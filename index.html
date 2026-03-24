@@ -220,6 +220,67 @@
         height: 0.5px;
         background: var(--border2);
       }
+      .deck-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 1rem;
+      }
+      .deck-card {
+        background: var(--surface);
+        border: 0.5px solid var(--border);
+        border-radius: 12px;
+        padding: 14px;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: left;
+      }
+      .deck-card:hover {
+        background: var(--surface2);
+        border-color: var(--border2);
+      }
+      .deck-card.selected {
+        border-color: var(--gold2);
+        background: rgba(138, 111, 48, 0.12);
+      }
+      .deck-card.locked {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .deck-card.locked:hover {
+        background: var(--surface);
+        border-color: var(--border);
+      }
+      .deck-icon {
+        font-size: 22px;
+        margin-bottom: 6px;
+      }
+      .deck-name {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text);
+        margin-bottom: 2px;
+      }
+      .deck-desc {
+        font-size: 11px;
+        color: var(--text3);
+        line-height: 1.4;
+      }
+      .deck-badge {
+        font-size: 10px;
+        padding: 2px 8px;
+        border-radius: 20px;
+        display: inline-block;
+        margin-top: 4px;
+      }
+      .badge-free {
+        background: rgba(109, 184, 122, 0.15);
+        color: var(--clubs);
+      }
+      .badge-lock {
+        background: rgba(212, 87, 74, 0.12);
+        color: var(--hearts);
+      }
       .player-tabs {
         display: flex;
         gap: 6px;
@@ -783,101 +844,61 @@
         color: var(--text3);
         margin-top: 3px;
       }
+      .loading {
+        text-align: center;
+        padding: 3rem 0;
+        color: var(--text3);
+        font-size: 14px;
+      }
     </style>
   </head>
   <body>
-    <div class="app" id="app"></div>
+    <div class="app" id="app"><div class="loading">Cargando...</div></div>
     <script>
-      const BASE = {
-        spades: {
-          soft: [
-            "¿Cuál es tu recuerdo más feliz de la infancia?",
-            "¿A qué le tenías miedo de niño/a que ahora te parece gracioso?",
-            "¿Cuál era tu lugar favorito cuando eras chico/a y por qué?",
-            "¿Qué versión de ti mismo/a extrañas a veces?",
-            "¿Cuál fue el momento más vergonzoso de tu vida y ya lo puedes contar?",
-          ],
-          mid: [
-            "¿Cuál es el momento en que te has sentido más solo/a en tu vida?",
-            "¿Qué decisión tomarías diferente si pudieras?",
-            "¿Hay algo de tu pasado que no has perdonado del todo?",
-            "¿Cuándo fue la última vez que lloraste y por qué?",
-            "¿Qué parte de tu historia le cuentas a muy poca gente?",
-            "¿Quién fue la persona que más te marcó antes de conocer a tu pareja?",
-          ],
-          hard: [
-            "¿Cuál es la cosa de la que más te arrepientes hasta ahora?",
-            "¿Hubo algún momento en que dejaste de ser tú mismo/a para encajar? ¿Cuándo?",
-          ],
+      const MAZOS_CONFIG = [
+        {
+          id: "base",
+          icon: "🃏",
+          nombre: "Base",
+          desc: "El mazo original. Para conocerse de verdad.",
+          free: true,
         },
-        hearts: {
-          soft: [
-            "¿Cuál fue el momento en que supiste que querías a tu pareja?",
-            "¿Qué cosa de tu pareja te sigue sorprendiendo?",
-            "¿Cuál ha sido tu día favorito de su relación?",
-            "¿Qué canción les recuerda a ustedes dos y por qué?",
-            "Si alguien pregunta cómo se conocieron, ¿qué parte exagerarías?",
-            "¿Qué rutina diaria te haría sentir estable y feliz en la relación?",
-          ],
-          mid: [
-            "¿Hay algo que quieras que cambie en su relación y no has dicho?",
-            "¿Cuándo te has sentido más enamorado/a de tu pareja?",
-            "¿Qué es lo que más te asusta de comprometerte?",
-            "¿Sientes que tu pareja te conoce de verdad? ¿Qué parte de ti aún no ve bien?",
-            "¿Qué hábito de tu pareja secretamente te pone de nervios?",
-            "¿Qué tipo de apoyo esperas de tu pareja sin saber cómo expresarlo?",
-            "¿Qué conversación pendiente crees que aún no han tenido?",
-            "¿Qué límites consideras importantes en su relación?",
-          ],
-          hard: [
-            "¿Hay algo que no le has contado a tu pareja y crees que debería saber?",
-            "¿Qué comportamiento de tu pareja podría hacerte sentir inseguro/a?",
-            "¿Qué te ha hecho sentir solo/a aún estando en pareja?",
-            "¿Qué no estás dispuesto/a a sacrificar ni siquiera por amor?",
-          ],
+        {
+          id: "primera-cita",
+          icon: "✨",
+          nombre: "Primera cita",
+          desc: "Para conocerse sin que parezca interrogatorio.",
+          free: true,
         },
-        diamonds: {
-          soft: [
-            "¿A dónde del mundo quieres ir que todavía no han ido juntos?",
-            "Si pudieras aprender cualquier habilidad en un año, ¿cuál sería?",
-            "¿Cuál es el trabajo soñado que nunca te has atrevido a decir en voz alta?",
-            "¿Qué harías mañana si el dinero no importara?",
-            "¿Cómo te imaginas sus domingos dentro de 10 años?",
-          ],
-          mid: [
-            "¿Cuál es el miedo que más te ha impedido hacer algo que quieres?",
-            "¿Hay algo que envidias de otras parejas? ¿Qué es?",
-            "¿Cómo te imaginas tu vida en 10 años? ¿Te da emoción o miedo?",
-            "¿Qué sueño sientes que has dejado morir y aún lo extrañas?",
-            "Si pudieras reinventarte completamente, ¿qué cambiarías de ti?",
-          ],
-          hard: [
-            "¿Qué es lo que más quieres lograr antes de morir y no le has dicho a nadie?",
-            "¿Hay algo que sientes que la vida no te va a dar y ya casi lo aceptaste?",
-          ],
+        {
+          id: "compromiso",
+          icon: "💍",
+          nombre: "Compromiso",
+          desc: "Las preguntas que toda pareja seria debe hacerse.",
+          free: true,
         },
-        clubs: {
-          soft: [
-            "Si fueras un animal, ¿cuál serías y por qué?",
-            "¿Cuál es la teoría más absurda en la que secretamente crees?",
-            "Si tu vida fuera un género cinematográfico, ¿cuál sería?",
-            "¿Qué personaje de película o serie serías en realidad?",
-            "¿Cuál es la cosa más rara que comes y que le da asco a la mayoría?",
-          ],
-          mid: [
-            "¿Tienes alguna superstición que nunca le has contado a nadie?",
-            "¿Crees que existe algo después de la muerte? ¿Qué crees que es?",
-            "Si pudieras leer la mente de alguien por 24 horas, ¿de quién y por qué?",
-            "¿Cuál es la mentira social que más te cuesta decir sin reírte?",
-            "¿Cuál es la pregunta que más miedo te da que alguien te haga?",
-          ],
-          hard: [
-            "¿Cuál es la creencia sobre la vida que nadie te ha podido quitar?",
-            "¿Hay algo que crees sobre ti mismo/a que sabes que no es verdad pero te lo repites?",
-          ],
+        {
+          id: "amigos",
+          icon: "🤝",
+          nombre: "Amigos",
+          desc: "Para conocerse más allá de lo superficial.",
+          free: true,
         },
-      };
-
+        {
+          id: "picante",
+          icon: "🔥",
+          nombre: "Picante",
+          desc: "Sin filtros pero con respeto. Para parejas.",
+          free: true,
+        },
+        {
+          id: "sexual",
+          icon: "🌶️",
+          nombre: "Sin filtros",
+          desc: "Solo adultos. Las conversaciones que pocas tienen.",
+          free: true,
+        },
+      ];
       const MECHANICS = {
         J: {
           label: "Pregunta tú primero",
@@ -887,20 +908,19 @@
         Q: {
           label: "Adivina al otro",
           tag: "tag-q",
-          desc: "Describe cómo crees que el otro respondería. Luego él/ella confirma o corrige.",
+          desc: "Describe cómo crees que el otro respondería. Luego confirma o corrige.",
         },
         K: {
           label: "Respuesta simultánea",
           tag: "tag-k",
-          desc: "Cuenten 3 juntos y respondan al mismo tiempo. Sin coordinarse antes.",
+          desc: "Cuenten 3 juntos y respondan al mismo tiempo.",
         },
         A: {
           label: "Comodín libre",
           tag: "tag-a",
-          desc: "Tú escribes la pregunta. La más rara, íntima o inesperada que se te ocurra. Sin filtros.",
+          desc: "Tú escribes la pregunta en el momento. Sin filtros.",
         },
       };
-
       const SUITS = ["spades", "hearts", "diamonds", "clubs"];
       const SYMS = { spades: "♠", hearts: "♥", diamonds: "♦", clubs: "♣" };
       const SUIT_NAMES = {
@@ -925,12 +945,13 @@
         "A",
       ];
       const FIGURES = ["J", "Q", "K", "A"];
-
       let S = {
         phase: "names",
         activePlayer: 0,
-        p1: "Robert",
-        p2: "Andrea",
+        p1: "",
+        p2: "",
+        selectedDeck: "base",
+        loadedDeck: null,
         customQ: [[], []],
         newQText: "",
         newQIntensity: "mid",
@@ -946,7 +967,6 @@
         aceConfirmed: false,
         usedQuestions: new Set(),
       };
-
       function shuffle(a) {
         const arr = [...a];
         for (let i = arr.length - 1; i > 0; i--) {
@@ -955,198 +975,165 @@
         }
         return arr;
       }
-
-      function buildQuestionPool() {
+      async function loadDeck(id) {
+        try {
+          const r = await fetch("preguntas-" + id + ".json");
+          if (!r.ok) throw new Error();
+          return await r.json();
+        } catch (e) {
+          return null;
+        }
+      }
+      function buildPool(d) {
         const pool = {
-          spades: {
-            soft: [...BASE.spades.soft],
-            mid: [...BASE.spades.mid],
-            hard: [...BASE.spades.hard],
-          },
-          hearts: {
-            soft: [...BASE.hearts.soft],
-            mid: [...BASE.hearts.mid],
-            hard: [...BASE.hearts.hard],
-          },
-          diamonds: {
-            soft: [...BASE.diamonds.soft],
-            mid: [...BASE.diamonds.mid],
-            hard: [...BASE.diamonds.hard],
-          },
-          clubs: {
-            soft: [...BASE.clubs.soft],
-            mid: [...BASE.clubs.mid],
-            hard: [...BASE.clubs.hard],
-          },
-        };
-        const sources = {
           spades: { soft: [], mid: [], hard: [] },
           hearts: { soft: [], mid: [], hard: [] },
           diamonds: { soft: [], mid: [], hard: [] },
           clubs: { soft: [], mid: [], hard: [] },
         };
-        for (const s of SUITS)
-          for (const i of ["soft", "mid", "hard"])
-            for (let k = 0; k < BASE[s][i].length; k++)
-              sources[s][i].push("base");
+        const src = {
+          spades: { soft: [], mid: [], hard: [] },
+          hearts: { soft: [], mid: [], hard: [] },
+          diamonds: { soft: [], mid: [], hard: [] },
+          clubs: { soft: [], mid: [], hard: [] },
+        };
+        if (d) {
+          for (const s of SUITS)
+            for (const i of ["soft", "mid", "hard"]) {
+              const qs = d[s]?.[i] || [];
+              pool[s][i].push(...qs);
+              src[s][i].push(...qs.map(() => "base"));
+            }
+        }
+        let si = 0;
         for (let pi = 0; pi < 2; pi++) {
-          const pname = pi === 0 ? "p1" : "p2";
-          let si = 0;
+          const pn = pi === 0 ? "p1" : "p2";
           for (const q of S.customQ[pi]) {
             const suit = SUITS[si % 4];
             pool[suit][q.intensity].push(q.text);
-            sources[suit][q.intensity].push(pname);
+            src[suit][q.intensity].push(pn);
             si++;
           }
         }
-        window._sources = sources;
+        window._src = src;
         return pool;
       }
-
       function buildDeck() {
         const d = [];
         for (const s of SUITS)
           for (const v of VALS) d.push({ suit: s, val: v });
         return d;
       }
-
       function getQ(pool, suit, val) {
-        // For figures J/Q/K pick a hard question from any suit, avoiding repeats
         if (["J", "Q", "K"].includes(val)) {
-          const allQ = [];
-          const allSrc = [];
+          const all = [],
+            allS = [];
           for (const s of SUITS) {
             pool[s].hard.forEach((q, i) => {
               if (!S.usedQuestions.has(q)) {
-                allQ.push({ text: q, suit: s });
-                allSrc.push(window._sources[s].hard[i]);
+                all.push(q);
+                allS.push(window._src[s].hard[i]);
               }
             });
           }
-          // fallback: include mid if hard exhausted
-          if (allQ.length === 0) {
+          if (!all.length) {
             for (const s of SUITS) {
               pool[s].mid.forEach((q, i) => {
                 if (!S.usedQuestions.has(q)) {
-                  allQ.push({ text: q, suit: s });
-                  allSrc.push(window._sources[s].mid[i]);
+                  all.push(q);
+                  allS.push(window._src[s].mid[i]);
                 }
               });
             }
           }
-          if (allQ.length === 0)
+          if (!all.length)
             return {
-              text: "Inventa tú la pregunta más difícil que puedas hacerle a tu pareja.",
+              text: "Inventa la pregunta más difícil que puedas hacerle a tu pareja.",
               source: "base",
             };
-          const idx = Math.floor(Math.random() * allQ.length);
-          S.usedQuestions.add(allQ[idx].text);
-          return { text: allQ[idx].text, source: allSrc[idx] };
+          const idx = Math.floor(Math.random() * all.length);
+          S.usedQuestions.add(all[idx]);
+          return { text: all[idx], source: allS[idx] };
         }
-        // A = comodín, no question from pool
         if (val === "A") return { text: "__ACE__", source: "ace" };
-
-        const n = parseInt(val);
-        const intensity = n <= 5 ? "soft" : n <= 9 ? "mid" : "hard";
-        // Filter unused questions for this suit+intensity
-        let available = pool[suit][intensity]
-          .map((q, i) => ({
-            text: q,
-            src: window._sources[suit][intensity][i],
-          }))
+        const n = parseInt(val),
+          intensity = n <= 5 ? "soft" : n <= 9 ? "mid" : "hard";
+        let av = pool[suit][intensity]
+          .map((q, i) => ({ text: q, src: window._src[suit][intensity][i] }))
           .filter((q) => !S.usedQuestions.has(q.text));
-        // fallback: try other intensities same suit
-        if (available.length === 0) {
-          const others = ["soft", "mid", "hard"].filter((x) => x !== intensity);
-          for (const o of others) {
-            const more = pool[suit][o]
-              .map((q, i) => ({ text: q, src: window._sources[suit][o][i] }))
-              .filter((q) => !S.usedQuestions.has(q.text));
-            available = [...available, ...more];
+        if (!av.length) {
+          for (const o of ["soft", "mid", "hard"].filter(
+            (x) => x !== intensity,
+          )) {
+            av.push(
+              ...pool[suit][o]
+                .map((q, i) => ({ text: q, src: window._src[suit][o][i] }))
+                .filter((q) => !S.usedQuestions.has(q.text)),
+            );
           }
         }
-        // fallback: any unused question
-        if (available.length === 0) {
+        if (!av.length) {
           for (const s of SUITS)
             for (const i of ["soft", "mid", "hard"]) {
               pool[s][i].forEach((q, idx) => {
                 if (!S.usedQuestions.has(q))
-                  available.push({ text: q, src: window._sources[s][i][idx] });
+                  av.push({ text: q, src: window._src[s][i][idx] });
               });
             }
         }
-        // last resort: allow repeats
-        if (available.length === 0) {
-          const list = pool[suit][intensity];
-          const idx = Math.floor(Math.random() * list.length);
-          return {
-            text: list[idx],
-            source: window._sources[suit][intensity][idx],
-          };
+        if (!av.length) {
+          const l = pool[suit][intensity];
+          const idx = Math.floor(Math.random() * l.length);
+          return { text: l[idx], source: "base" };
         }
-        const pick = available[Math.floor(Math.random() * available.length)];
+        const pick = av[Math.floor(Math.random() * av.length)];
         S.usedQuestions.add(pick.text);
         return { text: pick.text, source: pick.src };
       }
-
       function getIntensity(val) {
         if (FIGURES.includes(val)) return 3;
         const n = parseInt(val);
         return n <= 5 ? 1 : n <= 9 ? 2 : 3;
       }
-
       function render() {
         const app = document.getElementById("app");
         if (S.phase === "names") {
           app.innerHTML = renderNames();
           bindNames();
-          return;
-        }
-        if (S.phase === "questions") {
+        } else if (S.phase === "decks") {
+          app.innerHTML = renderDecks();
+        } else if (S.phase === "questions") {
           app.innerHTML = renderQuestions();
           bindQuestions();
-          return;
-        }
-        if (S.phase === "rules") {
+        } else if (S.phase === "rules") {
           app.innerHTML = renderRules();
-          return;
-        }
-        if (S.phase === "game") {
+        } else if (S.phase === "game") {
           app.innerHTML = renderGame();
           bindGame();
-          return;
-        }
-        if (S.phase === "end") {
+        } else if (S.phase === "end") {
           app.innerHTML = renderEnd();
-          return;
         }
       }
-
-      function renderSteps(current) {
-        const phaseIdx = { names: 0, questions: 1, rules: 2, game: 3, end: 3 };
-        const cur = phaseIdx[current] ?? 0;
+      function steps(cur) {
+        const idx = {
+          names: 0,
+          decks: 1,
+          questions: 2,
+          rules: 3,
+          game: 4,
+          end: 4,
+        };
+        const c = idx[cur] ?? 0;
         let h = '<div class="steps">';
-        ["Nombres", "Preguntas", "Reglas", "Juego"].forEach((s, i) => {
-          const cls = i < cur ? "done" : i === cur ? "active" : "";
-          h += `<div class="step ${cls}">${i < cur ? "✓" : i + 1}</div>`;
-          if (i < 3) h += `<div class="step-line"></div>`;
+        ["Nombres", "Mazo", "Preguntas", "Reglas", "Juego"].forEach((s, i) => {
+          const cl = i < c ? "done" : i === c ? "active" : "";
+          h += `<div class="step ${cl}">${i < c ? "✓" : i + 1}</div>`;
+          if (i < 4) h += '<div class="step-line"></div>';
         });
         return h + "</div>";
       }
-
-      // NAMES
       function renderNames() {
-        return `<div class="fade-in">
-    <div class="logo"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja<br>del <em>abismo</em></h1><div class="logo-sub">Juego de preguntas en pareja</div></div>
-    ${renderSteps("names")}
-    <div class="card-bg" style="margin-bottom:1rem;">
-      <span class="section-label">Jugador 1</span>
-      <input id="p1in" value="${S.p1}" placeholder="Tu nombre" style="margin-bottom:1rem;" />
-      <span class="section-label">Jugador 2</span>
-      <input id="p2in" value="${S.p2}" placeholder="Su nombre" />
-    </div>
-    <button class="btn btn-primary" style="width:100%;padding:13px;" onclick="goToQuestions()">Continuar →</button>
-  </div>`;
+        return `<div class="fade-in"><div class="logo"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja<br>del <em>abismo</em></h1><div class="logo-sub">Juego de preguntas en pareja</div></div>${steps("names")}<div class="card-bg" style="margin-bottom:1rem;"><span class="section-label">Jugador 1</span><input id="p1in" value="${S.p1}" placeholder="Tu nombre" style="margin-bottom:1rem;"/><span class="section-label">Jugador 2</span><input id="p2in" value="${S.p2}" placeholder="Su nombre"/></div><button class="btn btn-primary" style="width:100%;padding:13px;" onclick="goTo('decks')">Continuar →</button></div>`;
       }
       function bindNames() {
         document
@@ -1156,50 +1143,28 @@
           .getElementById("p2in")
           .addEventListener("input", (e) => (S.p2 = e.target.value));
       }
-      function goToQuestions() {
-        S.phase = "questions";
-        S.activePlayer = 0;
+      function renderDecks() {
+        const cards = MAZOS_CONFIG.map(
+          (m) =>
+            `<div class="deck-card ${S.selectedDeck === m.id ? "selected" : ""} ${!m.free ? "locked" : ""}" onclick="${m.free ? `selectDeck('${m.id}')` : ""}""><div class="deck-icon">${m.icon}</div><div class="deck-name">${m.nombre}</div><div class="deck-desc">${m.desc}</div><span class="deck-badge ${m.free ? "badge-free" : "badge-lock"}">${m.free ? "Incluido" : "Próximamente"}</span></div>`,
+        ).join("");
+        return `<div class="fade-in"><div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>${steps("decks")}<div style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Elige el mazo para esta partida</div><div class="deck-grid">${cards}</div><div style="display:flex;gap:8px;"><button class="btn btn-sm" onclick="goTo('names')" style="padding:11px 16px;">← Atrás</button><button class="btn btn-primary" style="flex:1;padding:13px;" onclick="goTo('questions')">Continuar →</button></div></div>`;
+      }
+      function selectDeck(id) {
+        S.selectedDeck = id;
         render();
       }
-
-      // QUESTIONS
       function renderQuestions() {
-        const pi = S.activePlayer;
-        const pname = pi === 0 ? S.p1 : S.p2;
-        const pcolor = pi === 0 ? "var(--p1)" : "var(--p2)";
-        const qs = S.customQ[pi];
-        const intLabels = { soft: "Suave", mid: "Mediana", hard: "Fuerte" };
-        let qListHTML =
+        const pi = S.activePlayer,
+          pn = pi === 0 ? S.p1 || "Jugador 1" : S.p2 || "Jugador 2",
+          pc = pi === 0 ? "var(--p1)" : "var(--p2)",
+          qs = S.customQ[pi],
+          IL = { soft: "Suave", mid: "Mediana", hard: "Fuerte" };
+        const qL =
           qs.length === 0
-            ? `<div class="empty-hint">Sin preguntas aún — las del juego base siempre están incluidas.</div>`
-            : `<div class="q-list">${qs.map((q, i) => `<div class="q-item"><div class="q-item-text">${q.text}</div><span class="q-item-badge badge-${q.intensity}">${intLabels[q.intensity]}</span><button class="q-del" onclick="deleteQ(${pi},${i})">×</button></div>`).join("")}</div>`;
-        return `<div class="fade-in">
-    <div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>
-    ${renderSteps("questions")}
-    <div class="player-tabs">
-      <button class="ptab ${S.activePlayer === 0 ? "active-p1" : ""}" onclick="switchPlayer(0)">${S.p1 || "Jugador 1"}</button>
-      <button class="ptab ${S.activePlayer === 1 ? "active-p2" : ""}" onclick="switchPlayer(1)">${S.p2 || "Jugador 2"}</button>
-    </div>
-    <div class="card-bg" style="margin-bottom:1rem;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
-        <span style="font-size:14px;font-weight:500;color:${pcolor};">${pname}</span>
-        <span style="font-size:12px;color:var(--text3);">${qs.length} pregunta${qs.length !== 1 ? "s" : ""}</span>
-      </div>
-      ${qListHTML}
-      <div class="add-q-form">
-        <span class="section-label">Nueva pregunta</span>
-        <textarea id="newQText" placeholder="Escribe tu pregunta aquí..." rows="2">${S.newQText}</textarea>
-        <div class="intensity-row">
-          ${["soft", "mid", "hard"].map((i) => `<button class="int-btn ${S.newQIntensity === i ? "sel-" + i : ""}" onclick="setIntensity('${i}')">${intLabels[i]}</button>`).join("")}
-        </div>
-        <div class="add-row"><button class="btn btn-primary btn-sm" style="flex:1;" onclick="addQ(${pi})">+ Agregar</button></div>
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;">
-      <button class="btn btn-sm" onclick="goBack()" style="padding:11px 16px;">← Atrás</button>
-      <button class="btn btn-primary" style="flex:1;padding:13px;" onclick="goToRules()">Ver reglas y jugar →</button>
-    </div>
-  </div>`;
+            ? `<div class="empty-hint">Sin preguntas aún — las del mazo seleccionado siempre están incluidas.</div>`
+            : `<div class="q-list">${qs.map((q, i) => `<div class="q-item"><div class="q-item-text">${q.text}</div><span class="q-item-badge badge-${q.intensity}">${IL[q.intensity]}</span><button class="q-del" onclick="deleteQ(${pi},${i})">×</button></div>`).join("")}</div>`;
+        return `<div class="fade-in"><div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>${steps("questions")}<div class="player-tabs"><button class="ptab ${pi === 0 ? "active-p1" : ""}" onclick="switchPlayer(0)">${S.p1 || "J1"}</button><button class="ptab ${pi === 1 ? "active-p2" : ""}" onclick="switchPlayer(1)">${S.p2 || "J2"}</button></div><div class="card-bg" style="margin-bottom:1rem;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;"><span style="font-size:14px;font-weight:500;color:${pc};">${pn}</span><span style="font-size:12px;color:var(--text3);">${qs.length} pregunta${qs.length !== 1 ? "s" : ""}</span></div>${qL}<div class="add-q-form"><span class="section-label">Nueva pregunta</span><textarea id="newQText" placeholder="Escribe tu pregunta aquí..." rows="2">${S.newQText}</textarea><div class="intensity-row">${["soft", "mid", "hard"].map((i) => `<button class="int-btn ${S.newQIntensity === i ? "sel-" + i : ""}" onclick="setIntensity('${i}')">${IL[i]}</button>`).join("")}</div><div class="add-row"><button class="btn btn-primary btn-sm" style="flex:1;" onclick="addQ(${pi})">+ Agregar</button></div></div></div><div style="display:flex;gap:8px;"><button class="btn btn-sm" onclick="goTo('decks')" style="padding:11px 16px;">← Atrás</button><button class="btn btn-primary" style="flex:1;padding:13px;" onclick="goTo('rules')">Ver reglas y jugar →</button></div></div>`;
       }
       function bindQuestions() {
         const ta = document.getElementById("newQText");
@@ -1229,61 +1194,20 @@
         S.customQ[pi].splice(idx, 1);
         render();
       }
-      function goBack() {
-        S.phase = "names";
+      function goTo(phase) {
+        S.phase = phase;
         render();
       }
-
-      // RULES
       function renderRules() {
-        return `<div class="fade-in">
-    <div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>
-    ${renderSteps("rules")}
-    <div class="card-bg" style="margin-bottom:1rem;">
-      <div style="font-size:13px;color:var(--text2);margin-bottom:0.75rem;">Preguntas listas</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;color:var(--text);">${S.customQ[0].length}</div><div style="font-size:11px;color:var(--p1);margin-top:2px;">${S.p1}</div></div>
-        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;color:var(--text);">${S.customQ[1].length}</div><div style="font-size:11px;color:var(--p2);margin-top:2px;">${S.p2}</div></div>
-        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;color:var(--gold);">+base</div><div style="font-size:11px;color:var(--text3);margin-top:2px;">Juego</div></div>
-      </div>
-    </div>
-    <div class="legend-grid">
-      <div class="legend-item s"><span class="legend-sym">♠</span><div><div class="legend-name">Espadas</div><div class="legend-desc">Pasado · 2 al 10</div></div></div>
-      <div class="legend-item h"><span class="legend-sym">♥</span><div><div class="legend-name">Corazones</div><div class="legend-desc">Amor · 2 al 10</div></div></div>
-      <div class="legend-item d"><span class="legend-sym">♦</span><div><div class="legend-name">Diamantes</div><div class="legend-desc">Sueños · 2 al 10</div></div></div>
-      <div class="legend-item c"><span class="legend-sym">♣</span><div><div class="legend-name">Tréboles</div><div class="legend-desc">Filosóficas · 2 al 10</div></div></div>
-    </div>
-    <div class="card-bg" style="margin-bottom:1rem;">
-      <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:0.75rem;">Figuras especiales</div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-j" style="flex-shrink:0;">J · Jota</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">El otro responde primero. Solo entonces puedes hacerlo tú. Dispara una pregunta fuerte.</span></div>
-        <div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-q" style="flex-shrink:0;">Q · Reina</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">Describe cómo crees que el otro respondería. Luego confirma o corrige. Pregunta fuerte.</span></div>
-        <div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-k" style="flex-shrink:0;">K · Rey</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">Cuenten 3 y respondan al mismo tiempo. Sin coordinarse. Pregunta fuerte.</span></div>
-        <div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-a" style="flex-shrink:0;">A · As</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">Comodín total. Tú escribes la pregunta en el momento. La más rara e íntima que se te ocurra.</span></div>
-      </div>
-    </div>
-    <div style="font-size:12px;color:var(--text3);margin-bottom:1rem;line-height:1.6;text-align:center;">
-      <strong style="color:var(--text2);">2–5</strong> Suave &nbsp;·&nbsp; <strong style="color:var(--text2);">6–9</strong> Mediana &nbsp;·&nbsp; <strong style="color:var(--text2);">10</strong> Fuerte<br>
-      Ninguna pregunta se repite durante la partida.
-    </div>
-    <div style="display:flex;gap:8px;">
-      <button class="btn btn-sm" onclick="goToQuestions()" style="padding:11px 16px;">← Atrás</button>
-      <button class="btn btn-primary" style="flex:1;padding:13px;" onclick="startGame()">¡Repartir el mazo!</button>
-    </div>
-  </div>`;
+        const m =
+          MAZOS_CONFIG.find((x) => x.id === S.selectedDeck) || MAZOS_CONFIG[0];
+        return `<div class="fade-in"><div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>${steps("rules")}<div class="card-bg" style="margin-bottom:1rem;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;"><span style="font-size:22px;">${m.icon}</span><div><div style="font-size:14px;font-weight:500;color:var(--text);">${m.nombre}</div><div style="font-size:12px;color:var(--text3);">${m.desc}</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;"><div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;color:var(--text);">${S.customQ[0].length}</div><div style="font-size:11px;color:var(--p1);margin-top:2px;">${S.p1 || "J1"}</div></div><div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;color:var(--text);">${S.customQ[1].length}</div><div style="font-size:11px;color:var(--p2);margin-top:2px;">${S.p2 || "J2"}</div></div><div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;color:var(--gold);">+mazo</div><div style="font-size:11px;color:var(--text3);margin-top:2px;">Base</div></div></div></div><div class="legend-grid"><div class="legend-item s"><span class="legend-sym">♠</span><div><div class="legend-name">Espadas</div><div class="legend-desc">Pasado · 2–10</div></div></div><div class="legend-item h"><span class="legend-sym">♥</span><div><div class="legend-name">Corazones</div><div class="legend-desc">Amor · 2–10</div></div></div><div class="legend-item d"><span class="legend-sym">♦</span><div><div class="legend-name">Diamantes</div><div class="legend-desc">Sueños · 2–10</div></div></div><div class="legend-item c"><span class="legend-sym">♣</span><div><div class="legend-name">Tréboles</div><div class="legend-desc">Filosóficas · 2–10</div></div></div></div><div class="card-bg" style="margin-bottom:1rem;"><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:0.75rem;">Figuras especiales</div><div style="display:flex;flex-direction:column;gap:10px;"><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-j" style="flex-shrink:0;">J · Jota</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">El otro responde primero. Dispara pregunta fuerte.</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-q" style="flex-shrink:0;">Q · Reina</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">Adivina cómo respondería el otro. Pregunta fuerte.</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-k" style="flex-shrink:0;">K · Rey</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">Cuenten 3 y respondan al mismo tiempo. Pregunta fuerte.</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-a" style="flex-shrink:0;">A · As</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">Tú escribes la pregunta. Comodín total.</span></div></div></div><div style="font-size:12px;color:var(--text3);margin-bottom:1rem;line-height:1.6;text-align:center;"><strong style="color:var(--text2);">2–5</strong> Suave &nbsp;·&nbsp; <strong style="color:var(--text2);">6–9</strong> Mediana &nbsp;·&nbsp; <strong style="color:var(--text2);">10</strong> Fuerte<br>Ninguna pregunta se repite durante la partida.</div><div style="display:flex;gap:8px;"><button class="btn btn-sm" onclick="goTo('questions')" style="padding:11px 16px;">← Atrás</button><button class="btn btn-primary" style="flex:1;padding:13px;" onclick="startGame()">¡Repartir el mazo!</button></div></div>`;
       }
-      function goToRules() {
-        S.phase = "rules";
-        render();
-      }
-      function goToQuestions() {
-        S.phase = "questions";
-        render();
-      }
-
-      // GAME
-      function startGame() {
-        window._pool = buildQuestionPool();
+      async function startGame() {
+        document.getElementById("app").innerHTML =
+          '<div class="loading">Cargando mazo...</div>';
+        const d = await loadDeck(S.selectedDeck);
+        window._pool = buildPool(d);
         S.deck = shuffle(buildDeck());
         S.phase = "game";
         S.history = [];
@@ -1298,107 +1222,67 @@
         S.usedQuestions = new Set();
         render();
       }
-
       function renderGame() {
-        const player = S.turn % 2 === 0 ? S.p1 : S.p2;
-        const played = S.history.length;
-        const remaining = S.deck.length;
-
-        let cardHTML = "";
+        const player = S.turn % 2 === 0 ? S.p1 || "J1" : S.p2 || "J2",
+          played = S.history.length,
+          remaining = S.deck.length;
+        let cH = "";
         if (!S.showCard) {
-          cardHTML = `<div class="card card-back" style="display:flex;" onclick="drawCard()"><div class="card-back-inner"><span class="card-back-sym">🂠</span></div></div>`;
+          cH = `<div class="card card-back" style="display:flex;" onclick="drawCard()"><div class="card-back-inner"><span class="card-back-sym">🂠</span></div></div>`;
         } else {
           const c = S.card;
-          cardHTML = `<div class="card card-face ${c.suit}"><div class="card-corner-top"><span class="card-val">${c.val}</span><span class="card-sym-s">${SYMS[c.suit]}</span></div><div class="card-center"><span class="card-sym-big">${SYMS[c.suit]}</span></div><div class="card-corner-bot"><span class="card-val">${c.val}</span><span class="card-sym-s">${SYMS[c.suit]}</span></div></div>`;
+          cH = `<div class="card card-face ${c.suit}"><div class="card-corner-top"><span class="card-val">${c.val}</span><span class="card-sym-s">${SYMS[c.suit]}</span></div><div class="card-center"><span class="card-sym-big">${SYMS[c.suit]}</span></div><div class="card-corner-bot"><span class="card-val">${c.val}</span><span class="card-sym-s">${SYMS[c.suit]}</span></div></div>`;
         }
-
-        let qHTML = "";
+        let qH = "";
         if (S.card && S.showCard) {
-          const intensity = getIntensity(S.card.val);
-          const dots = [1, 2, 3]
-            .map(
-              (i) =>
-                `<div class="q-dot ${i <= intensity ? (intensity === 3 ? "fire" : "on") : ""}"></div>`,
-            )
-            .join("");
-          const isAce = S.card.val === "A";
-          const isFigure = FIGURES.includes(S.card.val);
-
-          let mHTML = "";
-          if (isFigure) {
+          const intensity = getIntensity(S.card.val),
+            dots = [1, 2, 3]
+              .map(
+                (i) =>
+                  `<div class="q-dot ${i <= intensity ? (intensity === 3 ? "fire" : "on") : ""}"></div>`,
+              )
+              .join(""),
+            isAce = S.card.val === "A",
+            isFig = FIGURES.includes(S.card.val);
+          let mH = "";
+          if (isFig) {
             const m = MECHANICS[S.card.val];
-            mHTML = `<span class="mechanic-tag ${m.tag}">${m.label}</span><div class="mechanic-desc">${m.desc}</div>`;
+            mH = `<span class="mechanic-tag ${m.tag}">${m.label}</span><div class="mechanic-desc">${m.desc}</div>`;
           }
-
-          let srcHTML = "";
+          let sH = "";
           if (S.source === "p1")
-            srcHTML = `<span class="q-source src-p1">de ${S.p1}</span><br>`;
+            sH = `<span class="q-source src-p1">de ${S.p1 || "J1"}</span><br>`;
           else if (S.source === "p2")
-            srcHTML = `<span class="q-source src-p2">de ${S.p2}</span><br>`;
-
-          let bodyHTML = "";
+            sH = `<span class="q-source src-p2">de ${S.p2 || "J2"}</span><br>`;
+          let bH = "";
           if (isAce) {
-            // Ace: input to write custom question
-            if (!S.aceConfirmed) {
-              bodyHTML = `<div class="ace-input-box">
-          <textarea id="aceTA" placeholder="Escribe aquí tu pregunta comodín..." rows="3">${S.aceInput}</textarea>
-          <button class="btn btn-primary ace-confirm" onclick="confirmAce()">Confirmar pregunta →</button>
-        </div>`;
-            } else {
-              bodyHTML = `<div class="q-text">${S.aceInput}</div>`;
-            }
+            bH = !S.aceConfirmed
+              ? `<div class="ace-input-box"><textarea id="aceTA" placeholder="Escribe aquí tu pregunta comodín..." rows="3">${S.aceInput}</textarea><button class="btn btn-primary ace-confirm" onclick="confirmAce()">Confirmar →</button></div>`
+              : `<div class="q-text">${S.aceInput}</div>`;
           } else {
-            bodyHTML = `<div class="q-text">${S.question || ""}</div>`;
+            bH = `<div class="q-text">${S.question || ""}</div>`;
           }
-
           const showNext = !isAce || (isAce && S.aceConfirmed);
-          qHTML = `<div class="q-box">
-      <div class="q-header">
-        <span class="q-cat">${isAce ? "As · Comodín libre" : SUIT_NAMES[S.card.suit]}</span>
-        <div class="q-dots">${dots}</div>
-      </div>
-      ${srcHTML}${mHTML}${bodyHTML}
-    </div>
-    ${showNext ? `<div class="action-row"><button class="btn btn-next" onclick="nextTurn()">Siguiente turno →</button><button class="btn btn-sm btn-danger" onclick="resetGame()">⟳</button></div>` : ""}`;
+          qH = `<div class="q-box"><div class="q-header"><span class="q-cat">${isAce ? "As · Comodín libre" : SUIT_NAMES[S.card.suit]}</span><div class="q-dots">${dots}</div></div>${sH}${mH}${bH}</div>${showNext ? `<div class="action-row"><button class="btn btn-next" onclick="nextTurn()">Siguiente turno →</button><button class="btn btn-sm btn-danger" onclick="confirmReset()">⟳</button></div>` : "`"}`;
         }
-
-        let histHTML = "";
+        let hH = "";
         if (S.showHistory && S.history.length > 0) {
-          const items = [...S.history]
+          hH = `<div class="hist-panel">${[...S.history]
             .reverse()
             .slice(0, 15)
             .map(
               (h) =>
                 `<div class="hist-item"><span class="hist-tag">${h.val}${SYMS[h.suit]}</span><span class="hist-q">${h.question}</span></div>`,
             )
-            .join("");
-          histHTML = `<div class="hist-panel">${items}</div>`;
+            .join("")}</div>`;
         }
-
-        return `<div class="game-screen fade-in">
-    <div class="top-bar">
-      <span class="top-bar-title">La baraja del abismo</span>
-      <div class="stats">
-        <div class="stat"><div class="stat-n">${played}</div><div class="stat-l">Jugadas</div></div>
-        <div class="stat-sep"></div>
-        <div class="stat"><div class="stat-n">${remaining}</div><div class="stat-l">En mazo</div></div>
-      </div>
-    </div>
-    <div class="turn-label">Le toca a <span class="turn-name">${player}</span></div>
-    <div class="card-area">${cardHTML}</div>
-    ${!S.showCard ? '<div class="draw-hint">toca la carta para robar</div>' : ""}
-    ${qHTML}
-    <button class="hist-toggle" onclick="toggleHistory()">${S.showHistory ? "▴ Ocultar" : "▾ Ver"} historial (${played})</button>
-    ${histHTML}
-  </div>`;
+        return `<div class="game-screen fade-in"><div class="top-bar"><span class="top-bar-title">La baraja del abismo</span><div class="stats"><div class="stat"><div class="stat-n">${played}</div><div class="stat-l">Jugadas</div></div><div class="stat-sep"></div><div class="stat"><div class="stat-n">${remaining}</div><div class="stat-l">En mazo</div></div></div></div><div class="turn-label">Le toca a <span class="turn-name">${player}</span></div><div class="card-area">${cH}</div>${!S.showCard ? '<div class="draw-hint">toca la carta para robar</div>' : ""}${qH}<button class="hist-toggle" onclick="toggleHistory()">${S.showHistory ? "▴ Ocultar" : "▾ Ver"} historial (${played})</button>${hH}</div>`;
       }
-
       function bindGame() {
         const ta = document.getElementById("aceTA");
         if (ta)
           ta.addEventListener("input", (e) => (S.aceInput = e.target.value));
       }
-
       function confirmAce() {
         const ta = document.getElementById("aceTA");
         if (ta) S.aceInput = ta.value;
@@ -1406,7 +1290,6 @@
         S.aceConfirmed = true;
         render();
       }
-
       function drawCard() {
         if (S.deck.length === 0) {
           S.phase = "end";
@@ -1417,13 +1300,12 @@
         S.card = c;
         S.aceInput = "";
         S.aceConfirmed = false;
-        const result = getQ(window._pool, c.suit, c.val);
-        S.question = result.text === "__ACE__" ? "" : result.text;
-        S.source = result.source;
+        const r = getQ(window._pool, c.suit, c.val);
+        S.question = r.text === "__ACE__" ? "" : r.text;
+        S.source = r.source;
         S.showCard = true;
         render();
       }
-
       function nextTurn() {
         const q = S.card && S.card.val === "A" ? S.aceInput : S.question;
         if (S.card) S.history.push({ ...S.card, question: q || "—" });
@@ -1445,6 +1327,9 @@
         S.showHistory = !S.showHistory;
         render();
       }
+      function confirmReset() {
+        if (confirm("¿Reiniciar el juego?")) resetGame();
+      }
       function resetGame() {
         S.phase = "names";
         S.customQ = [[], []];
@@ -1452,22 +1337,9 @@
         S.usedQuestions = new Set();
         render();
       }
-
-      // END
       function renderEnd() {
-        return `<div class="end-screen">
-    <div class="logo"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>
-    <h2>¡Mazo agotado!</h2>
-    <p>${S.history.length} preguntas en una sola noche.</p>
-    <div class="summary-row">
-      <div class="summary-card"><div class="summary-n">${S.history.length}</div><div class="summary-l">Preguntas respondidas</div></div>
-      <div class="summary-card"><div class="summary-n">${S.customQ[0].length + S.customQ[1].length}</div><div class="summary-l">Personalizadas</div></div>
-    </div>
-    <button class="btn btn-primary" style="width:100%;padding:13px;margin-bottom:0.75rem;" onclick="startGame()">Jugar de nuevo</button>
-    <button class="btn" style="width:100%;padding:11px;" onclick="resetGame()">Nuevo juego desde cero</button>
-  </div>`;
+        return `<div class="end-screen"><div class="logo"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div><h2>¡Mazo agotado!</h2><p>${S.history.length} preguntas en una sola noche.</p><div class="summary-row"><div class="summary-card"><div class="summary-n">${S.history.length}</div><div class="summary-l">Respondidas</div></div><div class="summary-card"><div class="summary-n">${S.customQ[0].length + S.customQ[1].length}</div><div class="summary-l">Personalizadas</div></div></div><button class="btn btn-primary" style="width:100%;padding:13px;margin-bottom:0.75rem;" onclick="startGame()">Jugar de nuevo</button><button class="btn" style="width:100%;padding:11px;" onclick="resetGame()">Nuevo juego desde cero</button></div>`;
       }
-
       render();
     </script>
   </body>

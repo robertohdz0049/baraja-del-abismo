@@ -1,0 +1,139 @@
+{
+  "id": "primera-cita",
+  "nombre": "Primera cita",
+  "descripcion": "Para conocerse sin que se sienta un interrogatorio.",
+  "spades": {
+    "soft": [
+      "¿De dónde eres originalmente y qué extrañas de ahí?",
+      "¿Cómo es un día normal en tu vida?",
+      "¿Qué haces cuando no trabajas?",
+      "¿Tienes hermanos? ¿Cómo es tu relación con ellos?",
+      "¿Cuál fue el último viaje que hiciste y qué fue lo mejor?",
+      "¿Qué tipo de música escuchas cuando manejas solo/a?",
+      "¿Eres más de ciudad o de naturaleza?",
+      "¿Cuál es tu restaurante favorito y qué pides ahí?",
+      "¿Tienes mascotas? Si no tienes, ¿tendrías?",
+      "¿Qué tan seguido hablas con tu familia?",
+      "¿Eres de los que planean todo o de los que improvisan?",
+      "¿Cuál es tu película favorita de todos los tiempos?",
+      "¿Prefieres las mañanas o las noches?",
+      "¿Qué tan seguido cocinas y qué es lo que mejor haces?",
+      "¿Tienes algún ritual o costumbre rara que hacer todos los días?"
+    ],
+    "mid": [
+      "¿Qué fue lo más difícil que viviste el año pasado?",
+      "¿Hay algo que hayas dejado ir recientemente que te costó trabajo?",
+      "¿Cuándo fue la última vez que algo te cambió la forma de pensar?",
+      "¿Qué aprendiste de tu última relación importante?",
+      "¿Hay algo de tu pasado que sientas que todavía te define?",
+      "¿Qué etapa de tu vida fue la más complicada y qué te enseñó?",
+      "¿Hubo alguien en tu vida que te haya cambiado sin que se lo propusiera?",
+      "¿Qué tan fácil te resulta confiar en alguien nuevo?"
+    ],
+    "hard": [
+      "¿Qué es lo que más te cuesta dejar entrar a alguien nuevo en tu vida?",
+      "¿Hay algo de ti que crees que la gente malinterpreta seguido?",
+      "¿Qué patrón en tus relaciones anteriores reconoces que quieres cambiar?"
+    ]
+  },
+  "hearts": {
+    "soft": [
+      "¿Cómo sabes cuando alguien te gusta de verdad?",
+      "¿Eres de los que dice lo que siente o de los que espera que el otro lo adivine?",
+      "¿Qué te enamora primero de alguien, lo físico o la personalidad?",
+      "¿Cuál fue tu primera cita más memorable y por qué?",
+      "¿Eres detallista o más de grandes gestos?",
+      "¿Qué cosa hace que alguien te caiga bien de inmediato?",
+      "¿Cuál es tu love language principal?",
+      "¿Qué actividad te gustaría hacer en una segunda cita?",
+      "¿Eres celoso/a o muy tranquilo/a en ese sentido?",
+      "¿Qué tan rápido sueles ilusionarte con alguien?",
+      "¿Prefieres las citas planeadas o las espontáneas?",
+      "¿Qué detalle pequeño de alguien puede enamorarte sin que se lo espere?",
+      "¿Qué tan importante es para ti tener cosas en común con tu pareja?",
+      "¿Cómo te gustaría que alguien te cortejara?",
+      "¿Qué es lo primero que notas físicamente de alguien?"
+    ],
+    "mid": [
+      "¿Qué es lo que más valoras en una relación?",
+      "¿Tienes deal breakers claros? ¿Cuáles son los más importantes?",
+      "¿Qué tan seguido buscas tiempo para ti mismo/a en una relación?",
+      "¿Has tenido una relación que te costó mucho superar? ¿Qué aprendiste?",
+      "¿Qué tan importante es para ti que tu pareja sea tu mejor amigo/a?",
+      "¿Qué esperas de alguien en los primeros meses de conocerse?",
+      "¿Cuánto tiempo necesitas antes de presentar a alguien con tu familia?",
+      "¿Qué significa para ti estar listo/a para una relación seria?"
+    ],
+    "hard": [
+      "¿Qué es lo que más miedo te da de volverte a enamorar?",
+      "¿Hay algo que sientas que todavía cargas de una relación pasada?",
+      "¿Qué cosa sobre el amor tardaste mucho en entender?"
+    ]
+  },
+  "diamonds": {
+    "soft": [
+      "¿A dónde del mundo quieres ir que todavía no has ido?",
+      "¿Qué harías si te ganaras la lotería mañana?",
+      "¿Cuál es tu plan para los próximos 2 años?",
+      "¿Tienes algún proyecto personal que estés construyendo?",
+      "¿Qué hobby quieres empezar y siempre lo pospones?",
+      "¿Qué es lo que más disfrutas de tu trabajo?",
+      "¿Cómo sería tu vida ideal dentro de 5 años?",
+      "¿Qué es lo que más te emociona del futuro?",
+      "¿Tienes algún sueño que suene loco pero que no has dejado de pensar?",
+      "¿Quieres tener hijos o ya tienes? ¿Cómo te imaginas ese lado de la vida?",
+      "¿Qué ciudad del mundo vivirías si pudieras elegir?",
+      "¿Qué habilidad quisiste aprender de niño/a y nunca aprendiste?",
+      "¿Cuál es la cosa más grande que quieres lograr en tu vida?",
+      "¿Qué es lo que más te importa construir: familia, carrera, experiencias?",
+      "¿Hay algo que estés persiguiendo ahorita que te emocione mucho?"
+    ],
+    "mid": [
+      "¿Qué tan alineada está tu vida actual con lo que quieres?",
+      "¿Hay algo que sientas que sacrificas demasiado por los demás?",
+      "¿Qué tan importante es el dinero para ti a la hora de planear tu vida?",
+      "¿Hay algo que quieras cambiar de tu vida en el corto plazo?",
+      "¿Qué tan cómodo/a estás con la incertidumbre?",
+      "¿Hay algo que te dé miedo desear porque sientes que no se puede?",
+      "¿Qué tan dispuesto/a estás a cambiar planes si conoces a alguien que vale la pena?"
+    ],
+    "hard": [
+      "¿Hay algo que quieras y que no has perseguido por miedo al qué dirán?",
+      "¿Qué tan honesto/a eres contigo mismo/a sobre lo que realmente quieres en la vida?",
+      "¿Hay algo a lo que le has dicho que no y que hoy lamentas?"
+    ]
+  },
+  "clubs": {
+    "soft": [
+      "¿Eres más de Netflix o de salir?",
+      "¿Cuál es tu orden de tacos/comida favorita?",
+      "¿Tienes algún talento secreto y ridículo?",
+      "¿Qué aplicación en tu celular usas más de lo que admites?",
+      "¿Cuál es la canción que siempre skip-as y cuál nunca puedes saltarte?",
+      "¿Eres de los que llega temprano, a tiempo o siempre tarde?",
+      "¿Cuál es tu meme favorito de todos los tiempos?",
+      "¿Prefieres el frío o el calor?",
+      "¿Eres más de perros o de gatos?",
+      "¿Cuál es la serie que has vuelto a ver más veces?",
+      "¿Qué comida nunca podrías dejar de comer aunque quisiera?",
+      "¿Eres de los que pone alarmas de 5 minutos o de los que se levanta al primer intento?",
+      "¿Cuál es tu emoji más usado y dice algo de ti?",
+      "¿Cuál es el mito o leyenda urbana que te asustó de niño/a?",
+      "¿Cuál es tu chiste favorito aunque sea malísimo?"
+    ],
+    "mid": [
+      "¿Cuál es la opinión que tienes que pocas personas comparten contigo?",
+      "¿Hay algo en lo que crees que va contra la corriente?",
+      "¿Qué tan fácil te resulta decir que no?",
+      "¿Cuál es la cosa más espontánea que has hecho en tu vida?",
+      "¿Qué tan seguido haces cosas que te sacan de tu zona de confort?",
+      "¿Qué harías diferente si pudieras repetir los últimos 3 años?",
+      "¿Cuál es la pregunta que más te haces sobre la vida?"
+    ],
+    "hard": [
+      "¿Qué parte de ti crees que la mayoría de la gente no llega a conocer?",
+      "¿Qué es lo más auténtico de ti que tardas en mostrar?",
+      "¿Hay algo que la gente asume de ti que está completamente equivocado?"
+    ]
+  }
+}

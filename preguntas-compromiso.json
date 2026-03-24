@@ -1,0 +1,127 @@
+{
+  "id": "compromiso",
+  "nombre": "Compromiso",
+  "descripcion": "Para parejas que van en serio. Las preguntas que hay que hacerse.",
+  "spades": {
+    "soft": [
+      "¿Cuál fue el momento en que supiste que esta persona era diferente a todas las demás?",
+      "¿Qué recuerdo de su relación atesorarías aunque todo lo demás se olvidara?",
+      "¿Cómo ha cambiado tu visión del amor desde que están juntos?",
+      "¿Qué cosa de tu pareja te hizo entender algo nuevo sobre ti mismo/a?",
+      "¿Cuál fue el primer obstáculo que superaron juntos?",
+      "¿Qué aprendiste de tu pareja que nunca hubieras aprendido solo/a?",
+      "¿Cómo describirías su relación con una sola canción?",
+      "¿Cuál es el momento de su historia que más te gusta contar?",
+      "¿Qué fue lo primero que te enamoró de tu pareja que sigue igual hasta hoy?",
+      "¿Qué cosa pequeña de su día a día no cambiarías por nada?"
+    ],
+    "mid": [
+      "¿Hay algo de su historia juntos que sientes que no han hablado suficiente?",
+      "¿Cuándo fue la vez que más necesitaste a tu pareja y cómo respondió?",
+      "¿Hay algo de su pasado juntos que todavía duele un poco aunque ya pasó?",
+      "¿Qué momento de crisis en su relación los hizo más fuertes?",
+      "¿Hay algo que cambiaste de ti por esta relación y que no sabes si fue bueno?",
+      "¿Cuándo fue la vez que más dudaste de que esto funcionaría?",
+      "¿Hay algo que no dijiste en el momento correcto y que todavía piensas en eso?",
+      "¿Qué tanto crees que tu pareja sabe de tus miedos más profundos?"
+    ],
+    "hard": [
+      "¿Hay algo de su historia como pareja que sientas que nunca han resuelto del todo?",
+      "¿Qué es lo que más te asusta de envejecer junto a tu pareja?",
+      "¿Hay algo que hayas callado para proteger la relación y que tal vez debería decirse?",
+      "¿Cuál es la cosa que más trabajo te costaría perdonar si llegara a pasar?"
+    ]
+  },
+  "hearts": {
+    "soft": [
+      "¿Cómo te imaginas que va a ser su vida juntos en 20 años?",
+      "¿Qué tipo de pareja quieres ser y qué tan cerca estás de serlo?",
+      "¿Qué tradición quieres construir con tu pareja que sea solo de ustedes?",
+      "¿Cómo quieres que te recuerde tu pareja cuando lleguen a viejos?",
+      "¿Qué rol quieres tener en la familia que van a construir?",
+      "¿Qué valores son innegociables para ti en un matrimonio?",
+      "¿Cómo te imaginas celebrando su aniversario número 25?",
+      "¿Qué cosa quieres que nunca cambie de su relación?",
+      "¿Qué le dirías a tu pareja en sus votos que todavía no le has dicho?",
+      "¿Cómo quieres que sea tu hogar en términos de ambiente y dinámica?"
+    ],
+    "mid": [
+      "¿Qué tan alineados están sobre tener o no tener hijos?",
+      "¿Cómo se imaginan manejar el dinero juntos?",
+      "¿Qué tan importantes son sus familias de origen en las decisiones que toman?",
+      "¿Cómo quieren manejar los conflictos cuando sean más grandes?",
+      "¿Qué tanto espacio individual necesitan dentro de la relación?",
+      "¿Cómo se imaginan dividiendo responsabilidades del hogar?",
+      "¿Qué pasa si uno quiere vivir en una ciudad diferente por trabajo?",
+      "¿Cómo quieren manejar las finanzas, juntas o separadas?",
+      "¿Qué tan importante es para ti que tu pareja mantenga sus propias amistades?",
+      "¿Hay algo sobre su futuro juntos en lo que sientan que no están en la misma página?",
+      "¿Qué harían si uno de los dos pierde el trabajo por mucho tiempo?",
+      "¿Qué tan dispuesto/a estás a cambiar de ciudad o país por tu pareja?"
+    ],
+    "hard": [
+      "¿Hay algo sobre el matrimonio que te asuste y que no has podido decir en voz alta?",
+      "¿Qué harían si su relación llegara a una crisis muy seria?",
+      "¿Hay algo que necesitarías de tu pareja para poder comprometerte sin reservas?",
+      "¿Cuál sería para ti la razón más válida para poner en pausa o terminar una relación?",
+      "¿Qué tan seguro/a estás de que quieren lo mismo a largo plazo?",
+      "¿Hay algo que sacrificarías y algo que definitivamente no sacrificarías por este matrimonio?"
+    ]
+  },
+  "diamonds": {
+    "soft": [
+      "¿Qué lugar del mundo quieren visitar juntos antes de casarse?",
+      "¿Cómo se imaginan su boda, grande y tradicional o íntima y diferente?",
+      "¿Dónde quieren vivir a largo plazo?",
+      "¿Qué aventura quieren vivir juntos que todavía no han tenido?",
+      "¿Qué proyecto quieren construir juntos más allá de la familia?",
+      "¿Cómo se imaginan sus vacaciones ideales dentro de 10 años?",
+      "¿Qué legado quieren dejar juntos?",
+      "¿Hay algo que quieran lograr juntos antes de tener hijos?",
+      "¿Cómo se imaginan su retiro? ¿Qué harían con todo ese tiempo?",
+      "¿Qué tipo de padres quieren ser si deciden tener hijos?"
+    ],
+    "mid": [
+      "¿Qué tan alineados están sobre el tipo de vida que quieren construir?",
+      "¿Hay algo que uno de los dos quiere y que el otro no ha terminado de aceptar?",
+      "¿Qué tan dispuestos están a cambiar sus planes individuales por el proyecto en común?",
+      "¿Qué tan importantes son las metas económicas en su visión de futuro?",
+      "¿Hay algo en su visión de futuro que les genere más incertidumbre que emoción?",
+      "¿Qué tan seguido hablan de sus metas a largo plazo?",
+      "¿Cómo quieren que sea su relación con sus familias cuando sean independientes?"
+    ],
+    "hard": [
+      "¿Hay algo que uno de los dos quiere en el futuro y que el otro no comparte del todo?",
+      "¿Qué pasaría si sus sueños individuales entran en conflicto directo?",
+      "¿Hay algo que sientas que tu pareja espera de ti en el futuro y que no sabes si puedes dar?",
+      "¿Qué tan honesto/a has sido sobre lo que realmente quieres para tu vida?"
+    ]
+  },
+  "clubs": {
+    "soft": [
+      "¿Cuál sería el nombre perfecto para su futuro perro o gato?",
+      "¿Cuál sería la tradición más ridícula que instaurarían en su casa?",
+      "Si su relación fuera una película, ¿cómo se llamaría?",
+      "¿Cuál sería el himno oficial de su relación?",
+      "¿Cómo se repartirían los quehaceres del hogar en el mundo ideal?",
+      "¿Cuál sería su serie para ver juntos en maratón sin parar?",
+      "Si tuvieran que describir su relación con un solo platillo, ¿cuál sería?",
+      "¿Cuál sería su viaje de luna de miel soñado?",
+      "¿Qué regla ridícula pero necesaria tendrían en su casa?",
+      "¿Cuál sería el superpoder de cada uno dentro de su relación?"
+    ],
+    "mid": [
+      "¿Cómo se imaginan manejando los desacuerdos cuando ya lleven 20 años juntos?",
+      "¿Qué cosa de su dinámica actual tendrían que ajustar para que funcione a largo plazo?",
+      "¿Qué tan seguido sienten que se eligen de nuevo y qué pasa cuando no sienten eso?",
+      "¿Hay algo que hagan actualmente que saben que no es sostenible?",
+      "¿Qué harían diferente si empezaran su relación desde cero con lo que saben hoy?",
+      "¿Qué tan buenos son para pedirse perdón de verdad?"
+    ],
+    "hard": [
+      "¿Hay algo en su dinámica que en el fondo saben que tienen que cambiar?",
+      "¿Qué tan fácil les resulta elegirse cuando las cosas no están bien?",
+      "¿Hay algo que eviten hablar porque saben que va a generar conflicto importante?"
+    ]
+  }
+}

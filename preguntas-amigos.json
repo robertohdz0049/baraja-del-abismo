@@ -1,0 +1,136 @@
+{
+  "id": "amigos",
+  "nombre": "Amigos",
+  "descripcion": "Para conocerse más allá de lo superficial. Sin lo romántico.",
+  "spades": {
+    "soft": [
+      "¿Cuál es el recuerdo más chido que tienes de esta amistad?",
+      "¿Qué fue lo primero que pensaste de mí cuando nos conocimos?",
+      "¿Cuándo fue la primera vez que pensaste que éramos buenos amigos?",
+      "¿Cuál es la anécdota que siempre cuentas cuando hablas de mí?",
+      "¿Qué cosa de tu infancia nunca le has contado a casi nadie?",
+      "¿Cuál es el apodo que tuviste y que más odias?",
+      "¿Qué era lo que más te gustaba hacer cuando tenías 15 años?",
+      "¿Cuál fue tu mayor cagada en la adolescencia?",
+      "¿Qué grupo de amigos del pasado extrañas más?",
+      "¿Cuál fue tu primera borrachera y cómo terminó?",
+      "¿Qué versión de ti mismo/a de hace 10 años te sorprendería ver hoy?",
+      "¿Cuál es la historia de tu vida que siempre embelleces un poco al contarla?",
+      "¿Qué persona de tu pasado te cambió sin que ella lo supiera?",
+      "¿Cuál fue tu peor etapa y quién estuvo ahí?",
+      "¿Qué cosa hiciste en el pasado que hoy no harías ni loco/a?"
+    ],
+    "mid": [
+      "¿Qué es lo que más valoras de esta amistad?",
+      "¿Hay algo que siempre quisiste decirme y nunca encontraste el momento?",
+      "¿Cuándo fue la última vez que te sentiste verdaderamente solo/a?",
+      "¿Hay algo en lo que sientas que no puedo ayudarte aunque quisiera?",
+      "¿Qué amistad perdiste que todavía extrañas?",
+      "¿Cuándo fue la última vez que alguien te sorprendió positivamente?",
+      "¿Qué es lo que más trabajo te cuesta pedir ayuda?",
+      "¿Hay algo que hayas hecho que te haya costado una amistad importante?",
+      "¿Qué tan fácil te resulta confiar en la gente nueva?",
+      "¿Hay algo en lo que crees que soy mejor que tú aunque no lo admitas?",
+      "¿Cuándo fue la última vez que te sentiste completamente tú mismo/a?",
+      "¿Hay algo de lo que te arrepientes en esta amistad?",
+      "¿Qué es lo que más te cuesta mostrar de ti mismo/a frente a los amigos?",
+      "¿Cuándo fue la última vez que un amigo te decepcionó de verdad?"
+    ],
+    "hard": [
+      "¿Hay algo que pienses de mí y que nunca me has dicho por no herirme?",
+      "¿Cuál es la cosa más honesta que podrías decirme sobre mí mismo/a?",
+      "¿Hay algo en lo que sientas que me he equivocado y que nunca te he escuchado?",
+      "¿Qué harías diferente en esta amistad si pudieras volver a empezar?",
+      "¿Hay algo de ti que sientas que ni tus mejores amigos conocen de verdad?"
+    ]
+  },
+  "hearts": {
+    "soft": [
+      "¿Cómo defines la amistad de verdad?",
+      "¿Qué cosa hace que alguien sea tu amigo/a de por vida?",
+      "¿Cuál es la cualidad que más admiras de mí?",
+      "¿Qué harías por un amigo que no harías por nadie más?",
+      "¿Cuándo fue la última vez que un amigo te hizo sentir muy especial?",
+      "¿Qué tan seguido le dices a tus amigos lo importantes que son para ti?",
+      "¿Qué es lo que más agradeces de tener amigos como los que tienes?",
+      "¿Cuál es el gesto de amistad que más te llegó al corazón?",
+      "¿Hay alguien en tu vida que merece más de tu tiempo y no se lo das?",
+      "¿Qué cosa hace que te des cuenta de que alguien es un amigo de verdad?"
+    ],
+    "mid": [
+      "¿Qué tan seguido sientes que tus amigos te conocen de verdad?",
+      "¿Hay algo que quisieras que tus amigos entendieran mejor de ti?",
+      "¿Qué tan fácil te resulta ser vulnerable con tus amigos?",
+      "¿Hay algo que tus amigos hacen que secretamente te molesta?",
+      "¿Qué es lo que más necesitas de tus amigos cuando estás mal?",
+      "¿Qué tan seguido sientes que das más de lo que recibes en tus amistades?",
+      "¿Hay alguien con quien hayas perdido el contacto y que extrañes de verdad?",
+      "¿Qué tan bueno/a eres para estar para alguien cuando más te necesita?"
+    ],
+    "hard": [
+      "¿Hay algo que hayas guardado de esta amistad que quizás deberías decir?",
+      "¿Qué es lo que más te cuesta dar en una amistad?",
+      "¿Hay algo en lo que sientas que no has sido un buen/a amigo/a?",
+      "¿Qué tan fácil te resulta perdonar a un amigo que te falla?"
+    ]
+  },
+  "diamonds": {
+    "soft": [
+      "¿Qué viaje harías con tus mejores amigos si el dinero no importara?",
+      "¿Cuál es el plan con amigos que siempre dices que vas a hacer y nunca pasa?",
+      "¿Qué proyecto o negocio montarías con tus amigos?",
+      "¿A qué lugar del mundo llevarías a tus amigos si pudieras?",
+      "¿Cuál sería el plan de retiro ideal con tus amigos?",
+      "¿Qué actividad nueva quisieras hacer con tus amigos que nunca han probado?",
+      "¿Cómo te imaginas tu amistad con ellos dentro de 20 años?",
+      "¿Qué cosa quisieras aprender junto a tus amigos?",
+      "¿Cuál sería el roadtrip ideal con tu bola?",
+      "¿Qué tipo de viejito/a quieres ser y cómo encajan tus amigos en eso?"
+    ],
+    "mid": [
+      "¿Qué tan diferente es la vida que quieres de la vida que tienen tus amigos?",
+      "¿Hay algo que quieras lograr que sientes que tus amigos no entienden del todo?",
+      "¿Qué tanto influyen tus amigos en las decisiones grandes de tu vida?",
+      "¿Hay algo en lo que sientas que estás yendo en una dirección diferente a tu círculo?",
+      "¿Qué tan cómodo/a estás con que tus amigos cambien conforme crecen?"
+    ],
+    "hard": [
+      "¿Hay algo que quieras para tu vida que sientes que no encaja con quien eres en tu grupo de amigos?",
+      "¿Qué tan honesto/a eres con tus amigos sobre lo que realmente quieres?",
+      "¿Hay algo que postergues porque no quieres alejarte de tu círculo de amigos?"
+    ]
+  },
+  "clubs": {
+    "soft": [
+      "¿Cuál es el chiste interno de este grupo que nunca va a dejar de ser gracioso?",
+      "¿Cuál es la anécdota más épica que tienen juntos?",
+      "¿Si fueran personajes de una serie, qué papel tendría cada quién?",
+      "¿Cuál sería el nombre del grupo si fueran una banda?",
+      "¿Cuál es la discusión más absurda que han tenido?",
+      "¿Qué canción define perfectamente este grupo?",
+      "¿Cuál es el plan de 'algún día' que llevan años postergando?",
+      "¿Quién del grupo sería el primero en sobrevivir un apocalipsis zombie?",
+      "¿Cuál es el talento oculto de alguien del grupo que todos conocen pero nadie menciona?",
+      "¿Cuál sería el negocio que montarían juntos aunque estuviera condenado al fracaso?",
+      "¿Cuál es el objeto más ridículo que has guardado por sentimentalismo?",
+      "¿Si pudieras hacer un documental sobre este grupo, cómo se llamaría?",
+      "¿Cuál sería tu úlima cena y quién estaría invitado?",
+      "¿Qué app inventarías si pudieras y para qué serviría?",
+      "¿Cuál es la fobia más ridícula que tienes?"
+    ],
+    "mid": [
+      "¿Cuál es la opinión que tienes del grupo que nunca has dicho en voz alta?",
+      "¿Hay algo que este grupo no sepa de ti y que te sorprendería que supieran?",
+      "¿Qué es lo más raro que alguien del grupo ha hecho y que todavía no entiendes?",
+      "¿Qué harías diferente si pudieras revivir una noche de este grupo?",
+      "¿Cuál es el tema del que nunca hablan pero que todos piensan?",
+      "¿Qué tan diferente eres en este grupo comparado con otros lados de tu vida?",
+      "¿Hay algo que cambiarías de la dinámica de este grupo si pudieras?"
+    ],
+    "hard": [
+      "¿Hay algo que cargues en este grupo que sientes que nadie ve?",
+      "¿Qué es lo más auténtico de ti que pocas veces muestras con este grupo?",
+      "¿Hay algo que este grupo haya normalizado y que en el fondo no te guste?"
+    ]
+  }
+}

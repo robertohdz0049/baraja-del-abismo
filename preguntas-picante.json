@@ -1,0 +1,125 @@
+{
+  "id": "picante",
+  "nombre": "Picante",
+  "descripcion": "Para parejas que quieren ir más allá. Sin filtros pero con respeto.",
+  "spades": {
+    "soft": [
+      "¿Cuál fue tu primera fantasía romántica que recuerdas?",
+      "¿A qué edad tuviste tu primer beso y cómo fue?",
+      "¿Cuál fue la primera persona que te pareció atractiva y qué tenía?",
+      "¿Qué cosa de tu adolescencia te daría más vergüenza que supieran tus amigos?",
+      "¿Cuál fue la primera vez que sentiste atracción física por alguien de verdad?",
+      "¿Qué fue lo más atrevido que hiciste en una relación pasada?",
+      "¿Cuál fue tu primera experiencia romántica memorable?",
+      "¿Qué tan diferente eras en tus relaciones anteriores comparado con ahora?",
+      "¿Qué aprendiste de tu primera relación seria que todavía aplicas?",
+      "¿Cuál fue la cita más rara o incómoda que has tenido?"
+    ],
+    "mid": [
+      "¿Hay algo de tu pasado romántico que nunca le contarías a tus papás?",
+      "¿Cuál fue la decisión más impulsiva que tomaste por alguien que te gustaba?",
+      "¿Hubo alguien que se te fue y que a veces todavía piensas?",
+      "¿Qué cosa de una relación pasada te marcó más de lo que esperabas?",
+      "¿Hay algo que hiciste en una relación anterior de lo que te arrepientes?",
+      "¿Cuándo fue la última vez que alguien te sorprendió físicamente?",
+      "¿Qué tan diferente eres en privado comparado con cómo te ven los demás?",
+      "¿Hay algo de tu vida íntima que pocas personas conocen?"
+    ],
+    "hard": [
+      "¿Hay algo de tu pasado romántico que nunca le has contado a tu pareja actual?",
+      "¿Cuál es la experiencia íntima más intensa que has tenido?",
+      "¿Hay algo que hiciste en el pasado íntimamente que nunca has repetido?",
+      "¿Qué es lo que más te costó superar de una ruptura a nivel físico y emocional?"
+    ]
+  },
+  "hearts": {
+    "soft": [
+      "¿Qué es lo que más te atrae físicamente de tu pareja?",
+      "¿Cuál es el gesto de tu pareja que más te prende sin que lo sepa?",
+      "¿Qué parte del cuerpo de tu pareja es tu favorita y por qué?",
+      "¿Cuándo fue la última vez que tu pareja te pareció irresistible?",
+      "¿Qué detalle físico de tu pareja notaste primero?",
+      "¿Cómo te pone de buen humor tu pareja sin que se lo proponga?",
+      "¿Qué cosa que hace tu pareja te parece súper atractiva aunque sea algo cotidiano?",
+      "¿Cuál es el olor de tu pareja que más te gusta?",
+      "¿Qué prenda o look de tu pareja te encanta especialmente?",
+      "¿Cuál fue la primera vez que tu pareja te pareció realmente irresistible?"
+    ],
+    "mid": [
+      "¿Qué tan seguido sientes que la intimidad en su relación está en su mejor punto?",
+      "¿Hay algo que te gustaría que tu pareja hiciera más seguido íntimamente?",
+      "¿Qué es lo que más disfrutas de la intimidad con tu pareja?",
+      "¿Hay algo que siempre quisiste probar con tu pareja y no has dicho?",
+      "¿Qué tan cómodo/a te sientes diciéndole a tu pareja lo que quieres íntimamente?",
+      "¿Hay algo que tu pareja hace íntimamente que te vuelve loco/a?",
+      "¿Qué tan importante es la intimidad física para ti en esta relación?",
+      "¿Hay algo que sientas que ha cambiado en su intimidad y que quisieras recuperar?",
+      "¿Qué es lo que más te inhibe a la hora de decirle a tu pareja lo que quieres?",
+      "¿Cuándo fue la última vez que la intimidad con tu pareja te sorprendió?"
+    ],
+    "hard": [
+      "¿Hay algo que siempre quisiste hacer íntimamente y nunca has pedido?",
+      "¿Qué es lo que más te cuesta comunicar sobre lo que quieres en la intimidad?",
+      "¿Hay algo que tu pareja haga o no haga íntimamente que nunca has dicho que te molesta?",
+      "¿Qué tan abierto/a eres con tu pareja sobre tus fantasías?",
+      "¿Hay alguna fantasía que nunca has confesado ni a tu pareja?",
+      "¿Qué es lo que más te gustaría mejorar en su vida íntima como pareja?"
+    ]
+  },
+  "diamonds": {
+    "soft": [
+      "¿Cuál sería el viaje más romántico que podrían hacer juntos?",
+      "¿Cómo sería la noche perfecta con tu pareja si pudieras diseñarla?",
+      "¿Qué experiencia nueva querrías tener con tu pareja que nunca han hecho?",
+      "¿Cuál sería el lugar más atrevido donde les gustaría estar solos?",
+      "¿Qué cosa romántica que no han hecho está en tu lista mental?",
+      "¿Cómo sería tu fantasía de escapada perfecta con tu pareja?",
+      "¿Qué actividad fuera de lo común querrías hacer con tu pareja?",
+      "¿Cuál sería el regalo más memorable que le podrías dar a tu pareja?",
+      "¿Qué cosa haría que una noche con tu pareja fuera completamente memorable?",
+      "¿Cómo te imaginas la vida íntima de su relación en 10 años?"
+    ],
+    "mid": [
+      "¿Hay algo que siempre quisieron hacer juntos y siempre lo posponen?",
+      "¿Qué tan seguido se permiten ser espontáneos en su vida íntima?",
+      "¿Hay algo que creas que mejoraría mucho su vida como pareja si lo intentaran?",
+      "¿Qué tan importante es para ti mantener viva la atracción con el tiempo?",
+      "¿Qué harías para reconquistar a tu pareja si sintiera que la emoción se fue?",
+      "¿Hay algo que hayas visto o leído que te haya dado ideas para su relación?"
+    ],
+    "hard": [
+      "¿Hay algo que desearías que cambiara en su dinámica íntima y nunca has dicho?",
+      "¿Qué tan honesto/a eres con tu pareja sobre lo que realmente quieres íntimamente?",
+      "¿Hay algo que sientas que su vida íntima necesita y que ninguno de los dos ha dicho?"
+    ]
+  },
+  "clubs": {
+    "soft": [
+      "¿Cuál es el crush de famoso/a más ridículo que has tenido?",
+      "¿Qué canción te parece la más seductora de todos los tiempos?",
+      "¿Cuál es la película que secretamente encuentras muy sensual?",
+      "¿Qué personaje de serie o película encontrarías atractivo si fuera real?",
+      "¿Cuál es el piropo más ridículo que te han dicho o tú has dicho?",
+      "¿Qué tan seguido piensas en cosas atrevidas en los momentos más inapropiados?",
+      "¿Cuál es la prenda de ropa que encuentras más atractiva en el otro?",
+      "¿Qué tan atrevido/a eres en privado comparado con cómo te ven los demás?",
+      "¿Cuál es la situación más incómoda en la que te han cachado pensando en algo picante?",
+      "¿Qué tan fácil te ruborizas y qué es lo que más lo provoca?"
+    ],
+    "mid": [
+      "¿Cuál es la fantasía más recurrente que tienes?",
+      "¿Hay algo que encuentres atractivo y que te dé un poco de vergüenza admitirlo?",
+      "¿Qué tan seguido piensas en mejorar tu vida íntima?",
+      "¿Cuál es la cosa más atrevida que has hecho en un lugar público?",
+      "¿Hay algo que te genere mucha atracción y que no encaja con tu imagen?",
+      "¿Qué tan importante es para ti el juego previo comparado con todo lo demás?",
+      "¿Cuál es el escenario romántico o íntimo que más te llama la atención?"
+    ],
+    "hard": [
+      "¿Cuál es la fantasía que tienes y que nunca le has dicho a nadie?",
+      "¿Hay algo que encuentres muy atractivo y que nunca has actuado por pena?",
+      "¿Qué es lo más atrevido que harías si supieras que no hay consecuencias?",
+      "¿Cuál es el límite que sabes que tienes y que respetas aunque te llame la atención cruzarlo?"
+    ]
+  }
+}
