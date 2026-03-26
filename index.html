@@ -203,42 +203,61 @@
       .home-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 12px;
+        gap: 14px;
         margin-bottom: 1.5rem;
       }
       .game-card {
         background: var(--surface);
         border: 0.5px solid var(--border);
-        border-radius: 16px;
-        padding: 1.5rem 1.25rem;
+        border-radius: 20px;
+        padding: 2rem 1.5rem;
         cursor: pointer;
         transition: all 0.2s;
         text-align: center;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
       .game-card:hover {
         background: var(--surface2);
         border-color: var(--border2);
-        transform: translateY(-2px);
+        transform: translateY(-3px);
+      }
+      .game-card:active {
+        transform: scale(0.97);
       }
       .game-card-icon {
-        font-size: 36px;
-        margin-bottom: 0.75rem;
+        font-size: 52px;
+        margin-bottom: 1rem;
+        line-height: 1;
       }
       .game-card-name {
         font-family: "Playfair Display", serif;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 400;
         color: var(--text);
-        margin-bottom: 4px;
+        margin-bottom: 6px;
+        line-height: 1.3;
       }
       .game-card-name em {
         font-style: italic;
         color: var(--gold);
       }
       .game-card-desc {
-        font-size: 11px;
+        font-size: 12px;
         color: var(--text3);
-        line-height: 1.5;
+        line-height: 1.6;
+      }
+      @media (max-width: 400px) {
+        .home-grid {
+          grid-template-columns: 1fr;
+        }
+        .game-card {
+          min-height: 160px;
+          padding: 1.75rem 1.5rem;
+        }
       }
 
       /* BARAJA — STEPS */
@@ -3671,8 +3690,8 @@
       // HOME
       // ══════════════════════════════════════════════════════════════════════════════
       function renderHome() {
-        return `<div class="fade-in">
-    <div class="logo">
+        return `<div class="fade-in" style="min-height:80vh;display:flex;flex-direction:column;justify-content:center;">
+    <div class="logo" style="margin-bottom:2.5rem;">
       <div class="logo-suit">♠ ♥ ♦ ♣</div>
       <h1>El <em>Abismo</em></h1>
       <div class="logo-sub">Juegos en pareja</div>
@@ -3681,15 +3700,15 @@
       <div class="game-card" onclick="startBaraja()">
         <div class="game-card-icon">🃏</div>
         <div class="game-card-name">La baraja<br>del <em>abismo</em></div>
-        <div class="game-card-desc">Preguntas por palo. Para conocerse de verdad.</div>
+        <div class="game-card-desc">Preguntas por palo.<br>Para conocerse de verdad.</div>
       </div>
       <div class="game-card" onclick="startCMC()">
         <div class="game-card-icon">🧠</div>
         <div class="game-card-name">¿Cuánto<br>me <em>conoces?</em></div>
-        <div class="game-card-desc">Responde, comparte el link, tu pareja adivina.</div>
+        <div class="game-card-desc">Responde, comparte el link,<br>tu pareja adivina.</div>
       </div>
     </div>
-    <div style="text-align:center;font-size:12px;color:var(--text3);">Elige un juego para empezar</div>
+    <div style="text-align:center;font-size:12px;color:var(--text3);margin-top:0.5rem;">Toca un juego para empezar</div>
   </div>`;
       }
       function startBaraja() {
