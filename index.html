@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>La Baraja del Abismo</title>
+    <title>El Abismo — Juegos en pareja</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap"
       rel="stylesheet"
@@ -16,7 +16,6 @@
         --surface3: #2e2c28;
         --border: rgba(255, 255, 255, 0.08);
         --border2: rgba(255, 255, 255, 0.15);
-        --border3: rgba(255, 255, 255, 0.25);
         --text: #f0ece4;
         --text2: #9a9589;
         --text3: #5a564f;
@@ -135,8 +134,17 @@
         border-color: rgba(212, 87, 74, 0.4);
         color: var(--hearts);
       }
-      .btn-danger:hover {
-        background: rgba(212, 87, 74, 0.1);
+      .btn-p1 {
+        background: rgba(123, 184, 240, 0.15);
+        border-color: var(--p1);
+        color: var(--p1);
+        font-weight: 500;
+      }
+      .btn-p2 {
+        background: rgba(208, 128, 208, 0.15);
+        border-color: var(--p2);
+        color: var(--p2);
+        font-weight: 500;
       }
       .section-label {
         font-size: 11px;
@@ -147,8 +155,7 @@
         display: block;
       }
       input,
-      textarea,
-      select {
+      textarea {
         background: var(--surface2);
         border: 0.5px solid var(--border2);
         border-radius: 8px;
@@ -161,12 +168,8 @@
         width: 100%;
       }
       input:focus,
-      textarea:focus,
-      select:focus {
+      textarea:focus {
         border-color: var(--gold2);
-      }
-      select option {
-        background: var(--surface2);
       }
       textarea {
         resize: vertical;
@@ -186,6 +189,59 @@
           transform: translateY(0);
         }
       }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* HOME */
+      .home-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 1.5rem;
+      }
+      .game-card {
+        background: var(--surface);
+        border: 0.5px solid var(--border);
+        border-radius: 16px;
+        padding: 1.5rem 1.25rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+      }
+      .game-card:hover {
+        background: var(--surface2);
+        border-color: var(--border2);
+        transform: translateY(-2px);
+      }
+      .game-card-icon {
+        font-size: 36px;
+        margin-bottom: 0.75rem;
+      }
+      .game-card-name {
+        font-family: "Playfair Display", serif;
+        font-size: 16px;
+        font-weight: 400;
+        color: var(--text);
+        margin-bottom: 4px;
+      }
+      .game-card-name em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .game-card-desc {
+        font-size: 11px;
+        color: var(--text3);
+        line-height: 1.5;
+      }
+
+      /* BARAJA — STEPS */
       .steps {
         display: flex;
         gap: 6px;
@@ -243,14 +299,6 @@
         border-color: var(--gold2);
         background: rgba(138, 111, 48, 0.12);
       }
-      .deck-card.locked {
-        opacity: 0.5;
-        cursor: default;
-      }
-      .deck-card.locked:hover {
-        background: var(--surface);
-        border-color: var(--border);
-      }
       .deck-icon {
         font-size: 22px;
         margin-bottom: 6px;
@@ -266,20 +314,10 @@
         color: var(--text3);
         line-height: 1.4;
       }
-      .deck-badge {
+      .deck-count {
         font-size: 10px;
-        padding: 2px 8px;
-        border-radius: 20px;
-        display: inline-block;
+        color: var(--gold2);
         margin-top: 4px;
-      }
-      .badge-free {
-        background: rgba(109, 184, 122, 0.15);
-        color: var(--clubs);
-      }
-      .badge-lock {
-        background: rgba(212, 87, 74, 0.12);
-        color: var(--hearts);
       }
       .player-tabs {
         display: flex;
@@ -397,9 +435,6 @@
         transition: all 0.15s;
         text-align: center;
       }
-      .int-btn:hover {
-        background: var(--surface3);
-      }
       .int-btn.sel-soft {
         background: rgba(109, 184, 122, 0.15);
         border-color: var(--clubs);
@@ -414,11 +449,6 @@
         background: rgba(212, 87, 74, 0.15);
         border-color: var(--hearts);
         color: var(--hearts);
-      }
-      .add-row {
-        display: flex;
-        gap: 6px;
-        margin-top: 8px;
       }
       .legend-grid {
         display: grid;
@@ -634,15 +664,6 @@
         letter-spacing: 0.05em;
         animation: pulse 2s infinite;
       }
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 0.4;
-        }
-        50% {
-          opacity: 1;
-        }
-      }
       .q-box {
         background: var(--surface);
         border: 0.5px solid var(--border);
@@ -746,11 +767,6 @@
         font-size: 15px;
         min-height: 70px;
       }
-      .ace-confirm {
-        width: 100%;
-        margin-top: 8px;
-        padding: 10px;
-      }
       .action-row {
         display: flex;
         gap: 8px;
@@ -773,9 +789,6 @@
         text-transform: uppercase;
         transition: color 0.15s;
         text-align: center;
-      }
-      .hist-toggle:hover {
-        color: var(--text2);
       }
       .hist-panel {
         margin-top: 0.75rem;
@@ -844,59 +857,2706 @@
         color: var(--text3);
         margin-top: 3px;
       }
-      .loading {
-        text-align: center;
-        padding: 3rem 0;
+
+      /* CMC */
+      .cmc-progress {
+        height: 3px;
+        background: var(--surface2);
+        border-radius: 2px;
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+      }
+      .cmc-progress-bar {
+        height: 100%;
+        background: var(--gold2);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+      }
+      .cmc-question-box {
+        background: var(--surface);
+        border: 0.5px solid var(--border);
+        border-radius: 14px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        animation: fadeIn 0.3s ease;
+      }
+      .cmc-qnum {
+        font-size: 11px;
         color: var(--text3);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .cmc-qtext {
+        font-family: "Playfair Display", serif;
+        font-size: 18px;
+        color: var(--text);
+        line-height: 1.6;
+        margin-bottom: 1.25rem;
+      }
+      .cmc-options {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .cmc-opt {
+        padding: 12px 16px;
+        border-radius: 10px;
+        border: 0.5px solid var(--border2);
+        background: transparent;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
         font-size: 14px;
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.15s;
+        line-height: 1.4;
+      }
+      .cmc-opt:hover {
+        background: var(--surface2);
+      }
+      .cmc-opt.selected {
+        border-color: var(--gold2);
+        background: rgba(138, 111, 48, 0.15);
+        color: var(--gold);
+      }
+      .cmc-opt.correct {
+        border-color: var(--clubs);
+        background: rgba(109, 184, 122, 0.15);
+        color: var(--clubs);
+      }
+      .cmc-opt.wrong {
+        border-color: var(--hearts);
+        background: rgba(212, 87, 74, 0.12);
+        color: var(--hearts);
+      }
+      .cmc-tf-row {
+        display: flex;
+        gap: 8px;
+      }
+      .cmc-tf-btn {
+        flex: 1;
+        padding: 14px;
+        border-radius: 10px;
+        border: 0.5px solid var(--border2);
+        background: transparent;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: center;
+      }
+      .cmc-tf-btn:hover {
+        background: var(--surface2);
+      }
+      .cmc-tf-btn.selected {
+        border-color: var(--gold2);
+        background: rgba(138, 111, 48, 0.15);
+        color: var(--gold);
+      }
+      .cmc-tf-btn.correct {
+        border-color: var(--clubs);
+        background: rgba(109, 184, 122, 0.15);
+        color: var(--clubs);
+      }
+      .cmc-tf-btn.wrong {
+        border-color: var(--hearts);
+        background: rgba(212, 87, 74, 0.12);
+        color: var(--hearts);
+      }
+      .cmc-scale-row {
+        display: flex;
+        gap: 6px;
+        align-items: flex-end;
+        margin-bottom: 6px;
+      }
+      .cmc-scale-btn {
+        flex: 1;
+        border-radius: 8px;
+        border: 0.5px solid var(--border2);
+        background: transparent;
+        color: var(--text2);
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: center;
+        padding: 10px 4px;
+      }
+      .cmc-scale-btn:hover {
+        background: var(--surface2);
+      }
+      .cmc-scale-btn.selected {
+        border-color: var(--gold2);
+        background: rgba(138, 111, 48, 0.15);
+        color: var(--gold);
+        font-weight: 500;
+      }
+      .cmc-scale-btn.correct {
+        border-color: var(--clubs);
+        background: rgba(109, 184, 122, 0.15);
+        color: var(--clubs);
+      }
+      .cmc-scale-btn.wrong {
+        border-color: var(--hearts);
+        background: rgba(212, 87, 74, 0.12);
+        color: var(--hearts);
+      }
+      .cmc-scale-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: var(--text3);
+        margin-top: 4px;
+        padding: 0 2px;
+      }
+      .cmc-free-input {
+        width: 100%;
+      }
+      .cmc-free-answer {
+        font-family: "Playfair Display", serif;
+        font-size: 16px;
+        color: var(--text);
+        padding: 14px;
+        background: var(--surface2);
+        border-radius: 10px;
+        border: 0.5px solid var(--border2);
+        line-height: 1.6;
+      }
+      .cmc-reveal-box {
+        padding: 12px 16px;
+        border-radius: 10px;
+        margin-top: 10px;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .cmc-reveal-correct {
+        background: rgba(109, 184, 122, 0.12);
+        border: 0.5px solid rgba(109, 184, 122, 0.3);
+        color: var(--clubs);
+      }
+      .cmc-reveal-wrong {
+        background: rgba(212, 87, 74, 0.08);
+        border: 0.5px solid rgba(212, 87, 74, 0.2);
+        color: var(--hearts);
+      }
+      .cmc-score-big {
+        font-size: 48px;
+        font-weight: 500;
+        color: var(--gold);
+        line-height: 1;
+        margin: 0.5rem 0;
+      }
+      .cmc-share-box {
+        background: var(--surface);
+        border: 0.5px solid var(--border2);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+      .cmc-share-url {
+        font-size: 11px;
+        color: var(--text3);
+        word-break: break-all;
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+      }
+      .cmc-player-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 1rem;
+      }
+      .badge-p1 {
+        background: rgba(123, 184, 240, 0.12);
+        color: var(--p1);
+        border: 0.5px solid rgba(123, 184, 240, 0.3);
+      }
+      .badge-p2 {
+        background: rgba(208, 128, 208, 0.12);
+        color: var(--p2);
+        border: 0.5px solid rgba(208, 128, 208, 0.3);
       }
     </style>
   </head>
   <body>
-    <div class="app" id="app"><div class="loading">Cargando...</div></div>
+    <div class="app" id="app"></div>
+    <div
+      style="
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        padding: 8px 0;
+        font-size: 11px;
+        color: #3a3630;
+        letter-spacing: 0.08em;
+        pointer-events: none;
+      "
+    >
+      Creado por <span style="color: #5a564f">Roberto Hernández</span>
+    </div>
     <script>
+      // ── DATA ─────────────────────────────────────────────────────────────────────
+      const ALL_MAZOS = {
+        base: {
+          id: "base",
+          nombre: "Base",
+          descripcion: "El mazo original. Preguntas para conocerse de verdad.",
+          spades: {
+            soft: [
+              "¿Cuál es tu recuerdo más feliz de la infancia?",
+              "¿A qué le tenías miedo de niño/a que ahora te parece gracioso?",
+              "¿Cuál era tu lugar favorito cuando eras chico/a y por qué?",
+              "¿Qué versión de ti mismo/a extrañas a veces?",
+              "¿Cuál fue el momento más vergonzoso de tu vida y ya lo puedes contar?",
+              "¿Qué juego o actividad de tu infancia recuerdas con más cariño?",
+              "¿Quién era tu ídolo de niño/a y por qué?",
+              "¿Cuál fue tu primera mascota y qué pasó con ella?",
+              "¿Qué comida de tu infancia te transporta de inmediato al pasado?",
+              "¿Cuál fue el primer regalo que recuerdas haber recibido y de quién?",
+              "¿Cómo era tu cuarto cuando eras niño/a?",
+              "¿Qué canción o película marcó tu adolescencia?",
+              "¿Cuál fue tu primer crush y cómo fue esa historia?",
+              "¿Qué materia odiabas en la escuela y cuál era tu favorita?",
+              "¿Cuál fue tu primer trabajo o forma de ganar dinero?",
+              "¿Qué tradición familiar de tu infancia recuerdas con amor?",
+              "¿Cuál fue el viaje más memorable que hiciste de niño/a?",
+              "¿Qué apodo tenías y quién te lo puso?",
+              "¿Cuál era tu programa de tele favorito de chamaco/a?",
+              "¿Qué cosa hacías de niño/a que ahora te da risa recordar?",
+            ],
+            mid: [
+              "¿Cuál es el momento en que te has sentido más solo/a en tu vida?",
+              "¿Qué decisión tomarías diferente si pudieras?",
+              "¿Hay algo de tu pasado que no has perdonado del todo?",
+              "¿Cuándo fue la última vez que lloraste y por qué?",
+              "¿Qué parte de tu historia le cuentas a muy poca gente?",
+              "¿Quién fue la persona que más te marcó antes de conocer a tu pareja?",
+              "¿Cuál fue la peor etapa de tu vida y cómo la superaste?",
+              "¿Hay algo que hayas hecho en el pasado de lo que te avergüences?",
+              "¿Cuál fue la ruptura o pérdida que más te costó superar?",
+              "¿Hubo alguien que te lastimó profundamente y nunca se enteró?",
+              "¿Cuándo fue la última vez que te sentiste completamente libre?",
+              "¿Hay una versión de ti del pasado que no te gusta recordar?",
+              "¿Qué relación de tu pasado te costó más soltar?",
+              "¿Cuál fue el momento en que más dudaste de ti mismo/a?",
+              "¿Hay algo que hiciste por presión social y que hoy no harías?",
+              "¿Cuál fue la vez que más te equivocaste con alguien y cómo lo manejaste?",
+              "¿Qué secreto guardaste tanto tiempo que ya casi forma parte de ti?",
+              "¿Hubo un momento en que sentiste que todo se venía abajo? ¿Qué hiciste?",
+              "¿Qué relación de amistad perdiste y que todavía extrañas?",
+              "¿Cuándo fue la última vez que pediste perdón de verdad?",
+            ],
+            hard: [
+              "¿Cuál es la cosa de la que más te arrepientes hasta ahora?",
+              "¿Hubo algún momento en que dejaste de ser tú mismo/a para encajar? ¿Cuándo?",
+              "¿Hay algo que le hiciste a alguien y que nunca pudiste remediar?",
+              "¿Cuál es el dolor más viejo que todavía cargas?",
+              "¿Hay algo de tu pasado que sientes que te define aunque no quieras?",
+              "¿Existe alguien a quien le debes una disculpa que nunca diste?",
+              "¿Cuál fue el momento en que más te fallaste a ti mismo/a?",
+              "¿Hay algo que viviste de niño/a que crees que todavía afecta quién eres hoy?",
+            ],
+          },
+          hearts: {
+            soft: [
+              "¿Cuál fue el momento en que supiste que querías a tu pareja?",
+              "¿Qué cosa de tu pareja te sigue sorprendiendo?",
+              "¿Cuál ha sido tu día favorito de su relación?",
+              "¿Qué canción les recuerda a ustedes dos y por qué?",
+              "Si alguien pregunta cómo se conocieron, ¿qué parte exagerarías?",
+              "¿Qué rutina diaria te haría sentir estable y feliz en la relación?",
+              "¿Qué cosa pequeña hace tu pareja que secretamente te encanta?",
+              "¿Cuál fue la primera vez que pensaste 'esta persona es especial'?",
+              "¿Qué lugar les pertenece a ustedes dos que nadie más conoce?",
+              "¿Cuál es el chiste interno que solo ustedes entienden?",
+              "¿Qué harías para sorprender a tu pareja si el dinero no importara?",
+              "¿Cuál es la cualidad de tu pareja que más admiras?",
+              "¿Qué momento de su relación repetirías si pudieras?",
+              "¿Hay una foto de ustedes que te encanta especialmente? ¿Cuál y por qué?",
+              "¿Qué cosa de tu pareja te hace reír aunque estés enojado/a?",
+            ],
+            mid: [
+              "¿Hay algo que quieras que cambie en su relación y no has dicho?",
+              "¿Cuándo te has sentido más enamorado/a de tu pareja?",
+              "¿Qué es lo que más te asusta de comprometerte?",
+              "¿Sientes que tu pareja te conoce de verdad? ¿Qué parte de ti aún no ve bien?",
+              "¿Qué hábito de tu pareja secretamente te pone de nervios?",
+              "¿Qué tipo de apoyo esperas de tu pareja sin saber cómo expresarlo?",
+              "¿Qué conversación pendiente crees que aún no han tenido?",
+              "¿Qué límites consideras importantes en su relación?",
+              "¿Hay algo que sientas que tu pareja no valora suficiente de ti?",
+              "¿Cuándo fue la última vez que te sentiste completamente visto/a por tu pareja?",
+              "¿Hay algo que haces por tu pareja esperando que lo note y nunca lo nota?",
+              "¿Qué necesitas de tu pareja cuando estás en tu peor momento?",
+              "¿Hay algo de tu pareja que admiras en secreto pero poco le dices?",
+              "¿Cuándo fue la última vez que tu pareja te sorprendió de verdad?",
+              "¿Qué sacrificio has hecho por esta relación que pocas veces mencionas?",
+              "¿Hay algo que evites decirle a tu pareja para no generar conflicto?",
+              "¿Cuándo fue la última vez que se rieron juntos hasta llorar?",
+              "¿Qué tan seguido sientes que están en sintonía y cuándo se pierde eso?",
+            ],
+            hard: [
+              "¿Hay algo que no le has contado a tu pareja y crees que debería saber?",
+              "¿Qué comportamiento de tu pareja podría hacerte sentir inseguro/a?",
+              "¿Qué te ha hecho sentir solo/a aún estando en pareja?",
+              "¿Qué no estás dispuesto/a a sacrificar ni siquiera por amor?",
+              "¿Hubo un momento en que dudaste de esta relación? ¿Qué pasó?",
+              "¿Hay algo que tu pareja hizo que te costó mucho perdonar aunque no lo dijiste?",
+              "¿Qué miedo sobre el futuro de su relación no has podido decir en voz alta?",
+              "¿Hay algo que sientes que cambió en ti desde que están juntos y no sabes si es bueno?",
+            ],
+          },
+          diamonds: {
+            soft: [
+              "¿A dónde del mundo quieres ir que todavía no han ido juntos?",
+              "Si pudieras aprender cualquier habilidad en un año, ¿cuál sería?",
+              "¿Cuál es el trabajo soñado que nunca te has atrevido a decir en voz alta?",
+              "¿Qué harías mañana si el dinero no importara?",
+              "¿Cómo te imaginas sus domingos dentro de 10 años?",
+              "¿Qué proyecto personal tienes pendiente que nunca arrancas?",
+              "¿Cuál es el lugar en México que más quieres conocer?",
+              "¿Qué hobby siempre quisiste tener pero nunca has empezado?",
+              "¿Cómo sería tu día perfecto si pudieras diseñarlo desde cero?",
+              "¿Qué tipo de casa soñarías tener y dónde estaría?",
+              "¿Qué animal tendrías como mascota si pudieras tener cualquiera?",
+              "¿Qué libro, película o serie cambió tu forma de ver la vida?",
+              "¿Si pudieras vivir en otra época, cuál sería y por qué?",
+              "¿Qué idioma te gustaría hablar con fluidez y para qué lo usarías?",
+              "¿Cuál sería tu superpoder ideal y cómo lo usarías?",
+            ],
+            mid: [
+              "¿Cuál es el miedo que más te ha impedido hacer algo que quieres?",
+              "¿Hay algo que envidias de otras parejas? ¿Qué es?",
+              "¿Cómo te imaginas tu vida en 10 años? ¿Te da emoción o miedo?",
+              "¿Qué sueño sientes que has dejado morir y aún lo extrañas?",
+              "Si pudieras reinventarte completamente, ¿qué cambiarías de ti?",
+              "¿Hay algo que sientas que la sociedad te impidió ser o hacer?",
+              "¿Qué versión de ti mismo/a quieres ser dentro de 5 años?",
+              "¿Qué cosa en tu vida actual no va en la dirección que quieres?",
+              "¿Hay algo que postergues tanto que ya casi aceptaste que no va a pasar?",
+              "¿Qué necesitarías cambiar en tu vida hoy para ser más feliz?",
+              "¿Hay un camino que no tomaste y que a veces te preguntas cómo hubiera sido?",
+              "¿Qué es lo que más te frena para perseguir lo que quieres de verdad?",
+              "¿Hay algo que quieras lograr antes de los 40 que todavía no has empezado?",
+              "¿Qué tan alineada está tu vida actual con lo que soñabas de joven?",
+            ],
+            hard: [
+              "¿Qué es lo que más quieres lograr antes de morir y no le has dicho a nadie?",
+              "¿Hay algo que sientes que la vida no te va a dar y ya casi lo aceptaste?",
+              "¿Cuál es el sueño que más miedo te da perseguir y por qué?",
+              "¿Hay algo que desearías que tu pareja te apoyara a hacer y nunca se lo has pedido directamente?",
+              "¿Qué tan honesto/a eres contigo mismo/a sobre lo que realmente quieres?",
+              "¿Hay algo que sacrificaste por comodidad o miedo que hoy lamentas?",
+            ],
+          },
+          clubs: {
+            soft: [
+              "Si fueras un animal, ¿cuál serías y por qué?",
+              "¿Cuál es la teoría más absurda en la que secretamente crees?",
+              "Si tu vida fuera un género cinematográfico, ¿cuál sería?",
+              "¿Qué personaje de película o serie serías en realidad?",
+              "¿Cuál es la cosa más rara que comes y que le da asco a la mayoría?",
+              "Si pudieras ser famoso/a por algo absurdo, ¿por qué sería?",
+              "¿Cuál es el talento inútil que tienes y que nadie sabe?",
+              "¿Qué canción te avergüenza que te guste pero la cantas solito/a?",
+              "Si tuvieras que vivir en una película, ¿cuál escogerías?",
+              "¿Cuál es la app que más usas y que más te da vergüenza admitir?",
+              "¿Qué cosa absolutamente inútil sabes hacer muy bien?",
+              "¿Cuál sería tu nombre si pudieras elegirlo tú mismo/a?",
+              "Si fueras un meme, ¿cuál serías?",
+              "¿Cuál es el miedo más ridículo que tienes?",
+              "¿A qué celebridad te pareces según tú y según los demás?",
+            ],
+            mid: [
+              "¿Tienes alguna superstición que nunca le has contado a nadie?",
+              "¿Crees que existe algo después de la muerte? ¿Qué crees que es?",
+              "Si pudieras leer la mente de alguien por 24 horas, ¿de quién y por qué?",
+              "¿Cuál es la mentira social que más te cuesta decir sin reírte?",
+              "¿Cuál es la pregunta que más miedo te da que alguien te haga?",
+              "Si pudieras saber la verdad de una sola cosa, ¿qué preguntarías?",
+              "¿Qué harías si supieras que nadie te va a juzgar?",
+              "¿En qué crees que eres mejor que la mayoría de la gente?",
+              "¿Cuál es el pensamiento más raro que has tenido esta semana?",
+              "Si te dieran un millón pero tienes que renunciar a algo importante, ¿a qué?",
+              "¿Qué cosa moralmente gris harías si no hubiera consecuencias?",
+              "¿Hay alguna creencia popular en la que no crees aunque todo el mundo sí?",
+              "¿Qué harías con tu vida si supieras que te quedan 6 meses?",
+              "¿Cuál es la opinión impopular que tienes y que pocas veces dices?",
+            ],
+            hard: [
+              "¿Cuál es la creencia sobre la vida que nadie te ha podido quitar?",
+              "¿Hay algo que crees sobre ti mismo/a que sabes que no es verdad pero te lo repites?",
+              "¿Cuál es la cosa más oscura que has pensado y que nunca le dirías a nadie?",
+              "¿Qué parte de ti mismo/a te cuesta más aceptar?",
+              "¿Hay algo en lo que finges creer para no complicar las cosas?",
+              "¿Cuál es la verdad sobre ti que más trabajo te cuesta decir en voz alta?",
+            ],
+          },
+        },
+        "primera-cita": {
+          id: "primera-cita",
+          nombre: "Primera cita",
+          descripcion: "Para conocerse sin que se sienta un interrogatorio.",
+          spades: {
+            soft: [
+              "¿De dónde eres originalmente y qué extrañas de ahí?",
+              "¿Cómo es un día normal en tu vida?",
+              "¿Qué haces cuando no trabajas?",
+              "¿Tienes hermanos? ¿Cómo es tu relación con ellos?",
+              "¿Cuál fue el último viaje que hiciste y qué fue lo mejor?",
+              "¿Qué tipo de música escuchas cuando manejas solo/a?",
+              "¿Eres más de ciudad o de naturaleza?",
+              "¿Cuál es tu restaurante favorito y qué pides ahí?",
+              "¿Tienes mascotas? Si no tienes, ¿tendrías?",
+              "¿Qué tan seguido hablas con tu familia?",
+              "¿Eres de los que planean todo o de los que improvisan?",
+              "¿Cuál es tu película favorita de todos los tiempos?",
+              "¿Prefieres las mañanas o las noches?",
+              "¿Qué tan seguido cocinas y qué es lo que mejor haces?",
+              "¿Tienes algún ritual o costumbre rara que hacer todos los días?",
+            ],
+            mid: [
+              "¿Qué fue lo más difícil que viviste el año pasado?",
+              "¿Hay algo que hayas dejado ir recientemente que te costó trabajo?",
+              "¿Cuándo fue la última vez que algo te cambió la forma de pensar?",
+              "¿Qué aprendiste de tu última relación importante?",
+              "¿Hay algo de tu pasado que sientas que todavía te define?",
+              "¿Qué etapa de tu vida fue la más complicada y qué te enseñó?",
+              "¿Hubo alguien en tu vida que te haya cambiado sin que se lo propusiera?",
+              "¿Qué tan fácil te resulta confiar en alguien nuevo?",
+            ],
+            hard: [
+              "¿Qué es lo que más te cuesta dejar entrar a alguien nuevo en tu vida?",
+              "¿Hay algo de ti que crees que la gente malinterpreta seguido?",
+              "¿Qué patrón en tus relaciones anteriores reconoces que quieres cambiar?",
+            ],
+          },
+          hearts: {
+            soft: [
+              "¿Cómo sabes cuando alguien te gusta de verdad?",
+              "¿Eres de los que dice lo que siente o de los que espera que el otro lo adivine?",
+              "¿Qué te enamora primero de alguien, lo físico o la personalidad?",
+              "¿Cuál fue tu primera cita más memorable y por qué?",
+              "¿Eres detallista o más de grandes gestos?",
+              "¿Qué cosa hace que alguien te caiga bien de inmediato?",
+              "¿Cuál es tu love language principal?",
+              "¿Qué actividad te gustaría hacer en una segunda cita?",
+              "¿Eres celoso/a o muy tranquilo/a en ese sentido?",
+              "¿Qué tan rápido sueles ilusionarte con alguien?",
+              "¿Prefieres las citas planeadas o las espontáneas?",
+              "¿Qué detalle pequeño de alguien puede enamorarte sin que se lo espere?",
+              "¿Qué tan importante es para ti tener cosas en común con tu pareja?",
+              "¿Cómo te gustaría que alguien te cortejara?",
+              "¿Qué es lo primero que notas físicamente de alguien?",
+            ],
+            mid: [
+              "¿Qué es lo que más valoras en una relación?",
+              "¿Tienes deal breakers claros? ¿Cuáles son los más importantes?",
+              "¿Qué tan seguido buscas tiempo para ti mismo/a en una relación?",
+              "¿Has tenido una relación que te costó mucho superar? ¿Qué aprendiste?",
+              "¿Qué tan importante es para ti que tu pareja sea tu mejor amigo/a?",
+              "¿Qué esperas de alguien en los primeros meses de conocerse?",
+              "¿Cuánto tiempo necesitas antes de presentar a alguien con tu familia?",
+              "¿Qué significa para ti estar listo/a para una relación seria?",
+            ],
+            hard: [
+              "¿Qué es lo que más miedo te da de volverte a enamorar?",
+              "¿Hay algo que sientas que todavía cargas de una relación pasada?",
+              "¿Qué cosa sobre el amor tardaste mucho en entender?",
+            ],
+          },
+          diamonds: {
+            soft: [
+              "¿A dónde del mundo quieres ir que todavía no has ido?",
+              "¿Qué harías si te ganaras la lotería mañana?",
+              "¿Cuál es tu plan para los próximos 2 años?",
+              "¿Tienes algún proyecto personal que estés construyendo?",
+              "¿Qué hobby quieres empezar y siempre lo pospones?",
+              "¿Qué es lo que más disfrutas de tu trabajo?",
+              "¿Cómo sería tu vida ideal dentro de 5 años?",
+              "¿Qué es lo que más te emociona del futuro?",
+              "¿Tienes algún sueño que suene loco pero que no has dejado de pensar?",
+              "¿Quieres tener hijos o ya tienes? ¿Cómo te imaginas ese lado de la vida?",
+              "¿Qué ciudad del mundo vivirías si pudieras elegir?",
+              "¿Qué habilidad quisiste aprender de niño/a y nunca aprendiste?",
+              "¿Cuál es la cosa más grande que quieres lograr en tu vida?",
+              "¿Qué es lo que más te importa construir: familia, carrera, experiencias?",
+              "¿Hay algo que estés persiguiendo ahorita que te emocione mucho?",
+            ],
+            mid: [
+              "¿Qué tan alineada está tu vida actual con lo que quieres?",
+              "¿Hay algo que sientas que sacrificas demasiado por los demás?",
+              "¿Qué tan importante es el dinero para ti a la hora de planear tu vida?",
+              "¿Hay algo que quieras cambiar de tu vida en el corto plazo?",
+              "¿Qué tan cómodo/a estás con la incertidumbre?",
+              "¿Hay algo que te dé miedo desear porque sientes que no se puede?",
+              "¿Qué tan dispuesto/a estás a cambiar planes si conoces a alguien que vale la pena?",
+            ],
+            hard: [
+              "¿Hay algo que quieras y que no has perseguido por miedo al qué dirán?",
+              "¿Qué tan honesto/a eres contigo mismo/a sobre lo que realmente quieres en la vida?",
+              "¿Hay algo a lo que le has dicho que no y que hoy lamentas?",
+            ],
+          },
+          clubs: {
+            soft: [
+              "¿Eres más de Netflix o de salir?",
+              "¿Cuál es tu orden de tacos/comida favorita?",
+              "¿Tienes algún talento secreto y ridículo?",
+              "¿Qué aplicación en tu celular usas más de lo que admites?",
+              "¿Cuál es la canción que siempre skip-as y cuál nunca puedes saltarte?",
+              "¿Eres de los que llega temprano, a tiempo o siempre tarde?",
+              "¿Cuál es tu meme favorito de todos los tiempos?",
+              "¿Prefieres el frío o el calor?",
+              "¿Eres más de perros o de gatos?",
+              "¿Cuál es la serie que has vuelto a ver más veces?",
+              "¿Qué comida nunca podrías dejar de comer aunque quisiera?",
+              "¿Eres de los que pone alarmas de 5 minutos o de los que se levanta al primer intento?",
+              "¿Cuál es tu emoji más usado y dice algo de ti?",
+              "¿Cuál es el mito o leyenda urbana que te asustó de niño/a?",
+              "¿Cuál es tu chiste favorito aunque sea malísimo?",
+            ],
+            mid: [
+              "¿Cuál es la opinión que tienes que pocas personas comparten contigo?",
+              "¿Hay algo en lo que crees que va contra la corriente?",
+              "¿Qué tan fácil te resulta decir que no?",
+              "¿Cuál es la cosa más espontánea que has hecho en tu vida?",
+              "¿Qué tan seguido haces cosas que te sacan de tu zona de confort?",
+              "¿Qué harías diferente si pudieras repetir los últimos 3 años?",
+              "¿Cuál es la pregunta que más te haces sobre la vida?",
+            ],
+            hard: [
+              "¿Qué parte de ti crees que la mayoría de la gente no llega a conocer?",
+              "¿Qué es lo más auténtico de ti que tardas en mostrar?",
+              "¿Hay algo que la gente asume de ti que está completamente equivocado?",
+            ],
+          },
+        },
+        compromiso: {
+          id: "compromiso",
+          nombre: "Compromiso",
+          descripcion:
+            "Para parejas que van en serio. Las preguntas que hay que hacerse.",
+          spades: {
+            soft: [
+              "¿Cuál fue el momento en que supiste que esta persona era diferente a todas las demás?",
+              "¿Qué recuerdo de su relación atesorarías aunque todo lo demás se olvidara?",
+              "¿Cómo ha cambiado tu visión del amor desde que están juntos?",
+              "¿Qué cosa de tu pareja te hizo entender algo nuevo sobre ti mismo/a?",
+              "¿Cuál fue el primer obstáculo que superaron juntos?",
+              "¿Qué aprendiste de tu pareja que nunca hubieras aprendido solo/a?",
+              "¿Cómo describirías su relación con una sola canción?",
+              "¿Cuál es el momento de su historia que más te gusta contar?",
+              "¿Qué fue lo primero que te enamoró de tu pareja que sigue igual hasta hoy?",
+              "¿Qué cosa pequeña de su día a día no cambiarías por nada?",
+            ],
+            mid: [
+              "¿Hay algo de su historia juntos que sientes que no han hablado suficiente?",
+              "¿Cuándo fue la vez que más necesitaste a tu pareja y cómo respondió?",
+              "¿Hay algo de su pasado juntos que todavía duele un poco aunque ya pasó?",
+              "¿Qué momento de crisis en su relación los hizo más fuertes?",
+              "¿Hay algo que cambiaste de ti por esta relación y que no sabes si fue bueno?",
+              "¿Cuándo fue la vez que más dudaste de que esto funcionaría?",
+              "¿Hay algo que no dijiste en el momento correcto y que todavía piensas en eso?",
+              "¿Qué tanto crees que tu pareja sabe de tus miedos más profundos?",
+            ],
+            hard: [
+              "¿Hay algo de su historia como pareja que sientas que nunca han resuelto del todo?",
+              "¿Qué es lo que más te asusta de envejecer junto a tu pareja?",
+              "¿Hay algo que hayas callado para proteger la relación y que tal vez debería decirse?",
+              "¿Cuál es la cosa que más trabajo te costaría perdonar si llegara a pasar?",
+            ],
+          },
+          hearts: {
+            soft: [
+              "¿Cómo te imaginas que va a ser su vida juntos en 20 años?",
+              "¿Qué tipo de pareja quieres ser y qué tan cerca estás de serlo?",
+              "¿Qué tradición quieres construir con tu pareja que sea solo de ustedes?",
+              "¿Cómo quieres que te recuerde tu pareja cuando lleguen a viejos?",
+              "¿Qué rol quieres tener en la familia que van a construir?",
+              "¿Qué valores son innegociables para ti en un matrimonio?",
+              "¿Cómo te imaginas celebrando su aniversario número 25?",
+              "¿Qué cosa quieres que nunca cambie de su relación?",
+              "¿Qué le dirías a tu pareja en sus votos que todavía no le has dicho?",
+              "¿Cómo quieres que sea tu hogar en términos de ambiente y dinámica?",
+            ],
+            mid: [
+              "¿Qué tan alineados están sobre tener o no tener hijos?",
+              "¿Cómo se imaginan manejar el dinero juntos?",
+              "¿Qué tan importantes son sus familias de origen en las decisiones que toman?",
+              "¿Cómo quieren manejar los conflictos cuando sean más grandes?",
+              "¿Qué tanto espacio individual necesitan dentro de la relación?",
+              "¿Cómo se imaginan dividiendo responsabilidades del hogar?",
+              "¿Qué pasa si uno quiere vivir en una ciudad diferente por trabajo?",
+              "¿Cómo quieren manejar las finanzas, juntas o separadas?",
+              "¿Qué tan importante es para ti que tu pareja mantenga sus propias amistades?",
+              "¿Hay algo sobre su futuro juntos en lo que sientan que no están en la misma página?",
+              "¿Qué harían si uno de los dos pierde el trabajo por mucho tiempo?",
+              "¿Qué tan dispuesto/a estás a cambiar de ciudad o país por tu pareja?",
+            ],
+            hard: [
+              "¿Hay algo sobre el matrimonio que te asuste y que no has podido decir en voz alta?",
+              "¿Qué harían si su relación llegara a una crisis muy seria?",
+              "¿Hay algo que necesitarías de tu pareja para poder comprometerte sin reservas?",
+              "¿Cuál sería para ti la razón más válida para poner en pausa o terminar una relación?",
+              "¿Qué tan seguro/a estás de que quieren lo mismo a largo plazo?",
+              "¿Hay algo que sacrificarías y algo que definitivamente no sacrificarías por este matrimonio?",
+            ],
+          },
+          diamonds: {
+            soft: [
+              "¿Qué lugar del mundo quieren visitar juntos antes de casarse?",
+              "¿Cómo se imaginan su boda, grande y tradicional o íntima y diferente?",
+              "¿Dónde quieren vivir a largo plazo?",
+              "¿Qué aventura quieren vivir juntos que todavía no han tenido?",
+              "¿Qué proyecto quieren construir juntos más allá de la familia?",
+              "¿Cómo se imaginan sus vacaciones ideales dentro de 10 años?",
+              "¿Qué legado quieren dejar juntos?",
+              "¿Hay algo que quieran lograr juntos antes de tener hijos?",
+              "¿Cómo se imaginan su retiro? ¿Qué harían con todo ese tiempo?",
+              "¿Qué tipo de padres quieren ser si deciden tener hijos?",
+            ],
+            mid: [
+              "¿Qué tan alineados están sobre el tipo de vida que quieren construir?",
+              "¿Hay algo que uno de los dos quiere y que el otro no ha terminado de aceptar?",
+              "¿Qué tan dispuestos están a cambiar sus planes individuales por el proyecto en común?",
+              "¿Qué tan importantes son las metas económicas en su visión de futuro?",
+              "¿Hay algo en su visión de futuro que les genere más incertidumbre que emoción?",
+              "¿Qué tan seguido hablan de sus metas a largo plazo?",
+              "¿Cómo quieren que sea su relación con sus familias cuando sean independientes?",
+            ],
+            hard: [
+              "¿Hay algo que uno de los dos quiere en el futuro y que el otro no comparte del todo?",
+              "¿Qué pasaría si sus sueños individuales entran en conflicto directo?",
+              "¿Hay algo que sientas que tu pareja espera de ti en el futuro y que no sabes si puedes dar?",
+              "¿Qué tan honesto/a has sido sobre lo que realmente quieres para tu vida?",
+            ],
+          },
+          clubs: {
+            soft: [
+              "¿Cuál sería el nombre perfecto para su futuro perro o gato?",
+              "¿Cuál sería la tradición más ridícula que instaurarían en su casa?",
+              "Si su relación fuera una película, ¿cómo se llamaría?",
+              "¿Cuál sería el himno oficial de su relación?",
+              "¿Cómo se repartirían los quehaceres del hogar en el mundo ideal?",
+              "¿Cuál sería su serie para ver juntos en maratón sin parar?",
+              "Si tuvieran que describir su relación con un solo platillo, ¿cuál sería?",
+              "¿Cuál sería su viaje de luna de miel soñado?",
+              "¿Qué regla ridícula pero necesaria tendrían en su casa?",
+              "¿Cuál sería el superpoder de cada uno dentro de su relación?",
+            ],
+            mid: [
+              "¿Cómo se imaginan manejando los desacuerdos cuando ya lleven 20 años juntos?",
+              "¿Qué cosa de su dinámica actual tendrían que ajustar para que funcione a largo plazo?",
+              "¿Qué tan seguido sienten que se eligen de nuevo y qué pasa cuando no sienten eso?",
+              "¿Hay algo que hagan actualmente que saben que no es sostenible?",
+              "¿Qué harían diferente si empezaran su relación desde cero con lo que saben hoy?",
+              "¿Qué tan buenos son para pedirse perdón de verdad?",
+            ],
+            hard: [
+              "¿Hay algo en su dinámica que en el fondo saben que tienen que cambiar?",
+              "¿Qué tan fácil les resulta elegirse cuando las cosas no están bien?",
+              "¿Hay algo que eviten hablar porque saben que va a generar conflicto importante?",
+            ],
+          },
+        },
+        amigos: {
+          id: "amigos",
+          nombre: "Amigos",
+          descripcion:
+            "Para conocerse más allá de lo superficial. Sin lo romántico.",
+          spades: {
+            soft: [
+              "¿Cuál es el recuerdo más chido que tienes de esta amistad?",
+              "¿Qué fue lo primero que pensaste de mí cuando nos conocimos?",
+              "¿Cuándo fue la primera vez que pensaste que éramos buenos amigos?",
+              "¿Cuál es la anécdota que siempre cuentas cuando hablas de mí?",
+              "¿Qué cosa de tu infancia nunca le has contado a casi nadie?",
+              "¿Cuál es el apodo que tuviste y que más odias?",
+              "¿Qué era lo que más te gustaba hacer cuando tenías 15 años?",
+              "¿Cuál fue tu mayor cagada en la adolescencia?",
+              "¿Qué grupo de amigos del pasado extrañas más?",
+              "¿Cuál fue tu primera borrachera y cómo terminó?",
+              "¿Qué versión de ti mismo/a de hace 10 años te sorprendería ver hoy?",
+              "¿Cuál es la historia de tu vida que siempre embelleces un poco al contarla?",
+              "¿Qué persona de tu pasado te cambió sin que ella lo supiera?",
+              "¿Cuál fue tu peor etapa y quién estuvo ahí?",
+              "¿Qué cosa hiciste en el pasado que hoy no harías ni loco/a?",
+            ],
+            mid: [
+              "¿Qué es lo que más valoras de esta amistad?",
+              "¿Hay algo que siempre quisiste decirme y nunca encontraste el momento?",
+              "¿Cuándo fue la última vez que te sentiste verdaderamente solo/a?",
+              "¿Hay algo en lo que sientas que no puedo ayudarte aunque quisiera?",
+              "¿Qué amistad perdiste que todavía extrañas?",
+              "¿Cuándo fue la última vez que alguien te sorprendió positivamente?",
+              "¿Qué es lo que más trabajo te cuesta pedir ayuda?",
+              "¿Hay algo que hayas hecho que te haya costado una amistad importante?",
+              "¿Qué tan fácil te resulta confiar en la gente nueva?",
+              "¿Hay algo en lo que crees que soy mejor que tú aunque no lo admitas?",
+              "¿Cuándo fue la última vez que te sentiste completamente tú mismo/a?",
+              "¿Hay algo de lo que te arrepientes en esta amistad?",
+              "¿Qué es lo que más te cuesta mostrar de ti mismo/a frente a los amigos?",
+              "¿Cuándo fue la última vez que un amigo te decepcionó de verdad?",
+            ],
+            hard: [
+              "¿Hay algo que pienses de mí y que nunca me has dicho por no herirme?",
+              "¿Cuál es la cosa más honesta que podrías decirme sobre mí mismo/a?",
+              "¿Hay algo en lo que sientas que me he equivocado y que nunca te he escuchado?",
+              "¿Qué harías diferente en esta amistad si pudieras volver a empezar?",
+              "¿Hay algo de ti que sientas que ni tus mejores amigos conocen de verdad?",
+            ],
+          },
+          hearts: {
+            soft: [
+              "¿Cómo defines la amistad de verdad?",
+              "¿Qué cosa hace que alguien sea tu amigo/a de por vida?",
+              "¿Cuál es la cualidad que más admiras de mí?",
+              "¿Qué harías por un amigo que no harías por nadie más?",
+              "¿Cuándo fue la última vez que un amigo te hizo sentir muy especial?",
+              "¿Qué tan seguido le dices a tus amigos lo importantes que son para ti?",
+              "¿Qué es lo que más agradeces de tener amigos como los que tienes?",
+              "¿Cuál es el gesto de amistad que más te llegó al corazón?",
+              "¿Hay alguien en tu vida que merece más de tu tiempo y no se lo das?",
+              "¿Qué cosa hace que te des cuenta de que alguien es un amigo de verdad?",
+            ],
+            mid: [
+              "¿Qué tan seguido sientes que tus amigos te conocen de verdad?",
+              "¿Hay algo que quisieras que tus amigos entendieran mejor de ti?",
+              "¿Qué tan fácil te resulta ser vulnerable con tus amigos?",
+              "¿Hay algo que tus amigos hacen que secretamente te molesta?",
+              "¿Qué es lo que más necesitas de tus amigos cuando estás mal?",
+              "¿Qué tan seguido sientes que das más de lo que recibes en tus amistades?",
+              "¿Hay alguien con quien hayas perdido el contacto y que extrañes de verdad?",
+              "¿Qué tan bueno/a eres para estar para alguien cuando más te necesita?",
+            ],
+            hard: [
+              "¿Hay algo que hayas guardado de esta amistad que quizás deberías decir?",
+              "¿Qué es lo que más te cuesta dar en una amistad?",
+              "¿Hay algo en lo que sientas que no has sido un buen/a amigo/a?",
+              "¿Qué tan fácil te resulta perdonar a un amigo que te falla?",
+            ],
+          },
+          diamonds: {
+            soft: [
+              "¿Qué viaje harías con tus mejores amigos si el dinero no importara?",
+              "¿Cuál es el plan con amigos que siempre dices que vas a hacer y nunca pasa?",
+              "¿Qué proyecto o negocio montarías con tus amigos?",
+              "¿A qué lugar del mundo llevarías a tus amigos si pudieras?",
+              "¿Cuál sería el plan de retiro ideal con tus amigos?",
+              "¿Qué actividad nueva quisieras hacer con tus amigos que nunca han probado?",
+              "¿Cómo te imaginas tu amistad con ellos dentro de 20 años?",
+              "¿Qué cosa quisieras aprender junto a tus amigos?",
+              "¿Cuál sería el roadtrip ideal con tu bola?",
+              "¿Qué tipo de viejito/a quieres ser y cómo encajan tus amigos en eso?",
+            ],
+            mid: [
+              "¿Qué tan diferente es la vida que quieres de la vida que tienen tus amigos?",
+              "¿Hay algo que quieras lograr que sientes que tus amigos no entienden del todo?",
+              "¿Qué tanto influyen tus amigos en las decisiones grandes de tu vida?",
+              "¿Hay algo en lo que sientas que estás yendo en una dirección diferente a tu círculo?",
+              "¿Qué tan cómodo/a estás con que tus amigos cambien conforme crecen?",
+            ],
+            hard: [
+              "¿Hay algo que quieras para tu vida que sientes que no encaja con quien eres en tu grupo de amigos?",
+              "¿Qué tan honesto/a eres con tus amigos sobre lo que realmente quieres?",
+              "¿Hay algo que postergues porque no quieres alejarte de tu círculo de amigos?",
+            ],
+          },
+          clubs: {
+            soft: [
+              "¿Cuál es el chiste interno de este grupo que nunca va a dejar de ser gracioso?",
+              "¿Cuál es la anécdota más épica que tienen juntos?",
+              "¿Si fueran personajes de una serie, qué papel tendría cada quién?",
+              "¿Cuál sería el nombre del grupo si fueran una banda?",
+              "¿Cuál es la discusión más absurda que han tenido?",
+              "¿Qué canción define perfectamente este grupo?",
+              "¿Cuál es el plan de 'algún día' que llevan años postergando?",
+              "¿Quién del grupo sería el primero en sobrevivir un apocalipsis zombie?",
+              "¿Cuál es el talento oculto de alguien del grupo que todos conocen pero nadie menciona?",
+              "¿Cuál sería el negocio que montarían juntos aunque estuviera condenado al fracaso?",
+              "¿Cuál es el objeto más ridículo que has guardado por sentimentalismo?",
+              "¿Si pudieras hacer un documental sobre este grupo, cómo se llamaría?",
+              "¿Cuál sería tu úlima cena y quién estaría invitado?",
+              "¿Qué app inventarías si pudieras y para qué serviría?",
+              "¿Cuál es la fobia más ridícula que tienes?",
+            ],
+            mid: [
+              "¿Cuál es la opinión que tienes del grupo que nunca has dicho en voz alta?",
+              "¿Hay algo que este grupo no sepa de ti y que te sorprendería que supieran?",
+              "¿Qué es lo más raro que alguien del grupo ha hecho y que todavía no entiendes?",
+              "¿Qué harías diferente si pudieras revivir una noche de este grupo?",
+              "¿Cuál es el tema del que nunca hablan pero que todos piensan?",
+              "¿Qué tan diferente eres en este grupo comparado con otros lados de tu vida?",
+              "¿Hay algo que cambiarías de la dinámica de este grupo si pudieras?",
+            ],
+            hard: [
+              "¿Hay algo que cargues en este grupo que sientes que nadie ve?",
+              "¿Qué es lo más auténtico de ti que pocas veces muestras con este grupo?",
+              "¿Hay algo que este grupo haya normalizado y que en el fondo no te guste?",
+            ],
+          },
+        },
+        picante: {
+          id: "picante",
+          nombre: "Picante",
+          descripcion:
+            "Para parejas que quieren ir más allá. Sin filtros pero con respeto.",
+          spades: {
+            soft: [
+              "¿Cuál fue tu primera fantasía romántica que recuerdas?",
+              "¿A qué edad tuviste tu primer beso y cómo fue?",
+              "¿Cuál fue la primera persona que te pareció atractiva y qué tenía?",
+              "¿Qué cosa de tu adolescencia te daría más vergüenza que supieran tus amigos?",
+              "¿Cuál fue la primera vez que sentiste atracción física por alguien de verdad?",
+              "¿Qué fue lo más atrevido que hiciste en una relación pasada?",
+              "¿Cuál fue tu primera experiencia romántica memorable?",
+              "¿Qué tan diferente eras en tus relaciones anteriores comparado con ahora?",
+              "¿Qué aprendiste de tu primera relación seria que todavía aplicas?",
+              "¿Cuál fue la cita más rara o incómoda que has tenido?",
+            ],
+            mid: [
+              "¿Hay algo de tu pasado romántico que nunca le contarías a tus papás?",
+              "¿Cuál fue la decisión más impulsiva que tomaste por alguien que te gustaba?",
+              "¿Hubo alguien que se te fue y que a veces todavía piensas?",
+              "¿Qué cosa de una relación pasada te marcó más de lo que esperabas?",
+              "¿Hay algo que hiciste en una relación anterior de lo que te arrepientes?",
+              "¿Cuándo fue la última vez que alguien te sorprendió físicamente?",
+              "¿Qué tan diferente eres en privado comparado con cómo te ven los demás?",
+              "¿Hay algo de tu vida íntima que pocas personas conocen?",
+            ],
+            hard: [
+              "¿Hay algo de tu pasado romántico que nunca le has contado a tu pareja actual?",
+              "¿Cuál es la experiencia íntima más intensa que has tenido?",
+              "¿Hay algo que hiciste en el pasado íntimamente que nunca has repetido?",
+              "¿Qué es lo que más te costó superar de una ruptura a nivel físico y emocional?",
+            ],
+          },
+          hearts: {
+            soft: [
+              "¿Qué es lo que más te atrae físicamente de tu pareja?",
+              "¿Cuál es el gesto de tu pareja que más te prende sin que lo sepa?",
+              "¿Qué parte del cuerpo de tu pareja es tu favorita y por qué?",
+              "¿Cuándo fue la última vez que tu pareja te pareció irresistible?",
+              "¿Qué detalle físico de tu pareja notaste primero?",
+              "¿Cómo te pone de buen humor tu pareja sin que se lo proponga?",
+              "¿Qué cosa que hace tu pareja te parece súper atractiva aunque sea algo cotidiano?",
+              "¿Cuál es el olor de tu pareja que más te gusta?",
+              "¿Qué prenda o look de tu pareja te encanta especialmente?",
+              "¿Cuál fue la primera vez que tu pareja te pareció realmente irresistible?",
+            ],
+            mid: [
+              "¿Qué tan seguido sientes que la intimidad en su relación está en su mejor punto?",
+              "¿Hay algo que te gustaría que tu pareja hiciera más seguido íntimamente?",
+              "¿Qué es lo que más disfrutas de la intimidad con tu pareja?",
+              "¿Hay algo que siempre quisiste probar con tu pareja y no has dicho?",
+              "¿Qué tan cómodo/a te sientes diciéndole a tu pareja lo que quieres íntimamente?",
+              "¿Hay algo que tu pareja hace íntimamente que te vuelve loco/a?",
+              "¿Qué tan importante es la intimidad física para ti en esta relación?",
+              "¿Hay algo que sientas que ha cambiado en su intimidad y que quisieras recuperar?",
+              "¿Qué es lo que más te inhibe a la hora de decirle a tu pareja lo que quieres?",
+              "¿Cuándo fue la última vez que la intimidad con tu pareja te sorprendió?",
+            ],
+            hard: [
+              "¿Hay algo que siempre quisiste hacer íntimamente y nunca has pedido?",
+              "¿Qué es lo que más te cuesta comunicar sobre lo que quieres en la intimidad?",
+              "¿Hay algo que tu pareja haga o no haga íntimamente que nunca has dicho que te molesta?",
+              "¿Qué tan abierto/a eres con tu pareja sobre tus fantasías?",
+              "¿Hay alguna fantasía que nunca has confesado ni a tu pareja?",
+              "¿Qué es lo que más te gustaría mejorar en su vida íntima como pareja?",
+            ],
+          },
+          diamonds: {
+            soft: [
+              "¿Cuál sería el viaje más romántico que podrían hacer juntos?",
+              "¿Cómo sería la noche perfecta con tu pareja si pudieras diseñarla?",
+              "¿Qué experiencia nueva querrías tener con tu pareja que nunca han hecho?",
+              "¿Cuál sería el lugar más atrevido donde les gustaría estar solos?",
+              "¿Qué cosa romántica que no han hecho está en tu lista mental?",
+              "¿Cómo sería tu fantasía de escapada perfecta con tu pareja?",
+              "¿Qué actividad fuera de lo común querrías hacer con tu pareja?",
+              "¿Cuál sería el regalo más memorable que le podrías dar a tu pareja?",
+              "¿Qué cosa haría que una noche con tu pareja fuera completamente memorable?",
+              "¿Cómo te imaginas la vida íntima de su relación en 10 años?",
+            ],
+            mid: [
+              "¿Hay algo que siempre quisieron hacer juntos y siempre lo posponen?",
+              "¿Qué tan seguido se permiten ser espontáneos en su vida íntima?",
+              "¿Hay algo que creas que mejoraría mucho su vida como pareja si lo intentaran?",
+              "¿Qué tan importante es para ti mantener viva la atracción con el tiempo?",
+              "¿Qué harías para reconquistar a tu pareja si sintiera que la emoción se fue?",
+              "¿Hay algo que hayas visto o leído que te haya dado ideas para su relación?",
+            ],
+            hard: [
+              "¿Hay algo que desearías que cambiara en su dinámica íntima y nunca has dicho?",
+              "¿Qué tan honesto/a eres con tu pareja sobre lo que realmente quieres íntimamente?",
+              "¿Hay algo que sientas que su vida íntima necesita y que ninguno de los dos ha dicho?",
+            ],
+          },
+          clubs: {
+            soft: [
+              "¿Cuál es el crush de famoso/a más ridículo que has tenido?",
+              "¿Qué canción te parece la más seductora de todos los tiempos?",
+              "¿Cuál es la película que secretamente encuentras muy sensual?",
+              "¿Qué personaje de serie o película encontrarías atractivo si fuera real?",
+              "¿Cuál es el piropo más ridículo que te han dicho o tú has dicho?",
+              "¿Qué tan seguido piensas en cosas atrevidas en los momentos más inapropiados?",
+              "¿Cuál es la prenda de ropa que encuentras más atractiva en el otro?",
+              "¿Qué tan atrevido/a eres en privado comparado con cómo te ven los demás?",
+              "¿Cuál es la situación más incómoda en la que te han cachado pensando en algo picante?",
+              "¿Qué tan fácil te ruborizas y qué es lo que más lo provoca?",
+            ],
+            mid: [
+              "¿Cuál es la fantasía más recurrente que tienes?",
+              "¿Hay algo que encuentres atractivo y que te dé un poco de vergüenza admitirlo?",
+              "¿Qué tan seguido piensas en mejorar tu vida íntima?",
+              "¿Cuál es la cosa más atrevida que has hecho en un lugar público?",
+              "¿Hay algo que te genere mucha atracción y que no encaja con tu imagen?",
+              "¿Qué tan importante es para ti el juego previo comparado con todo lo demás?",
+              "¿Cuál es el escenario romántico o íntimo que más te llama la atención?",
+            ],
+            hard: [
+              "¿Cuál es la fantasía que tienes y que nunca le has dicho a nadie?",
+              "¿Hay algo que encuentres muy atractivo y que nunca has actuado por pena?",
+              "¿Qué es lo más atrevido que harías si supieras que no hay consecuencias?",
+              "¿Cuál es el límite que sabes que tienes y que respetas aunque te llame la atención cruzarlo?",
+            ],
+          },
+        },
+        sexual: {
+          id: "sexual",
+          nombre: "Sin filtros",
+          descripcion:
+            "Solo para adultos. Preguntas que abren conversaciones que pocas parejas tienen.",
+          spades: {
+            soft: [
+              "¿Qué edad tenías cuando tuviste tu primera experiencia sexual y cómo fue?",
+              "¿Cuál fue la primera vez que hablaste abiertamente de sexo con alguien?",
+              "¿Qué tan diferente era tu idea del sexo antes de tener relaciones a lo que resultó ser?",
+              "¿Cuál fue la primera película o contenido adulto que viste y cómo llegaste a él?",
+              "¿Qué aprendiste de tu primera relación sexual que no esperabas aprender?",
+              "¿Cómo fue la educación sexual que recibiste y qué tan útil resultó?",
+              "¿Cuál fue la primera vez que hablaste de sexo con tu pareja actual y cómo salió?",
+              "¿Qué mito sexual tardaste más en dejar ir?",
+              "¿Cuál fue la situación más incómoda que tuviste en el contexto sexual?",
+              "¿Qué tan diferente eres en la intimidad comparado con tu personalidad pública?",
+            ],
+            mid: [
+              "¿Qué es lo que más disfrutas del sexo con tu pareja actual?",
+              "¿Hay algo que hayas hecho sexualmente que no volverías a hacer?",
+              "¿Qué tan seguido piensas en mejorar tu vida sexual?",
+              "¿Qué es lo que más te cuesta comunicar en la intimidad?",
+              "¿Hay algo que tu pareja hace en la intimidad que te vuelve loco/a?",
+              "¿Qué tan importante es para ti la frecuencia sexual en una relación?",
+              "¿Hay algo que siempre quisiste probar y nunca te has atrevido a pedir?",
+              "¿Qué tan seguido finges que estás más o menos en el mood de lo que realmente estás?",
+              "¿Cómo manejas cuando hay diferencia de deseo con tu pareja?",
+              "¿Hay algo que hiciste en el pasado sexualmente que nunca le contarías a tu pareja?",
+              "¿Qué tan cómodo/a te sientes con tu cuerpo en la intimidad?",
+              "¿Qué es lo que más inhibe tu deseo sexual?",
+            ],
+            hard: [
+              "¿Cuál es tu fantasía sexual más recurrente que nunca has actuado?",
+              "¿Hay algo que quieras sexualmente y que no sabes cómo pedirle a tu pareja?",
+              "¿Qué es lo más atrevido que has hecho sexualmente y que pocas personas saben?",
+              "¿Hay algo en tu vida sexual que sientas que necesita cambiar pero es difícil decirlo?",
+              "¿Cuál es el límite sexual que tienes y que es innegociable para ti?",
+              "¿Qué tan honesto/a eres con tu pareja sobre lo que realmente quieres en la cama?",
+              "¿Hay algo que te excite y que te dé vergüenza admitir incluso con tu pareja?",
+              "¿Qué conversación sexual pendiente sientes que deberían tener y nunca han tenido?",
+            ],
+          },
+          hearts: {
+            soft: [
+              "¿Qué conexión emocional necesitas para que el sexo sea realmente bueno?",
+              "¿Cómo sabes cuando hay química sexual con alguien más allá de lo físico?",
+              "¿Qué tan importante es para ti el sexo dentro de una relación seria?",
+              "¿Cuál es el ambiente o contexto que más te pone en el mood?",
+              "¿Qué hace que el sexo sea memorable para ti más allá de lo físico?",
+              "¿Qué tan seguido sientes que el sexo los conecta más emocionalmente?",
+              "¿Qué cosa fuera de la intimidad aumenta tu deseo por tu pareja?",
+              "¿Qué tan importante es para ti que haya humor y ligereza en la intimidad?",
+              "¿Qué hace que sientas que tu pareja te desea de verdad?",
+              "¿Cómo prefieres que tu pareja te haga saber que te desea?",
+            ],
+            mid: [
+              "¿Qué tan seguido sientes que su vida sexual está en sintonía?",
+              "¿Hay algo que quisieras que cambiara en cómo se comunican sobre sexo?",
+              "¿Qué tan fácil te resulta decirle a tu pareja lo que quieres en la intimidad?",
+              "¿Hay algo que sientas que tu pareja necesita sexualmente y que no te ha pedido?",
+              "¿Qué harías si sintiera que hay un desajuste de deseo importante en su relación?",
+              "¿Cuándo sientes que la intimidad sexual está en su mejor momento entre ustedes?",
+              "¿Qué es lo que más te acerca emocionalmente a tu pareja después de la intimidad?",
+              "¿Hay algo que tu pareja haga antes o después del sexo que te importa mucho?",
+              "¿Qué tan seguido hablan abiertamente sobre lo que les gusta o no en la intimidad?",
+              "¿Hay algo que sientas que inhibe la conexión sexual entre ustedes?",
+            ],
+            hard: [
+              "¿Hay algo que necesites sexualmente y que sientas que tu pareja no puede o quiere darte?",
+              "¿Qué tan honesto/a eres cuando algo en la intimidad no te satisface?",
+              "¿Hay algo que tu pareja haya pedido íntimamente y que tú no hayas podido dar del todo?",
+              "¿Qué conversación sobre su vida sexual sienten que tienen pendiente?",
+              "¿Hay algo en su vida sexual que haya cambiado y que ninguno de los dos ha nombrado?",
+              "¿Qué tan cómodo/a te sientes siendo completamente vulnerable en la intimidad?",
+            ],
+          },
+          diamonds: {
+            soft: [
+              "¿Cuál sería el escenario ideal para una noche muy especial con tu pareja?",
+              "¿Hay algo que quieras experimentar con tu pareja que nunca han probado?",
+              "¿Qué juguete, accesorio o elemento agregarías a su vida íntima si pudieras?",
+              "¿Cuál sería el viaje más erótico que podrían hacer juntos?",
+              "¿Qué tan dispuesto/a estás a explorar cosas nuevas en la intimidad?",
+              "¿Qué elemento sorpresa agregarías a su vida sexual para hacerla más emocionante?",
+              "¿Hay algo que hayas visto, leído o escuchado que quisieras probar con tu pareja?",
+              "¿Cómo sería la noche más perfecta que puedas imaginar con tu pareja?",
+              "¿Qué tan seguido se permiten ser espontáneos en la intimidad?",
+              "¿Qué cosa nueva querrías que intentaran juntos en el próximo mes?",
+            ],
+            mid: [
+              "¿Hay algo en su vida sexual que sientas que perdieron y querrías recuperar?",
+              "¿Qué tan seguido hablan de lo que quieren explorar juntos?",
+              "¿Hay algo que creas mejoraría mucho su vida sexual si lo hablaran?",
+              "¿Qué tan abiertos están para explorar cosas nuevas juntos?",
+              "¿Hay algo que sientas que falta en su vida sexual y que no has podido nombrar?",
+              "¿Qué tan importante es para ti mantener el deseo vivo con el tiempo?",
+            ],
+            hard: [
+              "¿Cuál es la fantasía que más trabajo te costaría compartir con tu pareja?",
+              "¿Hay algo que quieras sexualmente y que no sabes si tu pareja estaría dispuesto/a?",
+              "¿Qué tan honesto/a eres con tu pareja sobre lo que realmente quieres explorar?",
+              "¿Hay algo que desearías que su vida sexual fuera y que ninguno de los dos ha dicho?",
+            ],
+          },
+          clubs: {
+            soft: [
+              "¿Cuál es la fantasía más ridícula o cómica que has tenido?",
+              "¿Cuál es el lugar más improbable donde has pensado que estaría bueno hacerlo?",
+              "¿Qué tan seguido piensas en sexo en momentos completamente inapropiados?",
+              "¿Cuál es el crush de famoso/a que encuentras más irresistible y que te da un poco de pena admitir?",
+              "¿Cuál es el escenario de película o serie que encuentras más cargado sexualmente?",
+              "¿Qué canción consideras la más sensual de todos los tiempos?",
+              "¿Cuál es la situación más graciosa que te ha pasado en un contexto íntimo?",
+              "¿Qué es lo más ridículo que has hecho intentando ser seductor/a?",
+              "¿Cuál es el mal momento más memorable que hayas tenido en la intimidad?",
+              "¿Qué es lo que más te ha hecho reír en un momento íntimo?",
+            ],
+            mid: [
+              "¿Cuál es tu fantasía sexual más recurrente aunque no la actuarías?",
+              "¿Hay algo que encuentres muy atractivo y que no encaja con tu imagen?",
+              "¿Qué es lo más atrevido que has hecho y que pocas personas saben?",
+              "¿Cuál es el tema sexual del que más te cuesta hablar aunque quieras?",
+              "¿Qué tan seguido piensas en mejorar tu vida sexual?",
+              "¿Hay algo que encuentres excitante y que te genere algo de vergüenza admitirlo?",
+              "¿Cuál es la pregunta sobre sexo que nunca le has hecho a nadie pero siempre quisiste?",
+            ],
+            hard: [
+              "¿Cuál es la fantasía que tienes y que nunca has actuado ni actarías?",
+              "¿Hay algo que te excite y que crees que a tu pareja le sorprendería saber?",
+              "¿Qué es lo que más trabajo te cuesta admitir que quieres en la intimidad?",
+              "¿Cuál es el límite que sabes que tienes y qué lo define?",
+            ],
+          },
+        },
+      };
+      const CMC_QUESTIONS = [
+        {
+          id: "mc1",
+          type: "multiple",
+          text: "Si tuvieras un día libre sin ningún plan, ¿qué harías primero?",
+          options: [
+            "Dormir hasta tarde",
+            "Salir a hacer ejercicio",
+            "Ver series o películas",
+            "Salir con amigos",
+          ],
+        },
+        {
+          id: "mc2",
+          type: "multiple",
+          text: "¿Cuál es tu estado de ánimo más frecuente un lunes por la mañana?",
+          options: [
+            "De malas, necesito café",
+            "Más o menos, hay que arrancar",
+            "Bien, me gustan las semanas nuevas",
+            "Depende totalmente de cómo dormí",
+          ],
+        },
+        {
+          id: "mc3",
+          type: "multiple",
+          text: "Si pudieras comer solo una cosa por el resto de tu vida, ¿cuál sería?",
+          options: ["Tacos", "Pizza", "Sushi", "Lo que sea, no soy muy foodie"],
+        },
+        {
+          id: "mc4",
+          type: "multiple",
+          text: "¿Cómo reaccionas cuando alguien te cancela planes de último momento?",
+          options: [
+            "Me alegra secretamente, prefiero quedarme en casa",
+            "Me molesta un poco pero lo entiendo",
+            "Me da igual, improviso",
+            "Me molesta bastante, ya me había emocionado",
+          ],
+        },
+        {
+          id: "mc5",
+          type: "multiple",
+          text: "¿Cuál es tu forma favorita de desestresarte?",
+          options: [
+            "Dormir",
+            "Hacer ejercicio",
+            "Ver algo en pantalla",
+            "Hablar con alguien de confianza",
+          ],
+        },
+        {
+          id: "mc6",
+          type: "multiple",
+          text: "¿Qué tipo de película eliges cuando no sabes qué ver?",
+          options: [
+            "Comedia",
+            "Acción o thriller",
+            "Drama o romance",
+            "Documental",
+          ],
+        },
+        {
+          id: "mc7",
+          type: "multiple",
+          text: "¿Cuál es tu mayor defecto según tú mismo/a?",
+          options: [
+            "Soy muy impaciente",
+            "Procrastino demasiado",
+            "Soy muy intenso/a con lo que me importa",
+            "Me cuesta pedir ayuda",
+          ],
+        },
+        {
+          id: "mc8",
+          type: "multiple",
+          text: "En una reunión social donde no conoces a casi nadie, ¿qué haces?",
+          options: [
+            "Busco a alguien con quien hablar y me suelto",
+            "Me quedo cerca de quien conozco",
+            "Estoy presente pero en modo observador",
+            "Cuento los minutos para irme",
+          ],
+        },
+        {
+          id: "mc9",
+          type: "multiple",
+          text: "¿Cómo prefieres que te digan las cosas difíciles?",
+          options: [
+            "Directo y sin rodeos",
+            "Con tacto pero sin adornos",
+            "Poco a poco, preparándome",
+            "Que lo escriban, me cuesta en persona",
+          ],
+        },
+        {
+          id: "mc10",
+          type: "multiple",
+          text: "¿Cuál es tu relación con el orden en casa?",
+          options: [
+            "Todo tiene su lugar y ahí debe estar",
+            "Tengo mi propio sistema que parece caos pero sé dónde está todo",
+            "Me da igual mientras no esté sucio",
+            "Quiero ser ordenado/a pero no lo logro",
+          ],
+        },
+        {
+          id: "mc11",
+          type: "multiple",
+          text: "¿Qué haces cuando estás de mal humor y alguien te pregunta qué tienes?",
+          options: [
+            "Digo que nada aunque sí tengo algo",
+            "Lo digo directo",
+            "Depende de quién sea",
+            "Necesito tiempo solo/a antes de hablar",
+          ],
+        },
+        {
+          id: "mc12",
+          type: "multiple",
+          text: "¿Cómo tomas decisiones importantes?",
+          options: [
+            "Con la cabeza, analizo todo",
+            "Con el corazón, me guío por lo que siento",
+            "Mitad y mitad",
+            "Pregunto a alguien de confianza antes",
+          ],
+        },
+        {
+          id: "mc13",
+          type: "multiple",
+          text: "¿Qué haces los primeros 10 minutos después de despertar?",
+          options: [
+            "Reviso el celular inmediatamente",
+            "Me quedo en cama un rato sin hacer nada",
+            "Me levanto directo, sin demora",
+            "Pongo música o algo de fondo",
+          ],
+        },
+        {
+          id: "mc14",
+          type: "multiple",
+          text: "¿Cómo te comportas cuando tienes mucho trabajo o estrés?",
+          options: [
+            "Me encierro y trabajo sin parar hasta terminar",
+            "Necesito pausas frecuentes o me bloqueo",
+            "Me cuesta arrancar pero luego fluyo",
+            "Busco compañía para no sentirme solo/a",
+          ],
+        },
+        {
+          id: "mc15",
+          type: "multiple",
+          text: "Si te regalan dinero extra inesperado, ¿qué haces?",
+          options: [
+            "Lo ahorro sin pensarlo",
+            "Me doy un gusto que tenía pendiente",
+            "Lo invierto en algo",
+            "Lo gasto rápido en cosas pequeñas",
+          ],
+        },
+        {
+          id: "mc16",
+          type: "multiple",
+          text: "¿Cuál es tu actitud ante los conflictos?",
+          options: [
+            "Los enfrento directo, no me gusta dejar cosas pendientes",
+            "Los evito hasta que ya no puedo",
+            "Necesito tiempo para calmarme antes de hablar",
+            "Depende mucho de con quién sea",
+          ],
+        },
+        {
+          id: "mc17",
+          type: "multiple",
+          text: "¿Qué tipo de música escuchas cuando manejas o vas en transporte?",
+          options: [
+            "Lo que esté de moda o en tendencia",
+            "Mis playlists de siempre",
+            "Podcasts o algo hablado",
+            "Silencio, prefiero mis pensamientos",
+          ],
+        },
+        {
+          id: "mc18",
+          type: "multiple",
+          text: "¿Cómo reaccionas ante una crítica de alguien cercano?",
+          options: [
+            "La recibo bien si es constructiva",
+            "Me duele aunque trate de no demostrarlo",
+            "La analizo fríamente antes de reaccionar",
+            "Depende mucho de cómo me la digan",
+          ],
+        },
+        {
+          id: "mc19",
+          type: "multiple",
+          text: "¿Qué tan seguido dices lo que realmente piensas?",
+          options: [
+            "Casi siempre, soy muy directo/a",
+            "Solo con personas muy cercanas",
+            "Depende del tema y la situación",
+            "Prefiero guardármelo para evitar conflictos",
+          ],
+        },
+        {
+          id: "mc20",
+          type: "multiple",
+          text: "¿Cuál es tu mayor fuente de motivación?",
+          options: [
+            "Demostrarme a mí mismo/a que puedo",
+            "El reconocimiento de los demás",
+            "El impacto que tengo en otras personas",
+            "La estabilidad y seguridad que construyo",
+          ],
+        },
+        {
+          id: "mc21",
+          type: "multiple",
+          text: "¿Cómo manejas cuando alguien llega tarde a una cita contigo?",
+          options: [
+            "Me molesta pero no digo nada",
+            "Lo digo con humor pero sí me afecta",
+            "Lo entiendo, a mí también me pasa",
+            "Me molesta mucho y lo expreso",
+          ],
+        },
+        {
+          id: "mc22",
+          type: "multiple",
+          text: "¿Cuál es tu relación con las redes sociales?",
+          options: [
+            "Las uso bastante pero podría dejarlo",
+            "Son parte esencial de mi día",
+            "Las uso poco, no me enganchan",
+            "Quisiera usarlas menos pero no puedo",
+          ],
+        },
+        {
+          id: "mc23",
+          type: "multiple",
+          text: "Cuando algo te preocupa mucho, ¿qué haces?",
+          options: [
+            "Lo hablo con alguien de confianza",
+            "Lo proceso solo/a hasta encontrar solución",
+            "Busco distracciones para no pensar",
+            "Me paralizo un rato antes de actuar",
+          ],
+        },
+        {
+          id: "mc24",
+          type: "multiple",
+          text: "¿Qué prefieres para una cita romántica?",
+          options: [
+            "Algo planeado con detalle",
+            "Algo espontáneo e inesperado",
+            "Una cena tranquila en casa",
+            "Una aventura o actividad diferente",
+          ],
+        },
+        {
+          id: "mc25",
+          type: "multiple",
+          text: "¿Cómo describes tu sentido del humor?",
+          options: [
+            "Sarcástico e irónico",
+            "Absurdo y sin sentido",
+            "Observacional, me río de la vida cotidiana",
+            "Blanco y accesible para todos",
+          ],
+        },
+        {
+          id: "mc26",
+          type: "multiple",
+          text: "¿Qué haces cuando no puedes dormir?",
+          options: [
+            "Reviso el celular hasta quedarme dormido/a",
+            "Me quedo quieto/a con los ojos cerrados",
+            "Me levanto y hago algo hasta tener sueño",
+            "Pongo algo de fondo para distraer la mente",
+          ],
+        },
+        {
+          id: "mc27",
+          type: "multiple",
+          text: "¿Cómo prefieres celebrar tu cumpleaños?",
+          options: [
+            "Fiesta grande con muchos amigos",
+            "Cena íntima con las personas que más quiero",
+            "Viaje o experiencia especial",
+            "Sin celebración, es un día normal",
+          ],
+        },
+        {
+          id: "mc28",
+          type: "multiple",
+          text: "¿Cuál es tu actitud ante el ejercicio?",
+          options: [
+            "Me encanta, es parte de mi rutina",
+            "Lo hago porque sé que debo pero no me apasiona",
+            "Estoy en modo 'voy a empezar pronto'",
+            "No es para mí, prefiero otras actividades",
+          ],
+        },
+        {
+          id: "mc29",
+          type: "multiple",
+          text: "Si pudieras cambiar algo de tu personalidad, ¿qué sería?",
+          options: [
+            "Ser menos ansioso/a o perfeccionista",
+            "Ser más decidido/a y menos indeciso/a",
+            "Abrirme más fácil a la gente",
+            "Preocuparme menos por lo que piensan los demás",
+          ],
+        },
+        {
+          id: "mc30",
+          type: "multiple",
+          text: "¿Cómo te sientes con los silencios en una conversación?",
+          options: [
+            "Cómodo/a, no necesito llenar el silencio",
+            "Me incomodan, tiendo a hablar para llenarlos",
+            "Depende de con quién sea",
+            "Me gustan si la otra persona también los disfruta",
+          ],
+        },
+        {
+          id: "mc31",
+          type: "multiple",
+          text: "¿Qué haces cuando cometes un error importante?",
+          options: [
+            "Lo asumo, aprendo y sigo adelante",
+            "Me quedo pensando en ello más de lo necesario",
+            "Busco soluciones antes de procesar la culpa",
+            "Necesito que alguien me diga que estuvo bien",
+          ],
+        },
+        {
+          id: "mc32",
+          type: "multiple",
+          text: "¿Cuál es tu relación con el dinero?",
+          options: [
+            "Ahorro constantemente, me da seguridad",
+            "Gasto sin mucho plan pero tampoco me excedo",
+            "Soy bastante gastador/a, disfruto el presente",
+            "Siempre quiero más pero no soy muy organizado/a",
+          ],
+        },
+        {
+          id: "mc33",
+          type: "multiple",
+          text: "¿Cómo te describes en el trabajo o los estudios?",
+          options: [
+            "Muy disciplinado/a y organizado/a",
+            "Creativo/a pero caótico/a",
+            "Trabajo bien bajo presión",
+            "Eficiente cuando me motiva el tema",
+          ],
+        },
+        {
+          id: "mc34",
+          type: "multiple",
+          text: "¿Qué valoras más en una amistad?",
+          options: [
+            "La lealtad y confianza",
+            "El humor y la diversión",
+            "La honestidad aunque duela",
+            "Estar presente en los momentos difíciles",
+          ],
+        },
+        {
+          id: "mc35",
+          type: "multiple",
+          text: "¿Cómo reaccionas ante los cambios inesperados?",
+          options: [
+            "Me adapto rápido, me gustan los retos",
+            "Me cuesta al principio pero luego fluyo",
+            "Me estresan bastante hasta que los proceso",
+            "Los evito si puedo, prefiero la rutina",
+          ],
+        },
+        {
+          id: "mc36",
+          type: "multiple",
+          text: "¿Cuál es tu actitud ante pedir ayuda?",
+          options: [
+            "Lo hago sin problema cuando la necesito",
+            "Me cuesta pero lo hago si es necesario",
+            "Prefiero resolverlo solo/a siempre",
+            "Solo pido ayuda cuando ya no tengo opción",
+          ],
+        },
+        {
+          id: "mc37",
+          type: "multiple",
+          text: "¿Qué tipo de vacaciones prefieres?",
+          options: [
+            "Playa y descanso total",
+            "Aventura y actividades al aire libre",
+            "Ciudad nueva, cultura y gastronomía",
+            "Quedarse en casa, las vacaciones me agotan",
+          ],
+        },
+        {
+          id: "mc38",
+          type: "multiple",
+          text: "¿Cómo expresas el cariño a las personas que quieres?",
+          options: [
+            "Con palabras directas, lo digo",
+            "Con detalles y acciones concretas",
+            "Con tiempo de calidad y presencia",
+            "Con humor y bromas, así me siento cómodo/a",
+          ],
+        },
+        {
+          id: "mc39",
+          type: "multiple",
+          text: "¿Qué haces cuando te aburres?",
+          options: [
+            "Busco algo productivo que hacer",
+            "Reviso el celular sin un objetivo claro",
+            "Busco a alguien con quien hacer algo",
+            "Me quedo quieto/a, no me molesta el aburrimiento",
+          ],
+        },
+        {
+          id: "mc40",
+          type: "multiple",
+          text: "¿Cuál es tu relación con el pasado?",
+          options: [
+            "Lo pienso poco, vivo el presente",
+            "Aprendo de él pero no me anclo ahí",
+            "A veces me cuesta soltarlo",
+            "Lo recuerdo con nostalgia y cariño",
+          ],
+        },
+        {
+          id: "mc41",
+          type: "multiple",
+          text: "Cuando discutes con alguien, ¿qué haces?",
+          options: [
+            "Defiendo mi postura con argumentos",
+            "Busco llegar a un acuerdo rápido",
+            "Necesito calmarme antes de hablar",
+            "Cedo aunque no esté convencido/a",
+          ],
+        },
+        {
+          id: "mc42",
+          type: "multiple",
+          text: "¿Cómo describes tu relación con la comida?",
+          options: [
+            "Como lo que sea, no soy muy exigente",
+            "Soy bastante selectivo/a con lo que como",
+            "La comida es uno de mis grandes placeres",
+            "Como por necesidad, no me obsesiona",
+          ],
+        },
+        {
+          id: "mc43",
+          type: "multiple",
+          text: "¿Qué haces cuando alguien te decepciona?",
+          options: [
+            "Lo hablo directo con esa persona",
+            "Me distancio poco a poco sin decir nada",
+            "Lo proceso solo/a y eventualmente lo suelto",
+            "Me cuesta mucho perdonar, lo recuerdo por tiempo",
+          ],
+        },
+        {
+          id: "mc44",
+          type: "multiple",
+          text: "¿Cuál es tu actitud ante los riesgos?",
+          options: [
+            "Me gustan, sin riesgo no hay recompensa",
+            "Los calculo bien antes de tomarlos",
+            "Los evito si puedo, prefiero lo seguro",
+            "Depende mucho del contexto y lo que esté en juego",
+          ],
+        },
+        {
+          id: "mc45",
+          type: "multiple",
+          text: "¿Qué tan seguido revisas el celular cuando estás con alguien?",
+          options: [
+            "Casi nunca, me parece falta de respeto",
+            "A veces, cuando es urgente",
+            "Bastante, es casi automático",
+            "Solo si me llega algo importante",
+          ],
+        },
+        {
+          id: "mc46",
+          type: "multiple",
+          text: "¿Cuál es tu mayor miedo en una relación?",
+          options: [
+            "Que me sean infiel",
+            "Perder mi independencia",
+            "Que me dejen de querer con el tiempo",
+            "No ser suficiente para la otra persona",
+          ],
+        },
+        {
+          id: "mc47",
+          type: "multiple",
+          text: "¿Cómo reaccionas ante los cumplidos?",
+          options: [
+            "Los recibo con agrado, me gustan",
+            "Me incomoda un poco, no sé cómo responder",
+            "Los minimizo aunque me alegren",
+            "Depende de quién me los diga",
+          ],
+        },
+        {
+          id: "mc48",
+          type: "multiple",
+          text: "¿Qué tan importante es para ti la opinión de tu familia?",
+          options: [
+            "Muy importante, la valoro mucho",
+            "La considero pero no determina mis decisiones",
+            "Me afecta aunque trate de que no",
+            "Poco, prefiero guiarme por lo que yo siento",
+          ],
+        },
+        {
+          id: "mc49",
+          type: "multiple",
+          text: "¿Cómo te sientes con la idea de envejecer?",
+          options: [
+            "Lo acepto con tranquilidad",
+            "Me genera algo de angustia cuando lo pienso",
+            "No lo pienso mucho, vivo el presente",
+            "Me parece emocionante, cada etapa tiene lo suyo",
+          ],
+        },
+        {
+          id: "mc50",
+          type: "multiple",
+          text: "¿Qué prefieres, muchos amigos o pocos pero muy cercanos?",
+          options: [
+            "Pocos pero que me conozcan de verdad",
+            "Un grupo mediano de amigos confiables",
+            "Me gustan los círculos amplios, conozco a mucha gente",
+            "Me la paso bien solo/a, los amigos son un plus",
+          ],
+        },
+        {
+          id: "mc51",
+          type: "multiple",
+          text: "¿Cómo reaccionas cuando alguien habla mal de ti?",
+          options: [
+            "Me afecta aunque trate de ignorarlo",
+            "Lo proceso y lo suelto relativamente rápido",
+            "Me confronto con la persona si puedo",
+            "Me da igual, no dependo de la opinión ajena",
+          ],
+        },
+        {
+          id: "mc52",
+          type: "multiple",
+          text: "¿Cuál es tu actitud ante las reglas?",
+          options: [
+            "Las sigo si tienen sentido para mí",
+            "Las sigo aunque no las entienda del todo",
+            "Las cuestiono frecuentemente",
+            "Busco la forma de adaptarlas a mi conveniencia",
+          ],
+        },
+        {
+          id: "mc53",
+          type: "multiple",
+          text: "¿Qué haces cuando tienes que esperar mucho tiempo?",
+          options: [
+            "Saco el celular de inmediato",
+            "Me desespero bastante",
+            "Lo tomo con calma, aprovecho para pensar",
+            "Busco algo útil que hacer mientras",
+          ],
+        },
+        {
+          id: "mc54",
+          type: "multiple",
+          text: "¿Qué tan seguido te sientes culpable por decir que no?",
+          options: [
+            "Casi siempre, me cuesta mucho",
+            "A veces, dependiendo de la situación",
+            "Rara vez, tengo mis límites claros",
+            "Casi nunca, respeto mis tiempos sin culpa",
+          ],
+        },
+        {
+          id: "mc55",
+          type: "multiple",
+          text: "¿Cómo describes tu relación con el sueño?",
+          options: [
+            "Duermo bien y mis horas completas",
+            "Me cuesta conciliar el sueño con frecuencia",
+            "Me desvelo seguido aunque no quiera",
+            "Podría dormir en cualquier lugar y momento",
+          ],
+        },
+        {
+          id: "mc56",
+          type: "multiple",
+          text: "¿Qué tan fácil te resulta olvidar una pelea?",
+          options: [
+            "Fácil, no guardo rencores",
+            "Me cuesta un poco pero eventualmente lo suelto",
+            "Depende de qué tan grave fue",
+            "Difícil, lo recuerdo por mucho tiempo",
+          ],
+        },
+        {
+          id: "mc57",
+          type: "multiple",
+          text: "¿Cuál es tu relación con los planes a futuro?",
+          options: [
+            "Me emociona planear, siempre tengo algo en mente",
+            "Planeo lo necesario pero sin obsesionarme",
+            "Prefiero vivir el día a día sin planes fijos",
+            "Me genera ansiedad pensar demasiado en el futuro",
+          ],
+        },
+        {
+          id: "mc58",
+          type: "multiple",
+          text: "¿Cómo prefieres pasar el tiempo libre entre semana?",
+          options: [
+            "Descansando, la semana ya es suficiente actividad",
+            "Haciendo algo productivo, no me gusta perder el tiempo",
+            "Saliendo o socializando aunque sea un rato",
+            "Combinando descanso con algo que me guste",
+          ],
+        },
+        {
+          id: "mc59",
+          type: "multiple",
+          text: "¿Qué tan seguido te comparas con los demás?",
+          options: [
+            "Casi nunca, voy a mi ritmo",
+            "A veces, especialmente en redes sociales",
+            "Más de lo que me gustaría admitir",
+            "Frecuentemente, es algo en lo que trabajo",
+          ],
+        },
+        {
+          id: "mc60",
+          type: "multiple",
+          text: "¿Cuál es tu actitud ante los fracasos?",
+          options: [
+            "Aprendo y sigo, son parte del proceso",
+            "Me afectan más de lo que quisiera",
+            "Los proceso lento pero eventualmente los supero",
+            "Me cuestan mucho, tiendo a rendirme",
+          ],
+        },
+        {
+          id: "mc61",
+          type: "multiple",
+          text: "¿Qué tan cómodo/a te sientes hablando de tus emociones?",
+          options: [
+            "Muy cómodo/a, no me cuesta expresarme",
+            "Solo con personas muy cercanas",
+            "Me cuesta pero lo intento",
+            "Prefiero no hablar de eso, me incomoda",
+          ],
+        },
+        {
+          id: "mc62",
+          type: "multiple",
+          text: "¿Cómo reaccionas cuando alguien te pide un favor que no quieres hacer?",
+          options: [
+            "Digo que no sin mayor problema",
+            "Lo hago aunque no quiera para no quedar mal",
+            "Busco una excusa para evitarlo",
+            "Lo negocio o propongo una alternativa",
+          ],
+        },
+        {
+          id: "mc63",
+          type: "multiple",
+          text: "¿Qué es lo primero que notas de alguien cuando lo conoces?",
+          options: [
+            "Su forma de hablar y comunicarse",
+            "Su energía o vibra general",
+            "Su apariencia física",
+            "Cómo trata a los demás",
+          ],
+        },
+        {
+          id: "mc64",
+          type: "multiple",
+          text: "¿Cuál es tu actitud ante el trabajo en equipo?",
+          options: [
+            "Me encanta, rindo mejor acompañado/a",
+            "Lo acepto pero prefiero trabajar solo/a",
+            "Depende mucho del equipo",
+            "Me frustra cuando los demás no rinden igual",
+          ],
+        },
+        {
+          id: "mc65",
+          type: "multiple",
+          text: "¿Qué haces cuando estás triste?",
+          options: [
+            "Busco a alguien con quien hablar",
+            "Me aíslo hasta procesar lo que siento",
+            "Busco distracciones para no pensar",
+            "Lo dejo pasar solo, sin hacer nada especial",
+          ],
+        },
+        {
+          id: "mc66",
+          type: "multiple",
+          text: "¿Cuál es tu relación con la puntualidad?",
+          options: [
+            "Soy muy puntual, me estresa llegar tarde",
+            "Generalmente llego a tiempo pero no me obsesiona",
+            "Siempre llego un poco tarde, es mi ritmo",
+            "Depende del compromiso y con quién sea",
+          ],
+        },
+        {
+          id: "mc67",
+          type: "multiple",
+          text: "¿Qué tan seguido te sientes abrumado/a?",
+          options: [
+            "Pocas veces, manejo bien mi carga",
+            "Con cierta frecuencia, especialmente en épocas de estrés",
+            "Bastante seguido, siempre hay mucho que hacer",
+            "Casi nunca, soy bastante tranquilo/a",
+          ],
+        },
+        {
+          id: "mc68",
+          type: "multiple",
+          text: "¿Cómo prefieres aprender algo nuevo?",
+          options: [
+            "Viendo cómo se hace y luego practicando",
+            "Leyendo o investigando por mi cuenta",
+            "Que alguien me lo explique paso a paso",
+            "Aprendiendo sobre la marcha, equivocándome",
+          ],
+        },
+        {
+          id: "mc69",
+          type: "multiple",
+          text: "¿Qué tan importante es para ti tener tiempo solo/a?",
+          options: [
+            "Fundamental, lo necesito para recargar energía",
+            "Importante pero no lo priorizo mucho",
+            "No lo necesito especialmente, prefiero compañía",
+            "Es algo que me gusta pero no indispensable",
+          ],
+        },
+        {
+          id: "mc70",
+          type: "multiple",
+          text: "¿Cuál es tu reacción ante algo que te da miedo?",
+          options: [
+            "Lo enfrento aunque me cueste",
+            "Lo evito hasta que no tengo opción",
+            "Lo analizo para entender el miedo antes de actuar",
+            "Busco apoyo de alguien para no hacerlo solo/a",
+          ],
+        },
+        {
+          id: "mc71",
+          type: "multiple",
+          text: "¿Qué tan seguido te disculpas aunque no sea tu culpa?",
+          options: [
+            "Bastante, lo hago para evitar tensión",
+            "A veces, cuando quiero que las cosas se calmen",
+            "Rara vez, solo me disculpo si realmente lo soy",
+            "Casi nunca, no digo perdón si no lo siento",
+          ],
+        },
+        {
+          id: "mc72",
+          type: "multiple",
+          text: "¿Cómo describes tu forma de querer a las personas?",
+          options: [
+            "Intensamente, me entrego mucho",
+            "Con calma y consistencia, sin grandes gestos",
+            "Con acciones más que con palabras",
+            "De lejos, me cuesta mostrar el cariño directamente",
+          ],
+        },
+        {
+          id: "mc73",
+          type: "multiple",
+          text: "¿Qué haces cuando no sabes qué decidir?",
+          options: [
+            "Hago una lista de pros y contras",
+            "Me guío por lo que siento en el momento",
+            "Pregunto la opinión de alguien cercano",
+            "Lo dejo reposar hasta que llegue la respuesta sola",
+          ],
+        },
+        {
+          id: "mc74",
+          type: "multiple",
+          text: "¿Cuál es tu actitud ante los planes de último momento?",
+          options: [
+            "Me encantan, soy muy espontáneo/a",
+            "Los acepto si tengo energía",
+            "Me cuestan, prefiero saber con anticipación",
+            "Los evito, necesito planear con tiempo",
+          ],
+        },
+        {
+          id: "mc75",
+          type: "multiple",
+          text: "¿Qué tan seguido sientes que no eres suficiente?",
+          options: [
+            "Pocas veces, tengo buena autoestima",
+            "Con cierta frecuencia, especialmente bajo presión",
+            "Bastante seguido, es algo en lo que trabajo",
+            "Casi nunca, creo en mí mismo/a",
+          ],
+        },
+        {
+          id: "mc76",
+          type: "multiple",
+          text: "¿Cómo reaccionas ante una buena noticia?",
+          options: [
+            "Me emociono mucho y lo expreso sin filtro",
+            "Lo celebro con calma pero genuinamente",
+            "Me alegro por dentro aunque no lo exprese mucho",
+            "Busco a quién contárselo de inmediato",
+          ],
+        },
+        {
+          id: "mc77",
+          type: "multiple",
+          text: "¿Cuál es tu relación con los hábitos?",
+          options: [
+            "Tengo rutinas muy establecidas que no cambio fácil",
+            "Tengo algunos pero no soy muy disciplinado/a",
+            "Me cuesta mantener hábitos por mucho tiempo",
+            "No tengo muchos, prefiero la flexibilidad",
+          ],
+        },
+        {
+          id: "mc78",
+          type: "multiple",
+          text: "¿Qué tan seguido te sientes solo/a aunque estés rodeado de gente?",
+          options: [
+            "Pocas veces, me conecto fácil con los demás",
+            "A veces, especialmente en grupos grandes",
+            "Con bastante frecuencia, me cuesta conectar",
+            "Casi nunca, disfruto cualquier tipo de compañía",
+          ],
+        },
+        {
+          id: "mc79",
+          type: "multiple",
+          text: "¿Cómo describes tu relación con el cambio?",
+          options: [
+            "Me encanta cambiar, me aburre la rutina",
+            "Lo acepto cuando viene, aunque me cueste",
+            "Me genera ansiedad pero eventualmente me adapto",
+            "Prefiero la estabilidad, los cambios me desestabilizan",
+          ],
+        },
+        {
+          id: "mc80",
+          type: "multiple",
+          text: "¿Qué tan seguido dices lo que sientes en el momento justo?",
+          options: [
+            "Casi siempre, soy bastante espontáneo/a",
+            "A veces, cuando el contexto lo permite",
+            "Rara vez, generalmente lo proceso después",
+            "Casi nunca, prefiero guardarme las cosas",
+          ],
+        },
+        {
+          id: "vf1",
+          type: "truefalse",
+          text: "Prefiero quedarme en casa un viernes que salir a una fiesta que no me emociona.",
+        },
+        {
+          id: "vf2",
+          type: "truefalse",
+          text: "Soy de los que llega puntual o antes a los planes.",
+        },
+        {
+          id: "vf3",
+          type: "truefalse",
+          text: "Me cuesta mucho decir que no aunque no quiera hacer algo.",
+        },
+        {
+          id: "vf4",
+          type: "truefalse",
+          text: "Cuando me enojo prefiero hablar en el momento antes de que se enfríe.",
+        },
+        {
+          id: "vf5",
+          type: "truefalse",
+          text: "Soy más feliz en la naturaleza que en la ciudad.",
+        },
+        {
+          id: "vf6",
+          type: "truefalse",
+          text: "Me acuerdo de las fechas importantes sin necesitar recordatorio.",
+        },
+        {
+          id: "vf7",
+          type: "truefalse",
+          text: "Puedo ver la misma serie o película varias veces y disfrutarla igual.",
+        },
+        {
+          id: "vf8",
+          type: "truefalse",
+          text: "Soy de los que lee las instrucciones antes de armar algo.",
+        },
+        {
+          id: "vf9",
+          type: "truefalse",
+          text: "Prefiero dar regalos que recibirlos.",
+        },
+        {
+          id: "vf10",
+          type: "truefalse",
+          text: "Me cuesta más pedir perdón que perdonar.",
+        },
+        {
+          id: "vf11",
+          type: "truefalse",
+          text: "Cuando algo me preocupa, tiendo a guardármelo antes de contarlo.",
+        },
+        {
+          id: "vf12",
+          type: "truefalse",
+          text: "Soy más de madrugar que de trasnochar.",
+        },
+        {
+          id: "vf13",
+          type: "truefalse",
+          text: "Me considero una persona más intuitiva que analítica.",
+        },
+        {
+          id: "vf14",
+          type: "truefalse",
+          text: "Cuando veo una injusticia, difícilmente me quedo callado/a.",
+        },
+        {
+          id: "vf15",
+          type: "truefalse",
+          text: "Prefiero tener pocas cosas pero de calidad que muchas cosas baratas.",
+        },
+        {
+          id: "vf16",
+          type: "truefalse",
+          text: "Me gusta más escuchar que hablar en una conversación.",
+        },
+        {
+          id: "vf17",
+          type: "truefalse",
+          text: "Tengo facilidad para hacer reír a los demás.",
+        },
+        {
+          id: "vf18",
+          type: "truefalse",
+          text: "Me cuesta mucho pedir ayuda aunque la necesite.",
+        },
+        {
+          id: "vf19",
+          type: "truefalse",
+          text: "Soy de los que guarda rencor aunque diga que no.",
+        },
+        {
+          id: "vf20",
+          type: "truefalse",
+          text: "Disfruto más los planes espontáneos que los muy planeados.",
+        },
+        {
+          id: "vf21",
+          type: "truefalse",
+          text: "Me afecta mucho cuando alguien está enojado conmigo aunque no lo diga.",
+        },
+        {
+          id: "vf22",
+          type: "truefalse",
+          text: "Prefiero la honestidad aunque duela a que me digan lo que quiero escuchar.",
+        },
+        {
+          id: "vf23",
+          type: "truefalse",
+          text: "Cuando estoy nervioso/a, generalmente se me nota.",
+        },
+        {
+          id: "vf24",
+          type: "truefalse",
+          text: "Me resulta fácil conocer gente nueva y romper el hielo.",
+        },
+        {
+          id: "vf25",
+          type: "truefalse",
+          text: "Soy más de disfrutar el proceso que de enfocarse solo en el resultado.",
+        },
+        {
+          id: "vf26",
+          type: "truefalse",
+          text: "Me molesta cuando alguien no cumple lo que prometió, aunque sea algo pequeño.",
+        },
+        {
+          id: "vf27",
+          type: "truefalse",
+          text: "Tengo tendencia a pensar demasiado las cosas antes de actuar.",
+        },
+        {
+          id: "vf28",
+          type: "truefalse",
+          text: "Prefiero tener pocas amistades muy profundas que muchas superficiales.",
+        },
+        {
+          id: "vf29",
+          type: "truefalse",
+          text: "Me resulta fácil hablar en público o ante grupos de personas.",
+        },
+        {
+          id: "vf30",
+          type: "truefalse",
+          text: "Soy bastante terco/a cuando creo que tengo razón.",
+        },
+        {
+          id: "vf31",
+          type: "truefalse",
+          text: "Me incomoda recibir cumplidos aunque en el fondo me gusten.",
+        },
+        {
+          id: "vf32",
+          type: "truefalse",
+          text: "Cuando tomo una decisión, raramente me arrepiento después.",
+        },
+        {
+          id: "vf33",
+          type: "truefalse",
+          text: "Soy de los que revisa el celular apenas se despierta.",
+        },
+        {
+          id: "vf34",
+          type: "truefalse",
+          text: "Me considero más optimista que realista.",
+        },
+        {
+          id: "vf35",
+          type: "truefalse",
+          text: "Cuando algo me emociona, es difícil que no se me note.",
+        },
+        {
+          id: "vf36",
+          type: "truefalse",
+          text: "Me cuesta mucho desconectarme del trabajo o las obligaciones.",
+        },
+        {
+          id: "vf37",
+          type: "truefalse",
+          text: "Prefiero resolver un conflicto en el momento que dejarlo para después.",
+        },
+        {
+          id: "vf38",
+          type: "truefalse",
+          text: "Me gusta más sorprender a los demás que ser yo quien recibe la sorpresa.",
+        },
+        {
+          id: "vf39",
+          type: "truefalse",
+          text: "Tengo facilidad para adaptarme a entornos o personas nuevas.",
+        },
+        {
+          id: "vf40",
+          type: "truefalse",
+          text: "Me afectan más los fracasos propios que las críticas de otros.",
+        },
+        {
+          id: "vf41",
+          type: "truefalse",
+          text: "Soy de los que pide perdón aunque no haya sido su culpa para calmar la situación.",
+        },
+        {
+          id: "vf42",
+          type: "truefalse",
+          text: "Me considero una persona creativa.",
+        },
+        {
+          id: "vf43",
+          type: "truefalse",
+          text: "Cuando estoy enojado/a, prefiero el silencio a discutir.",
+        },
+        {
+          id: "vf44",
+          type: "truefalse",
+          text: "Me resulta más fácil expresar mis emociones por escrito que en persona.",
+        },
+        {
+          id: "vf45",
+          type: "truefalse",
+          text: "Tengo tendencia a comparar mi vida con la de los demás.",
+        },
+        {
+          id: "vf46",
+          type: "truefalse",
+          text: "Me considero una persona más de rutina que de aventura.",
+        },
+        {
+          id: "vf47",
+          type: "truefalse",
+          text: "Cuando quiero algo, soy bastante persistente hasta conseguirlo.",
+        },
+        {
+          id: "vf48",
+          type: "truefalse",
+          text: "Me cuesta mucho ver a alguien triste sin querer ayudarlo/a.",
+        },
+        {
+          id: "vf49",
+          type: "truefalse",
+          text: "Prefiero pasar tiempo de calidad con pocas personas que ir a eventos masivos.",
+        },
+        {
+          id: "vf50",
+          type: "truefalse",
+          text: "Me resulta difícil descansar sin sentirme culpable por no ser productivo/a.",
+        },
+        {
+          id: "sc1",
+          type: "scale",
+          text: "¿Qué tan seguido piensas en el futuro a largo plazo?",
+          label_min: "Vivo el día a día",
+          label_max: "Siempre estoy planeando",
+        },
+        {
+          id: "sc2",
+          type: "scale",
+          text: "¿Qué tan fácil te resulta confiar en alguien nuevo?",
+          label_min: "Me cuesta mucho",
+          label_max: "Confío rápido",
+        },
+        {
+          id: "sc3",
+          type: "scale",
+          text: "¿Qué tan importante es para ti el reconocimiento de los demás?",
+          label_min: "No me importa nada",
+          label_max: "Es muy importante",
+        },
+        {
+          id: "sc4",
+          type: "scale",
+          text: "¿Qué tan celoso/a eres en una relación?",
+          label_min: "Para nada",
+          label_max: "Muy celoso/a",
+        },
+        {
+          id: "sc5",
+          type: "scale",
+          text: "¿Qué tan bueno/a eres para manejar el estrés?",
+          label_min: "Me cuesta mucho",
+          label_max: "Lo manejo muy bien",
+        },
+        {
+          id: "sc6",
+          type: "scale",
+          text: "¿Qué tan seguido te sientes satisfecho/a con tu vida?",
+          label_min: "Casi nunca",
+          label_max: "Casi siempre",
+        },
+        {
+          id: "sc7",
+          type: "scale",
+          text: "¿Qué tan importante es para ti la estabilidad económica?",
+          label_min: "No es prioridad",
+          label_max: "Es fundamental",
+        },
+        {
+          id: "sc8",
+          type: "scale",
+          text: "¿Qué tan fácil te resulta expresar lo que sientes?",
+          label_min: "Muy difícil",
+          label_max: "Muy fácil",
+        },
+        {
+          id: "sc9",
+          type: "scale",
+          text: "¿Qué tan aventurero/a eres en la vida cotidiana?",
+          label_min: "Muy de rutina",
+          label_max: "Muy aventurero/a",
+        },
+        {
+          id: "sc10",
+          type: "scale",
+          text: "¿Qué tan seguido te arrepientes de las decisiones que tomas?",
+          label_min: "Casi nunca",
+          label_max: "Con mucha frecuencia",
+        },
+        {
+          id: "sc11",
+          type: "scale",
+          text: "¿Qué tan fácil te resulta perdonar a alguien que te lastimó?",
+          label_min: "Me cuesta mucho",
+          label_max: "Perdono con facilidad",
+        },
+        {
+          id: "sc12",
+          type: "scale",
+          text: "¿Qué tan importante es para ti la opinión de los demás?",
+          label_min: "No me afecta",
+          label_max: "Me afecta mucho",
+        },
+        {
+          id: "sc13",
+          type: "scale",
+          text: "¿Qué tan organizado/a eres en tu vida diaria?",
+          label_min: "Bastante caótico/a",
+          label_max: "Muy organizado/a",
+        },
+        {
+          id: "sc14",
+          type: "scale",
+          text: "¿Qué tan seguido sientes que necesitas tiempo a solas?",
+          label_min: "Casi nunca",
+          label_max: "Con mucha frecuencia",
+        },
+        {
+          id: "sc15",
+          type: "scale",
+          text: "¿Qué tan impulsivo/a eres cuando tomas decisiones?",
+          label_min: "Muy reflexivo/a",
+          label_max: "Muy impulsivo/a",
+        },
+        {
+          id: "sc16",
+          type: "scale",
+          text: "¿Qué tan seguido sientes que das más de lo que recibes?",
+          label_min: "Casi nunca",
+          label_max: "Casi siempre",
+        },
+        {
+          id: "sc17",
+          type: "scale",
+          text: "¿Qué tan fácil te resulta decir que no?",
+          label_min: "Muy difícil",
+          label_max: "Muy fácil",
+        },
+        {
+          id: "sc18",
+          type: "scale",
+          text: "¿Qué tan seguido te comparas con los demás?",
+          label_min: "Casi nunca",
+          label_max: "Con mucha frecuencia",
+        },
+        {
+          id: "sc19",
+          type: "scale",
+          text: "¿Qué tan importante es para ti la independencia en una relación?",
+          label_min: "No es prioridad",
+          label_max: "Es fundamental",
+        },
+        {
+          id: "sc20",
+          type: "scale",
+          text: "¿Qué tan seguido actúas diferente a como te sientes por dentro?",
+          label_min: "Casi nunca",
+          label_max: "Con mucha frecuencia",
+        },
+        {
+          id: "sc21",
+          type: "scale",
+          text: "¿Qué tan competitivo/a eres?",
+          label_min: "Nada competitivo/a",
+          label_max: "Muy competitivo/a",
+        },
+        {
+          id: "sc22",
+          type: "scale",
+          text: "¿Qué tan seguido sientes que podrías hacer más de lo que haces?",
+          label_min: "Casi nunca",
+          label_max: "Casi siempre",
+        },
+        {
+          id: "sc23",
+          type: "scale",
+          text: "¿Qué tan fácil te resulta adaptarte a personas muy diferentes a ti?",
+          label_min: "Me cuesta mucho",
+          label_max: "Me resulta fácil",
+        },
+        {
+          id: "sc24",
+          type: "scale",
+          text: "¿Qué tan seguido piensas en el pasado?",
+          label_min: "Casi nunca",
+          label_max: "Con mucha frecuencia",
+        },
+        {
+          id: "sc25",
+          type: "scale",
+          text: "¿Qué tan importante es para ti el orden físico de tus espacios?",
+          label_min: "No me importa",
+          label_max: "Es muy importante",
+        },
+        {
+          id: "sc26",
+          type: "scale",
+          text: "¿Qué tan seguido actúas por impulso y luego lo piensas?",
+          label_min: "Casi nunca",
+          label_max: "Con mucha frecuencia",
+        },
+        {
+          id: "sc27",
+          type: "scale",
+          text: "¿Qué tan fácil te resulta desconectarte y relajarte de verdad?",
+          label_min: "Muy difícil",
+          label_max: "Muy fácil",
+        },
+        {
+          id: "sc28",
+          type: "scale",
+          text: "¿Qué tan seguido sientes que no tienes suficiente tiempo?",
+          label_min: "Casi nunca",
+          label_max: "Casi siempre",
+        },
+        {
+          id: "sc29",
+          type: "scale",
+          text: "¿Qué tan importante es para ti mantener la paz aunque estés enojado/a?",
+          label_min: "No es prioridad",
+          label_max: "Es fundamental",
+        },
+        {
+          id: "sc30",
+          type: "scale",
+          text: "¿Qué tan seguido sientes que te conocen de verdad las personas cercanas?",
+          label_min: "Casi nunca",
+          label_max: "Casi siempre",
+        },
+        {
+          id: "rl1",
+          type: "free",
+          text: "¿Cuál es la cosa más ridícula que te da miedo?",
+        },
+        {
+          id: "rl2",
+          type: "free",
+          text: "¿Qué es lo primero que piensas cuando te despiertas?",
+        },
+        {
+          id: "rl3",
+          type: "free",
+          text: "¿Cuál sería tu última cena y con quién?",
+        },
+        {
+          id: "rl4",
+          type: "free",
+          text: "¿Qué canción describe tu vida en este momento?",
+        },
+        {
+          id: "rl5",
+          type: "free",
+          text: "¿Cuál es el cumplido que más te ha llegado al corazón?",
+        },
+        {
+          id: "rl6",
+          type: "free",
+          text: "¿Qué es lo que más extrañarías si te quedas sin internet por un mes?",
+        },
+        {
+          id: "rl7",
+          type: "free",
+          text: "¿Cuál es la cosa que más orgullo te da de ti mismo/a?",
+        },
+        {
+          id: "rl8",
+          type: "free",
+          text: "¿Qué harías mañana si supieras que nadie te va a juzgar?",
+        },
+        {
+          id: "rl9",
+          type: "free",
+          text: "¿Cuál es el olor que más te transporta a un recuerdo específico?",
+        },
+        {
+          id: "rl10",
+          type: "free",
+          text: "¿Qué frase o dicho repites tanto que ya es parte de ti?",
+        },
+        {
+          id: "rl11",
+          type: "free",
+          text: "¿Cuál es la película o serie que más veces has visto?",
+        },
+        {
+          id: "rl12",
+          type: "free",
+          text: "¿Qué es lo primero que haces cuando llegas a casa después de un día agotador?",
+        },
+        {
+          id: "rl13",
+          type: "free",
+          text: "¿Cuál es el talento que tienes y que más poca gente conoce?",
+        },
+        {
+          id: "rl14",
+          type: "free",
+          text: "¿Qué cosa de tu infancia llevarías contigo si pudieras?",
+        },
+        {
+          id: "rl15",
+          type: "free",
+          text: "¿Cuál es la aplicación que más usas y que más te avergüenza admitir?",
+        },
+        {
+          id: "rl16",
+          type: "free",
+          text: "¿Qué es lo que más te hace reír sin poder parar?",
+        },
+        {
+          id: "rl17",
+          type: "free",
+          text: "¿Cuál es la comida que podrías comer todos los días sin cansarte?",
+        },
+        {
+          id: "rl18",
+          type: "free",
+          text: "¿Qué harías con 24 horas completamente tuyas, sin ninguna obligación?",
+        },
+        {
+          id: "rl19",
+          type: "free",
+          text: "¿Cuál es el peor consejo que alguien te ha dado?",
+        },
+        {
+          id: "rl20",
+          type: "free",
+          text: "¿Qué es lo que más te molesta de las personas en general?",
+        },
+        {
+          id: "rl21",
+          type: "free",
+          text: "¿Cuál es la pregunta que más te cuesta responder sobre ti mismo/a?",
+        },
+        {
+          id: "rl22",
+          type: "free",
+          text: "¿Qué cosa de tu rutina actual no cambiarías por nada?",
+        },
+        {
+          id: "rl23",
+          type: "free",
+          text: "¿Cuál es el lugar en el mundo donde te has sentido más en paz?",
+        },
+        {
+          id: "rl24",
+          type: "free",
+          text: "¿Qué es lo que más te cuesta soltar cuando ya pasó?",
+        },
+        {
+          id: "rl25",
+          type: "free",
+          text: "¿Cuál es el mejor regalo que alguien te ha dado sin que costara dinero?",
+        },
+        {
+          id: "rl26",
+          type: "free",
+          text: "¿Qué es lo que harías diferente si empezaras tu vida laboral desde cero?",
+        },
+        {
+          id: "rl27",
+          type: "free",
+          text: "¿Cuál es la cosa más valiente que has hecho en tu vida?",
+        },
+        {
+          id: "rl28",
+          type: "free",
+          text: "¿Qué es lo que te hace sentir más vivo/a?",
+        },
+        {
+          id: "rl29",
+          type: "free",
+          text: "¿Cuál es el error que más te costó pero del que más aprendiste?",
+        },
+        {
+          id: "rl30",
+          type: "free",
+          text: "¿Qué es lo que más agradeces de cómo te criaron?",
+        },
+        {
+          id: "rl31",
+          type: "free",
+          text: "¿Cuál es la versión de ti mismo/a que más te gusta?",
+        },
+        {
+          id: "rl32",
+          type: "free",
+          text: "¿Qué es lo que más te sorprendió de ti mismo/a en los últimos años?",
+        },
+        {
+          id: "rl33",
+          type: "free",
+          text: "¿Cuál es la conversación que más te marcó en tu vida?",
+        },
+        {
+          id: "rl34",
+          type: "free",
+          text: "¿Qué es lo que más valoras de tu relación actual?",
+        },
+        {
+          id: "rl35",
+          type: "free",
+          text: "¿Cuál es la cosa que más te cuesta pedir aunque la necesites?",
+        },
+        {
+          id: "rl36",
+          type: "free",
+          text: "¿Qué harías si supieras que no puedes fallar?",
+        },
+        {
+          id: "rl37",
+          type: "free",
+          text: "¿Cuál es la decisión de la que más orgulloso/a estás?",
+        },
+        {
+          id: "rl38",
+          type: "free",
+          text: "¿Qué es lo que más te cuesta decirle a alguien en persona?",
+        },
+        {
+          id: "rl39",
+          type: "free",
+          text: "¿Cuál es tu mayor fuente de paz cuando todo se siente caótico?",
+        },
+        {
+          id: "rl40",
+          type: "free",
+          text: "¿Qué es lo que más quieres que recuerden de ti las personas que te conocen?",
+        },
+      ];
+
+      // ── SANITIZACIÓN XSS ─────────────────────────────────────────────────────────
+      // Escapa caracteres peligrosos antes de insertar cualquier texto de usuario en el DOM
+      function san(str) {
+        if (!str) return "";
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#x27;")
+          .replace(/\//g, "&#x2F;");
+      }
+
+      // ── BARAJA CONFIG ─────────────────────────────────────────────────────────────
       const MAZOS_CONFIG = [
         {
           id: "base",
           icon: "🃏",
           nombre: "Base",
           desc: "El mazo original. Para conocerse de verdad.",
-          free: true,
         },
         {
           id: "primera-cita",
           icon: "✨",
           nombre: "Primera cita",
           desc: "Para conocerse sin que parezca interrogatorio.",
-          free: true,
         },
         {
           id: "compromiso",
           icon: "💍",
           nombre: "Compromiso",
           desc: "Las preguntas que toda pareja seria debe hacerse.",
-          free: true,
         },
         {
           id: "amigos",
           icon: "🤝",
           nombre: "Amigos",
           desc: "Para conocerse más allá de lo superficial.",
-          free: true,
         },
         {
           id: "picante",
           icon: "🔥",
           nombre: "Picante",
           desc: "Sin filtros pero con respeto. Para parejas.",
-          free: true,
         },
         {
           id: "sexual",
           icon: "🌶️",
           nombre: "Sin filtros",
           desc: "Solo adultos. Las conversaciones que pocas tienen.",
-          free: true,
         },
       ];
       const MECHANICS = {
@@ -945,13 +3605,17 @@
         "A",
       ];
       const FIGURES = ["J", "Q", "K", "A"];
-      let S = {
+
+      // ── APP STATE ─────────────────────────────────────────────────────────────────
+      let APP = { mode: null }; // 'baraja' | 'cmc'
+
+      // ── BARAJA STATE ──────────────────────────────────────────────────────────────
+      let B = {
         phase: "names",
         activePlayer: 0,
         p1: "",
         p2: "",
         selectedDeck: "base",
-        loadedDeck: null,
         customQ: [[], []],
         newQText: "",
         newQIntensity: "mid",
@@ -967,6 +3631,251 @@
         aceConfirmed: false,
         usedQuestions: new Set(),
       };
+
+      // ── CMC STATE ─────────────────────────────────────────────────────────────────
+      let C = {
+        phase: "setup",
+        p1: "",
+        p2: "",
+        myName: "",
+        role: "answerer",
+        questionCount: 10,
+        selectedQs: [],
+        currentIdx: 0,
+        myAnswers: {},
+        guesses: {},
+        score: 0,
+        showResult: false,
+        answered: false,
+      };
+
+      // ── ROUTER ────────────────────────────────────────────────────────────────────
+      function render() {
+        // Check URL for CMC guesser mode
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("cmc") === "guess" && !APP.mode) {
+          APP.mode = "cmc";
+          loadCMCFromURL(params);
+          return;
+        }
+        const app = document.getElementById("app");
+        if (!APP.mode) {
+          app.innerHTML = renderHome();
+          return;
+        }
+        if (APP.mode === "baraja") renderBaraja();
+        if (APP.mode === "cmc") renderCMC();
+      }
+
+      // ══════════════════════════════════════════════════════════════════════════════
+      // HOME
+      // ══════════════════════════════════════════════════════════════════════════════
+      function renderHome() {
+        return `<div class="fade-in">
+    <div class="logo">
+      <div class="logo-suit">♠ ♥ ♦ ♣</div>
+      <h1>El <em>Abismo</em></h1>
+      <div class="logo-sub">Juegos en pareja</div>
+    </div>
+    <div class="home-grid">
+      <div class="game-card" onclick="startBaraja()">
+        <div class="game-card-icon">🃏</div>
+        <div class="game-card-name">La baraja<br>del <em>abismo</em></div>
+        <div class="game-card-desc">Preguntas por palo. Para conocerse de verdad.</div>
+      </div>
+      <div class="game-card" onclick="startCMC()">
+        <div class="game-card-icon">🧠</div>
+        <div class="game-card-name">¿Cuánto<br>me <em>conoces?</em></div>
+        <div class="game-card-desc">Responde, comparte el link, tu pareja adivina.</div>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:12px;color:var(--text3);">Elige un juego para empezar</div>
+  </div>`;
+      }
+      function startBaraja() {
+        APP.mode = "baraja";
+        B = {
+          phase: "names",
+          activePlayer: 0,
+          p1: "",
+          p2: "",
+          selectedDeck: "base",
+          customQ: [[], []],
+          newQText: "",
+          newQIntensity: "mid",
+          deck: [],
+          card: null,
+          question: null,
+          source: null,
+          turn: 0,
+          history: [],
+          showHistory: false,
+          showCard: false,
+          aceInput: "",
+          aceConfirmed: false,
+          usedQuestions: new Set(),
+        };
+        render();
+      }
+      function startCMC() {
+        APP.mode = "cmc";
+        C = {
+          phase: "setup",
+          p1: "",
+          p2: "",
+          myName: "",
+          role: "answerer",
+          questionCount: 10,
+          selectedQs: [],
+          currentIdx: 0,
+          myAnswers: {},
+          guesses: {},
+          score: 0,
+          showResult: false,
+          answered: false,
+        };
+        renderCMC();
+      }
+      function goHome() {
+        APP.mode = null;
+        history.pushState({}, "", window.location.pathname);
+        render();
+      }
+
+      // ══════════════════════════════════════════════════════════════════════════════
+      // BARAJA DEL ABISMO
+      // ══════════════════════════════════════════════════════════════════════════════
+      function renderBaraja() {
+        const app = document.getElementById("app");
+        if (B.phase === "names") {
+          app.innerHTML = renderBNames();
+          bindBNames();
+        } else if (B.phase === "decks") {
+          app.innerHTML = renderBDecks();
+        } else if (B.phase === "questions") {
+          app.innerHTML = renderBQuestions();
+          bindBQuestions();
+        } else if (B.phase === "rules") {
+          app.innerHTML = renderBRules();
+        } else if (B.phase === "game") {
+          app.innerHTML = renderBGame();
+          bindBGame();
+        } else if (B.phase === "end") {
+          app.innerHTML = renderBEnd();
+        }
+      }
+      function bSteps(cur) {
+        const idx = {
+          names: 0,
+          decks: 1,
+          questions: 2,
+          rules: 3,
+          game: 4,
+          end: 4,
+        };
+        const c = idx[cur] ?? 0;
+        let h = '<div class="steps">';
+        ["Nombres", "Mazo", "Preguntas", "Reglas", "Juego"].forEach((s, i) => {
+          const cl = i < c ? "done" : i === c ? "active" : "";
+          h += `<div class="step ${cl}">${i < c ? "✓" : i + 1}</div>`;
+          if (i < 4) h += '<div class="step-line"></div>';
+        });
+        return h + "</div>";
+      }
+      function renderBNames() {
+        return `<div class="fade-in"><div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>${bSteps("names")}<div class="card-bg" style="margin-bottom:1rem;"><span class="section-label">Jugador 1</span><input id="p1in" value="${B.p1}" placeholder="Tu nombre" style="margin-bottom:1rem;"/><span class="section-label">Jugador 2</span><input id="p2in" value="${B.p2}" placeholder="Su nombre"/></div><div style="display:flex;gap:8px;"><button class="btn btn-sm" onclick="goHome()" style="padding:11px 16px;">← Inicio</button><button class="btn btn-primary" style="flex:1;padding:13px;" onclick="bGoTo('decks')">Continuar →</button></div></div>`;
+      }
+      function bindBNames() {
+        document
+          .getElementById("p1in")
+          .addEventListener("input", (e) => (B.p1 = e.target.value));
+        document
+          .getElementById("p2in")
+          .addEventListener("input", (e) => (B.p2 = e.target.value));
+      }
+      function renderBDecks() {
+        const cards = MAZOS_CONFIG.map((m) => {
+          const md = ALL_MAZOS[m.id];
+          const total = md
+            ? SUITS.reduce(
+                (acc, s) =>
+                  acc +
+                  ["soft", "mid", "hard"].reduce(
+                    (a, i) => a + (md[s]?.[i]?.length || 0),
+                    0,
+                  ),
+                0,
+              )
+            : 0;
+          return `<div class="deck-card ${B.selectedDeck === m.id ? "selected" : ""}" onclick="selectDeck('${m.id}')"><div class="deck-icon">${m.icon}</div><div class="deck-name">${m.nombre}</div><div class="deck-desc">${m.desc}</div><div class="deck-count">${total} preguntas</div></div>`;
+        }).join("");
+        return `<div class="fade-in"><div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>${bSteps("decks")}<div style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Elige el mazo para esta partida</div><div class="deck-grid">${cards}</div><div style="display:flex;gap:8px;"><button class="btn btn-sm" onclick="bGoTo('names')" style="padding:11px 16px;">← Atrás</button><button class="btn btn-primary" style="flex:1;padding:13px;" onclick="bGoTo('questions')">Continuar →</button></div></div>`;
+      }
+      function selectDeck(id) {
+        B.selectedDeck = id;
+        renderBaraja();
+      }
+      function renderBQuestions() {
+        const pi = B.activePlayer,
+          pn = pi === 0 ? B.p1 || "J1" : B.p2 || "J2",
+          pc = pi === 0 ? "var(--p1)" : "var(--p2)",
+          qs = B.customQ[pi];
+        const IL = { soft: "Suave", mid: "Mediana", hard: "Fuerte" };
+        const qL =
+          qs.length === 0
+            ? '<div class="empty-hint">Sin preguntas aún — las del mazo siempre están incluidas.</div>'
+            : `<div class="q-list">${qs.map((q, i) => `<div class="q-item"><div class="q-item-text">${san(q.text)}</div><span class="q-item-badge badge-${q.intensity}">${IL[q.intensity]}</span><button class="q-del" onclick="deleteBQ(${pi},${i})">×</button></div>`).join("")}</div>`;
+        return `<div class="fade-in"><div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>${bSteps("questions")}<div class="player-tabs"><button class="ptab ${pi === 0 ? "active-p1" : ""}" onclick="switchBPlayer(0)">${san(B.p1) || "J1"}</button><button class="ptab ${pi === 1 ? "active-p2" : ""}" onclick="switchBPlayer(1)">${san(B.p2) || "J2"}</button></div><div class="card-bg" style="margin-bottom:1rem;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;"><span style="font-size:14px;font-weight:500;color:${pc};">${pn}</span><span style="font-size:12px;color:var(--text3);">${qs.length} pregunta${qs.length !== 1 ? "s" : ""}</span></div>${qL}<div class="add-q-form"><span class="section-label">Nueva pregunta</span><textarea id="newQText" placeholder="Escribe tu pregunta aquí..." rows="2">${B.newQText}</textarea><div class="intensity-row">${["soft", "mid", "hard"].map((i) => `<button class="int-btn ${B.newQIntensity === i ? "sel-" + i : ""}" onclick="setBIntensity('${i}')">${IL[i]}</button>`).join("")}</div><div style="display:flex;gap:6px;margin-top:8px;"><button class="btn btn-primary btn-sm" style="flex:1;" onclick="addBQ(${pi})">+ Agregar</button></div></div></div><div style="display:flex;gap:8px;"><button class="btn btn-sm" onclick="bGoTo('decks')" style="padding:11px 16px;">← Atrás</button><button class="btn btn-primary" style="flex:1;padding:13px;" onclick="bGoTo('rules')">Ver reglas y jugar →</button></div></div>`;
+      }
+      function bindBQuestions() {
+        const ta = document.getElementById("newQText");
+        if (ta)
+          ta.addEventListener("input", (e) => (B.newQText = e.target.value));
+      }
+      function switchBPlayer(pi) {
+        B.activePlayer = pi;
+        B.newQText = "";
+        renderBaraja();
+      }
+      function setBIntensity(i) {
+        B.newQIntensity = i;
+        const ta = document.getElementById("newQText");
+        if (ta) B.newQText = ta.value;
+        renderBaraja();
+      }
+      function addBQ(pi) {
+        const ta = document.getElementById("newQText");
+        const text = (ta ? ta.value : B.newQText).trim();
+        if (!text) return;
+        B.customQ[pi].push({ text, intensity: B.newQIntensity });
+        B.newQText = "";
+        renderBaraja();
+      }
+      function deleteBQ(pi, idx) {
+        B.customQ[pi].splice(idx, 1);
+        renderBaraja();
+      }
+      function bGoTo(phase) {
+        B.phase = phase;
+        renderBaraja();
+      }
+      function renderBRules() {
+        const m =
+          MAZOS_CONFIG.find((x) => x.id === B.selectedDeck) || MAZOS_CONFIG[0];
+        const md = ALL_MAZOS[B.selectedDeck];
+        const total = md
+          ? SUITS.reduce(
+              (acc, s) =>
+                acc +
+                ["soft", "mid", "hard"].reduce(
+                  (a, i) => a + (md[s]?.[i]?.length || 0),
+                  0,
+                ),
+              0,
+            )
+          : 0;
+        return `<div class="fade-in"><div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>${bSteps("rules")}<div class="card-bg" style="margin-bottom:1rem;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;"><span style="font-size:22px;">${m.icon}</span><div><div style="font-size:14px;font-weight:500;">${m.nombre}</div><div style="font-size:12px;color:var(--text3);">${total} preguntas</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;"><div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;">${B.customQ[0].length}</div><div style="font-size:11px;color:var(--p1);margin-top:2px;">${san(B.p1) || "J1"}</div></div><div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;">${B.customQ[1].length}</div><div style="font-size:11px;color:var(--p2);margin-top:2px;">${san(B.p2) || "J2"}</div></div><div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;color:var(--gold);">${total}</div><div style="font-size:11px;color:var(--text3);margin-top:2px;">Mazo</div></div></div></div><div class="legend-grid"><div class="legend-item s"><span class="legend-sym">♠</span><div><div class="legend-name">Espadas</div><div class="legend-desc">Pasado · 2–10</div></div></div><div class="legend-item h"><span class="legend-sym">♥</span><div><div class="legend-name">Corazones</div><div class="legend-desc">Amor · 2–10</div></div></div><div class="legend-item d"><span class="legend-sym">♦</span><div><div class="legend-name">Diamantes</div><div class="legend-desc">Sueños · 2–10</div></div></div><div class="legend-item c"><span class="legend-sym">♣</span><div><div class="legend-name">Tréboles</div><div class="legend-desc">Filosóficas · 2–10</div></div></div></div><div class="card-bg" style="margin-bottom:1rem;"><div style="font-size:13px;font-weight:500;margin-bottom:0.75rem;">Figuras especiales</div><div style="display:flex;flex-direction:column;gap:10px;"><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-j" style="flex-shrink:0;">J</span><span style="font-size:13px;color:var(--text2);">El otro responde primero. Pregunta fuerte.</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-q" style="flex-shrink:0;">Q</span><span style="font-size:13px;color:var(--text2);">Adivina cómo respondería el otro. Pregunta fuerte.</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-k" style="flex-shrink:0;">K</span><span style="font-size:13px;color:var(--text2);">Cuenten 3 y respondan al mismo tiempo.</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-a" style="flex-shrink:0;">A</span><span style="font-size:13px;color:var(--text2);">Tú escribes la pregunta. Comodín total.</span></div></div></div><div style="display:flex;gap:8px;"><button class="btn btn-sm" onclick="bGoTo('questions')" style="padding:11px 16px;">← Atrás</button><button class="btn btn-primary" style="flex:1;padding:13px;" onclick="startBGame()">¡Repartir el mazo!</button></div></div>`;
+      }
       function shuffle(a) {
         const arr = [...a];
         for (let i = arr.length - 1; i > 0; i--) {
@@ -975,16 +3884,8 @@
         }
         return arr;
       }
-      async function loadDeck(id) {
-        try {
-          const r = await fetch("preguntas-" + id + ".json");
-          if (!r.ok) throw new Error();
-          return await r.json();
-        } catch (e) {
-          return null;
-        }
-      }
-      function buildPool(d) {
+      function buildBPool() {
+        const d = ALL_MAZOS[B.selectedDeck];
         const pool = {
           spades: { soft: [], mid: [], hard: [] },
           hearts: { soft: [], mid: [], hard: [] },
@@ -1008,40 +3909,40 @@
         let si = 0;
         for (let pi = 0; pi < 2; pi++) {
           const pn = pi === 0 ? "p1" : "p2";
-          for (const q of S.customQ[pi]) {
+          for (const q of B.customQ[pi]) {
             const suit = SUITS[si % 4];
             pool[suit][q.intensity].push(q.text);
             src[suit][q.intensity].push(pn);
             si++;
           }
         }
-        window._src = src;
+        window._bsrc = src;
         return pool;
       }
-      function buildDeck() {
+      function buildBDeck() {
         const d = [];
         for (const s of SUITS)
           for (const v of VALS) d.push({ suit: s, val: v });
         return d;
       }
-      function getQ(pool, suit, val) {
+      function getBQ(pool, suit, val) {
         if (["J", "Q", "K"].includes(val)) {
           const all = [],
             allS = [];
           for (const s of SUITS) {
             pool[s].hard.forEach((q, i) => {
-              if (!S.usedQuestions.has(q)) {
+              if (!B.usedQuestions.has(q)) {
                 all.push(q);
-                allS.push(window._src[s].hard[i]);
+                allS.push(window._bsrc[s].hard[i]);
               }
             });
           }
           if (!all.length) {
             for (const s of SUITS) {
               pool[s].mid.forEach((q, i) => {
-                if (!S.usedQuestions.has(q)) {
+                if (!B.usedQuestions.has(q)) {
                   all.push(q);
-                  allS.push(window._src[s].mid[i]);
+                  allS.push(window._bsrc[s].mid[i]);
                 }
               });
             }
@@ -1052,23 +3953,23 @@
               source: "base",
             };
           const idx = Math.floor(Math.random() * all.length);
-          S.usedQuestions.add(all[idx]);
+          B.usedQuestions.add(all[idx]);
           return { text: all[idx], source: allS[idx] };
         }
         if (val === "A") return { text: "__ACE__", source: "ace" };
         const n = parseInt(val),
           intensity = n <= 5 ? "soft" : n <= 9 ? "mid" : "hard";
         let av = pool[suit][intensity]
-          .map((q, i) => ({ text: q, src: window._src[suit][intensity][i] }))
-          .filter((q) => !S.usedQuestions.has(q.text));
+          .map((q, i) => ({ text: q, src: window._bsrc[suit][intensity][i] }))
+          .filter((q) => !B.usedQuestions.has(q.text));
         if (!av.length) {
           for (const o of ["soft", "mid", "hard"].filter(
             (x) => x !== intensity,
           )) {
             av.push(
               ...pool[suit][o]
-                .map((q, i) => ({ text: q, src: window._src[suit][o][i] }))
-                .filter((q) => !S.usedQuestions.has(q.text)),
+                .map((q, i) => ({ text: q, src: window._bsrc[suit][o][i] }))
+                .filter((q) => !B.usedQuestions.has(q.text)),
             );
           }
         }
@@ -1076,8 +3977,8 @@
           for (const s of SUITS)
             for (const i of ["soft", "mid", "hard"]) {
               pool[s][i].forEach((q, idx) => {
-                if (!S.usedQuestions.has(q))
-                  av.push({ text: q, src: window._src[s][i][idx] });
+                if (!B.usedQuestions.has(q))
+                  av.push({ text: q, src: window._bsrc[s][i][idx] });
               });
             }
         }
@@ -1087,7 +3988,7 @@
           return { text: l[idx], source: "base" };
         }
         const pick = av[Math.floor(Math.random() * av.length)];
-        S.usedQuestions.add(pick.text);
+        B.usedQuestions.add(pick.text);
         return { text: pick.text, source: pick.src };
       }
       function getIntensity(val) {
@@ -1095,251 +3996,595 @@
         const n = parseInt(val);
         return n <= 5 ? 1 : n <= 9 ? 2 : 3;
       }
-      function render() {
-        const app = document.getElementById("app");
-        if (S.phase === "names") {
-          app.innerHTML = renderNames();
-          bindNames();
-        } else if (S.phase === "decks") {
-          app.innerHTML = renderDecks();
-        } else if (S.phase === "questions") {
-          app.innerHTML = renderQuestions();
-          bindQuestions();
-        } else if (S.phase === "rules") {
-          app.innerHTML = renderRules();
-        } else if (S.phase === "game") {
-          app.innerHTML = renderGame();
-          bindGame();
-        } else if (S.phase === "end") {
-          app.innerHTML = renderEnd();
-        }
+      function startBGame() {
+        window._bpool = buildBPool();
+        B.deck = shuffle(buildBDeck());
+        B.phase = "game";
+        B.history = [];
+        B.turn = 0;
+        B.card = null;
+        B.question = null;
+        B.source = null;
+        B.showCard = false;
+        B.showHistory = false;
+        B.aceInput = "";
+        B.aceConfirmed = false;
+        B.usedQuestions = new Set();
+        renderBaraja();
       }
-      function steps(cur) {
-        const idx = {
-          names: 0,
-          decks: 1,
-          questions: 2,
-          rules: 3,
-          game: 4,
-          end: 4,
-        };
-        const c = idx[cur] ?? 0;
-        let h = '<div class="steps">';
-        ["Nombres", "Mazo", "Preguntas", "Reglas", "Juego"].forEach((s, i) => {
-          const cl = i < c ? "done" : i === c ? "active" : "";
-          h += `<div class="step ${cl}">${i < c ? "✓" : i + 1}</div>`;
-          if (i < 4) h += '<div class="step-line"></div>';
-        });
-        return h + "</div>";
-      }
-      function renderNames() {
-        return `<div class="fade-in"><div class="logo"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja<br>del <em>abismo</em></h1><div class="logo-sub">Juego de preguntas en pareja</div></div>${steps("names")}<div class="card-bg" style="margin-bottom:1rem;"><span class="section-label">Jugador 1</span><input id="p1in" value="${S.p1}" placeholder="Tu nombre" style="margin-bottom:1rem;"/><span class="section-label">Jugador 2</span><input id="p2in" value="${S.p2}" placeholder="Su nombre"/></div><button class="btn btn-primary" style="width:100%;padding:13px;" onclick="goTo('decks')">Continuar →</button></div>`;
-      }
-      function bindNames() {
-        document
-          .getElementById("p1in")
-          .addEventListener("input", (e) => (S.p1 = e.target.value));
-        document
-          .getElementById("p2in")
-          .addEventListener("input", (e) => (S.p2 = e.target.value));
-      }
-      function renderDecks() {
-        const cards = MAZOS_CONFIG.map(
-          (m) =>
-            `<div class="deck-card ${S.selectedDeck === m.id ? "selected" : ""} ${!m.free ? "locked" : ""}" onclick="${m.free ? `selectDeck('${m.id}')` : ""}""><div class="deck-icon">${m.icon}</div><div class="deck-name">${m.nombre}</div><div class="deck-desc">${m.desc}</div><span class="deck-badge ${m.free ? "badge-free" : "badge-lock"}">${m.free ? "Incluido" : "Próximamente"}</span></div>`,
-        ).join("");
-        return `<div class="fade-in"><div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>${steps("decks")}<div style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Elige el mazo para esta partida</div><div class="deck-grid">${cards}</div><div style="display:flex;gap:8px;"><button class="btn btn-sm" onclick="goTo('names')" style="padding:11px 16px;">← Atrás</button><button class="btn btn-primary" style="flex:1;padding:13px;" onclick="goTo('questions')">Continuar →</button></div></div>`;
-      }
-      function selectDeck(id) {
-        S.selectedDeck = id;
-        render();
-      }
-      function renderQuestions() {
-        const pi = S.activePlayer,
-          pn = pi === 0 ? S.p1 || "Jugador 1" : S.p2 || "Jugador 2",
-          pc = pi === 0 ? "var(--p1)" : "var(--p2)",
-          qs = S.customQ[pi],
-          IL = { soft: "Suave", mid: "Mediana", hard: "Fuerte" };
-        const qL =
-          qs.length === 0
-            ? `<div class="empty-hint">Sin preguntas aún — las del mazo seleccionado siempre están incluidas.</div>`
-            : `<div class="q-list">${qs.map((q, i) => `<div class="q-item"><div class="q-item-text">${q.text}</div><span class="q-item-badge badge-${q.intensity}">${IL[q.intensity]}</span><button class="q-del" onclick="deleteQ(${pi},${i})">×</button></div>`).join("")}</div>`;
-        return `<div class="fade-in"><div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>${steps("questions")}<div class="player-tabs"><button class="ptab ${pi === 0 ? "active-p1" : ""}" onclick="switchPlayer(0)">${S.p1 || "J1"}</button><button class="ptab ${pi === 1 ? "active-p2" : ""}" onclick="switchPlayer(1)">${S.p2 || "J2"}</button></div><div class="card-bg" style="margin-bottom:1rem;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;"><span style="font-size:14px;font-weight:500;color:${pc};">${pn}</span><span style="font-size:12px;color:var(--text3);">${qs.length} pregunta${qs.length !== 1 ? "s" : ""}</span></div>${qL}<div class="add-q-form"><span class="section-label">Nueva pregunta</span><textarea id="newQText" placeholder="Escribe tu pregunta aquí..." rows="2">${S.newQText}</textarea><div class="intensity-row">${["soft", "mid", "hard"].map((i) => `<button class="int-btn ${S.newQIntensity === i ? "sel-" + i : ""}" onclick="setIntensity('${i}')">${IL[i]}</button>`).join("")}</div><div class="add-row"><button class="btn btn-primary btn-sm" style="flex:1;" onclick="addQ(${pi})">+ Agregar</button></div></div></div><div style="display:flex;gap:8px;"><button class="btn btn-sm" onclick="goTo('decks')" style="padding:11px 16px;">← Atrás</button><button class="btn btn-primary" style="flex:1;padding:13px;" onclick="goTo('rules')">Ver reglas y jugar →</button></div></div>`;
-      }
-      function bindQuestions() {
-        const ta = document.getElementById("newQText");
-        if (ta)
-          ta.addEventListener("input", (e) => (S.newQText = e.target.value));
-      }
-      function switchPlayer(pi) {
-        S.activePlayer = pi;
-        S.newQText = "";
-        render();
-      }
-      function setIntensity(i) {
-        S.newQIntensity = i;
-        const ta = document.getElementById("newQText");
-        if (ta) S.newQText = ta.value;
-        render();
-      }
-      function addQ(pi) {
-        const ta = document.getElementById("newQText");
-        const text = (ta ? ta.value : S.newQText).trim();
-        if (!text) return;
-        S.customQ[pi].push({ text, intensity: S.newQIntensity });
-        S.newQText = "";
-        render();
-      }
-      function deleteQ(pi, idx) {
-        S.customQ[pi].splice(idx, 1);
-        render();
-      }
-      function goTo(phase) {
-        S.phase = phase;
-        render();
-      }
-      function renderRules() {
-        const m =
-          MAZOS_CONFIG.find((x) => x.id === S.selectedDeck) || MAZOS_CONFIG[0];
-        return `<div class="fade-in"><div class="logo" style="margin-bottom:1rem;"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div>${steps("rules")}<div class="card-bg" style="margin-bottom:1rem;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;"><span style="font-size:22px;">${m.icon}</span><div><div style="font-size:14px;font-weight:500;color:var(--text);">${m.nombre}</div><div style="font-size:12px;color:var(--text3);">${m.desc}</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;"><div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;color:var(--text);">${S.customQ[0].length}</div><div style="font-size:11px;color:var(--p1);margin-top:2px;">${S.p1 || "J1"}</div></div><div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;color:var(--text);">${S.customQ[1].length}</div><div style="font-size:11px;color:var(--p2);margin-top:2px;">${S.p2 || "J2"}</div></div><div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:20px;font-weight:500;color:var(--gold);">+mazo</div><div style="font-size:11px;color:var(--text3);margin-top:2px;">Base</div></div></div></div><div class="legend-grid"><div class="legend-item s"><span class="legend-sym">♠</span><div><div class="legend-name">Espadas</div><div class="legend-desc">Pasado · 2–10</div></div></div><div class="legend-item h"><span class="legend-sym">♥</span><div><div class="legend-name">Corazones</div><div class="legend-desc">Amor · 2–10</div></div></div><div class="legend-item d"><span class="legend-sym">♦</span><div><div class="legend-name">Diamantes</div><div class="legend-desc">Sueños · 2–10</div></div></div><div class="legend-item c"><span class="legend-sym">♣</span><div><div class="legend-name">Tréboles</div><div class="legend-desc">Filosóficas · 2–10</div></div></div></div><div class="card-bg" style="margin-bottom:1rem;"><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:0.75rem;">Figuras especiales</div><div style="display:flex;flex-direction:column;gap:10px;"><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-j" style="flex-shrink:0;">J · Jota</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">El otro responde primero. Dispara pregunta fuerte.</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-q" style="flex-shrink:0;">Q · Reina</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">Adivina cómo respondería el otro. Pregunta fuerte.</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-k" style="flex-shrink:0;">K · Rey</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">Cuenten 3 y respondan al mismo tiempo. Pregunta fuerte.</span></div><div style="display:flex;gap:10px;align-items:flex-start;"><span class="mechanic-tag tag-a" style="flex-shrink:0;">A · As</span><span style="font-size:13px;color:var(--text2);line-height:1.5;">Tú escribes la pregunta. Comodín total.</span></div></div></div><div style="font-size:12px;color:var(--text3);margin-bottom:1rem;line-height:1.6;text-align:center;"><strong style="color:var(--text2);">2–5</strong> Suave &nbsp;·&nbsp; <strong style="color:var(--text2);">6–9</strong> Mediana &nbsp;·&nbsp; <strong style="color:var(--text2);">10</strong> Fuerte<br>Ninguna pregunta se repite durante la partida.</div><div style="display:flex;gap:8px;"><button class="btn btn-sm" onclick="goTo('questions')" style="padding:11px 16px;">← Atrás</button><button class="btn btn-primary" style="flex:1;padding:13px;" onclick="startGame()">¡Repartir el mazo!</button></div></div>`;
-      }
-      async function startGame() {
-        document.getElementById("app").innerHTML =
-          '<div class="loading">Cargando mazo...</div>';
-        const d = await loadDeck(S.selectedDeck);
-        window._pool = buildPool(d);
-        S.deck = shuffle(buildDeck());
-        S.phase = "game";
-        S.history = [];
-        S.turn = 0;
-        S.card = null;
-        S.question = null;
-        S.source = null;
-        S.showCard = false;
-        S.showHistory = false;
-        S.aceInput = "";
-        S.aceConfirmed = false;
-        S.usedQuestions = new Set();
-        render();
-      }
-      function renderGame() {
-        const player = S.turn % 2 === 0 ? S.p1 || "J1" : S.p2 || "J2",
-          played = S.history.length,
-          remaining = S.deck.length;
+      function renderBGame() {
+        const player = B.turn % 2 === 0 ? B.p1 || "J1" : B.p2 || "J2",
+          played = B.history.length,
+          remaining = B.deck.length;
         let cH = "";
-        if (!S.showCard) {
-          cH = `<div class="card card-back" style="display:flex;" onclick="drawCard()"><div class="card-back-inner"><span class="card-back-sym">🂠</span></div></div>`;
+        if (!B.showCard) {
+          cH = `<div class="card card-back" style="display:flex;" onclick="drawBCard()"><div class="card-back-inner"><span class="card-back-sym">🂠</span></div></div>`;
         } else {
-          const c = S.card;
+          const c = B.card;
           cH = `<div class="card card-face ${c.suit}"><div class="card-corner-top"><span class="card-val">${c.val}</span><span class="card-sym-s">${SYMS[c.suit]}</span></div><div class="card-center"><span class="card-sym-big">${SYMS[c.suit]}</span></div><div class="card-corner-bot"><span class="card-val">${c.val}</span><span class="card-sym-s">${SYMS[c.suit]}</span></div></div>`;
         }
         let qH = "";
-        if (S.card && S.showCard) {
-          const intensity = getIntensity(S.card.val),
-            dots = [1, 2, 3]
-              .map(
-                (i) =>
-                  `<div class="q-dot ${i <= intensity ? (intensity === 3 ? "fire" : "on") : ""}"></div>`,
-              )
-              .join(""),
-            isAce = S.card.val === "A",
-            isFig = FIGURES.includes(S.card.val);
+        if (B.card && B.showCard) {
+          const intensity = getIntensity(B.card.val);
+          const dots = [1, 2, 3]
+            .map(
+              (i) =>
+                `<div class="q-dot ${i <= intensity ? (intensity === 3 ? "fire" : "on") : ""}"></div>`,
+            )
+            .join("");
+          const isAce = B.card.val === "A",
+            isFig = FIGURES.includes(B.card.val);
           let mH = "";
           if (isFig) {
-            const m = MECHANICS[S.card.val];
+            const m = MECHANICS[B.card.val];
             mH = `<span class="mechanic-tag ${m.tag}">${m.label}</span><div class="mechanic-desc">${m.desc}</div>`;
           }
           let sH = "";
-          if (S.source === "p1")
-            sH = `<span class="q-source src-p1">de ${S.p1 || "J1"}</span><br>`;
-          else if (S.source === "p2")
-            sH = `<span class="q-source src-p2">de ${S.p2 || "J2"}</span><br>`;
+          if (B.source === "p1")
+            sH = `<span class="q-source src-p1">de ${san(B.p1) || "J1"}</span><br>`;
+          else if (B.source === "p2")
+            sH = `<span class="q-source src-p2">de ${san(B.p2) || "J2"}</span><br>`;
           let bH = "";
           if (isAce) {
-            bH = !S.aceConfirmed
-              ? `<div class="ace-input-box"><textarea id="aceTA" placeholder="Escribe aquí tu pregunta comodín..." rows="3">${S.aceInput}</textarea><button class="btn btn-primary ace-confirm" onclick="confirmAce()">Confirmar →</button></div>`
-              : `<div class="q-text">${S.aceInput}</div>`;
+            bH = !B.aceConfirmed
+              ? `<div class="ace-input-box"><textarea id="aceTA" placeholder="Escribe aquí tu pregunta comodín..." rows="3">${B.aceInput}</textarea><button class="btn btn-primary" style="width:100%;margin-top:8px;padding:10px;" onclick="confirmBAce()">Confirmar →</button></div>`
+              : `<div class="q-text">${san(B.aceInput)}</div>`;
           } else {
-            bH = `<div class="q-text">${S.question || ""}</div>`;
+            bH = `<div class="q-text">${san(B.question || "")}</div>`;
           }
-          const showNext = !isAce || (isAce && S.aceConfirmed);
-          qH = `<div class="q-box"><div class="q-header"><span class="q-cat">${isAce ? "As · Comodín libre" : SUIT_NAMES[S.card.suit]}</span><div class="q-dots">${dots}</div></div>${sH}${mH}${bH}</div>${showNext ? `<div class="action-row"><button class="btn btn-next" onclick="nextTurn()">Siguiente turno →</button><button class="btn btn-sm btn-danger" onclick="confirmReset()">⟳</button></div>` : "`"}`;
+          const showNext = !isAce || (isAce && B.aceConfirmed);
+          qH = `<div class="q-box"><div class="q-header"><span class="q-cat">${isAce ? "As · Comodín libre" : SUIT_NAMES[B.card.suit]}</span><div class="q-dots">${dots}</div></div>${sH}${mH}${bH}</div>${showNext ? `<div class="action-row"><button class="btn btn-next" onclick="nextBTurn()">Siguiente turno →</button><button class="btn btn-sm btn-danger" onclick="if(confirm('¿Reiniciar?'))resetB()">⟳</button></div>` : ""}`;
         }
         let hH = "";
-        if (S.showHistory && S.history.length > 0) {
-          hH = `<div class="hist-panel">${[...S.history]
+        if (B.showHistory && B.history.length > 0) {
+          hH = `<div class="hist-panel">${[...B.history]
             .reverse()
             .slice(0, 15)
             .map(
               (h) =>
-                `<div class="hist-item"><span class="hist-tag">${h.val}${SYMS[h.suit]}</span><span class="hist-q">${h.question}</span></div>`,
+                `<div class="hist-item"><span class="hist-tag">${h.val}${SYMS[h.suit]}</span><span class="hist-q">${san(h.question)}</span></div>`,
             )
             .join("")}</div>`;
         }
-        return `<div class="game-screen fade-in"><div class="top-bar"><span class="top-bar-title">La baraja del abismo</span><div class="stats"><div class="stat"><div class="stat-n">${played}</div><div class="stat-l">Jugadas</div></div><div class="stat-sep"></div><div class="stat"><div class="stat-n">${remaining}</div><div class="stat-l">En mazo</div></div></div></div><div class="turn-label">Le toca a <span class="turn-name">${player}</span></div><div class="card-area">${cH}</div>${!S.showCard ? '<div class="draw-hint">toca la carta para robar</div>' : ""}${qH}<button class="hist-toggle" onclick="toggleHistory()">${S.showHistory ? "▴ Ocultar" : "▾ Ver"} historial (${played})</button>${hH}</div>`;
+        return `<div class="fade-in"><div class="top-bar"><span class="top-bar-title">La baraja del abismo</span><div class="stats"><div class="stat"><div class="stat-n">${played}</div><div class="stat-l">Jugadas</div></div><div class="stat-sep"></div><div class="stat"><div class="stat-n">${remaining}</div><div class="stat-l">En mazo</div></div></div></div><div class="turn-label">Le toca a <span class="turn-name">${player}</span></div><div class="card-area">${cH}</div>${!B.showCard ? '<div class="draw-hint">toca la carta para robar</div>' : ""}${qH}<button class="hist-toggle" onclick="toggleBHist()">${B.showHistory ? "▴ Ocultar" : "▾ Ver"} historial (${played})</button>${hH}</div>`;
       }
-      function bindGame() {
+      function bindBGame() {
         const ta = document.getElementById("aceTA");
         if (ta)
-          ta.addEventListener("input", (e) => (S.aceInput = e.target.value));
+          ta.addEventListener("input", (e) => (B.aceInput = e.target.value));
       }
-      function confirmAce() {
+      function confirmBAce() {
         const ta = document.getElementById("aceTA");
-        if (ta) S.aceInput = ta.value;
-        if (!S.aceInput.trim()) return;
-        S.aceConfirmed = true;
-        render();
+        if (ta) B.aceInput = ta.value;
+        if (!B.aceInput.trim()) return;
+        B.aceConfirmed = true;
+        renderBaraja();
       }
-      function drawCard() {
-        if (S.deck.length === 0) {
-          S.phase = "end";
-          render();
+      function drawBCard() {
+        if (B.deck.length === 0) {
+          B.phase = "end";
+          renderBaraja();
           return;
         }
-        const c = S.deck.pop();
-        S.card = c;
-        S.aceInput = "";
-        S.aceConfirmed = false;
-        const r = getQ(window._pool, c.suit, c.val);
-        S.question = r.text === "__ACE__" ? "" : r.text;
-        S.source = r.source;
-        S.showCard = true;
-        render();
+        const c = B.deck.pop();
+        B.card = c;
+        B.aceInput = "";
+        B.aceConfirmed = false;
+        const r = getBQ(window._bpool, c.suit, c.val);
+        B.question = r.text === "__ACE__" ? "" : r.text;
+        B.source = r.source;
+        B.showCard = true;
+        renderBaraja();
       }
-      function nextTurn() {
-        const q = S.card && S.card.val === "A" ? S.aceInput : S.question;
-        if (S.card) S.history.push({ ...S.card, question: q || "—" });
-        S.turn++;
-        S.card = null;
-        S.question = null;
-        S.source = null;
-        S.showCard = false;
-        S.aceInput = "";
-        S.aceConfirmed = false;
-        if (S.deck.length === 0) {
-          S.phase = "end";
-          render();
+      function nextBTurn() {
+        const q = B.card && B.card.val === "A" ? B.aceInput : B.question;
+        if (B.card) B.history.push({ ...B.card, question: san(q) || "—" });
+        B.turn++;
+        B.card = null;
+        B.question = null;
+        B.source = null;
+        B.showCard = false;
+        B.aceInput = "";
+        B.aceConfirmed = false;
+        if (B.deck.length === 0) {
+          B.phase = "end";
+          renderBaraja();
           return;
         }
-        render();
+        renderBaraja();
       }
-      function toggleHistory() {
-        S.showHistory = !S.showHistory;
-        render();
+      function toggleBHist() {
+        B.showHistory = !B.showHistory;
+        renderBaraja();
       }
-      function confirmReset() {
-        if (confirm("¿Reiniciar el juego?")) resetGame();
+      function resetB() {
+        B.phase = "names";
+        B.customQ = [[], []];
+        B.newQText = "";
+        B.usedQuestions = new Set();
+        renderBaraja();
       }
-      function resetGame() {
-        S.phase = "names";
-        S.customQ = [[], []];
-        S.newQText = "";
-        S.usedQuestions = new Set();
-        render();
+      function renderBEnd() {
+        return `<div class="end-screen"><div class="logo"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div><h2>¡Mazo agotado!</h2><p>${B.history.length} preguntas en una sola noche.</p><div class="summary-row"><div class="summary-card"><div class="summary-n">${B.history.length}</div><div class="summary-l">Respondidas</div></div><div class="summary-card"><div class="summary-n">${B.customQ[0].length + B.customQ[1].length}</div><div class="summary-l">Personalizadas</div></div></div><button class="btn btn-primary" style="width:100%;padding:13px;margin-bottom:0.75rem;" onclick="startBGame()">Jugar de nuevo</button><button class="btn" style="width:100%;padding:11px;" onclick="goHome()">← Inicio</button></div>`;
       }
-      function renderEnd() {
-        return `<div class="end-screen"><div class="logo"><div class="logo-suit">♠ ♥ ♦ ♣</div><h1>La baraja del <em>abismo</em></h1></div><h2>¡Mazo agotado!</h2><p>${S.history.length} preguntas en una sola noche.</p><div class="summary-row"><div class="summary-card"><div class="summary-n">${S.history.length}</div><div class="summary-l">Respondidas</div></div><div class="summary-card"><div class="summary-n">${S.customQ[0].length + S.customQ[1].length}</div><div class="summary-l">Personalizadas</div></div></div><button class="btn btn-primary" style="width:100%;padding:13px;margin-bottom:0.75rem;" onclick="startGame()">Jugar de nuevo</button><button class="btn" style="width:100%;padding:11px;" onclick="resetGame()">Nuevo juego desde cero</button></div>`;
+
+      // ══════════════════════════════════════════════════════════════════════════════
+      // ¿CUÁNTO ME CONOCES?
+      // ══════════════════════════════════════════════════════════════════════════════
+      function renderCMC() {
+        const app = document.getElementById("app");
+        if (C.phase === "setup") app.innerHTML = renderCMCSetup();
+        else if (C.phase === "answering") app.innerHTML = renderCMCAnswering();
+        else if (C.phase === "share") app.innerHTML = renderCMCShare();
+        else if (C.phase === "guessing") app.innerHTML = renderCMCGuessing();
+        else if (C.phase === "results") app.innerHTML = renderCMCResults();
+        // bind free text inputs
+        const ft = document.getElementById("cmc-free-input");
+        if (ft)
+          ft.addEventListener("input", (e) => {
+            const q = C.selectedQs[C.currentIdx];
+            C.myAnswers[q.id] = e.target.value;
+          });
+        const gft = document.getElementById("cmc-guess-free");
+        if (gft)
+          gft.addEventListener("input", (e) => {
+            const q = C.selectedQs[C.currentIdx];
+            C.guesses[q.id] = e.target.value;
+          });
       }
+
+      function renderCMCSetup() {
+        return `<div class="fade-in">
+    <div class="logo" style="margin-bottom:1rem;">
+      <div class="logo-suit">🧠</div>
+      <h1>¿Cuánto<br>me <em>conoces?</em></h1>
+      <div class="logo-sub">Responde · Comparte · Adivina</div>
+    </div>
+    <div class="card-bg" style="margin-bottom:1rem;">
+      <span class="section-label">Tu nombre</span>
+      <input id="cmc-name" value="${C.myName}" placeholder="¿Cómo te llamas?" style="margin-bottom:1rem;"/>
+      <span class="section-label">Nombre de tu pareja</span>
+      <input id="cmc-partner" value="${C.p2}" placeholder="¿Cómo se llama?"/>
+    </div>
+    <div class="card-bg" style="margin-bottom:1rem;">
+      <span class="section-label">Número de preguntas</span>
+      <div style="display:flex;gap:8px;margin-top:6px;">
+        ${[5, 10, 15, 20].map((n) => `<button class="btn btn-sm ${C.questionCount === n ? "btn-primary" : ""}" onclick="setCMCCount(${n})" style="flex:1;">${n}</button>`).join("")}
+      </div>
+    </div>
+    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:1rem;font-size:13px;color:var(--text2);line-height:1.7;">
+      <strong style="color:var(--text);font-weight:500;">¿Cómo funciona?</strong><br>
+      1. Tú respondes ${C.questionCount} preguntas sobre ti mismo/a<br>
+      2. Te genera un link especial<br>
+      3. Se lo mandas a tu pareja<br>
+      4. Tu pareja adivina tus respuestas<br>
+      5. Ven juntos quién ganó más puntos
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-sm" onclick="goHome()" style="padding:11px 16px;">← Inicio</button>
+      <button class="btn btn-primary" style="flex:1;padding:13px;" onclick="startCMCAnswering()">Empezar →</button>
+    </div>
+  </div>`;
+      }
+
+      function setCMCCount(n) {
+        C.questionCount = n;
+        const ni = document.getElementById("cmc-name");
+        const pi = document.getElementById("cmc-partner");
+        if (ni) C.myName = ni.value;
+        if (pi) C.p2 = pi.value;
+        renderCMC();
+      }
+
+      function startCMCAnswering() {
+        const ni = document.getElementById("cmc-name");
+        const pi = document.getElementById("cmc-partner");
+        if (ni) C.myName = ni.value.trim();
+        if (pi) C.p2 = pi.value.trim();
+        if (!C.myName) {
+          alert("Escribe tu nombre para continuar");
+          return;
+        }
+        // Select random questions
+        const shuffled = shuffle([...CMC_QUESTIONS]);
+        C.selectedQs = shuffled.slice(0, C.questionCount);
+        C.currentIdx = 0;
+        C.myAnswers = {};
+        C.phase = "answering";
+        renderCMC();
+      }
+
+      function renderCMCAnswering() {
+        const q = C.selectedQs[C.currentIdx];
+        const progress = (C.currentIdx / C.selectedQs.length) * 100;
+        const myAns = C.myAnswers[q.id];
+        let inputHTML = "";
+        if (q.type === "multiple") {
+          inputHTML = `<div class="cmc-options">${q.options.map((o, i) => `<button class="cmc-opt ${myAns === String(i) ? "selected" : ""}" onclick="setCMCAns('${q.id}','${i}')">${o}</button>`).join("")}</div>`;
+        } else if (q.type === "truefalse") {
+          inputHTML = `<div class="cmc-tf-row">
+      <button class="cmc-tf-btn ${myAns === "true" ? "selected" : ""}" onclick="setCMCAns('${q.id}','true')">✓ Verdadero</button>
+      <button class="cmc-tf-btn ${myAns === "false" ? "selected" : ""}" onclick="setCMCAns('${q.id}','false')">✗ Falso</button>
+    </div>`;
+        } else if (q.type === "scale") {
+          inputHTML = `<div class="cmc-scale-row">${[1, 2, 3, 4, 5].map((n) => `<button class="cmc-scale-btn ${myAns === String(n) ? "selected" : ""}" onclick="setCMCAns('${q.id}','${n}')" style="height:${30 + n * 8}px;">${n}</button>`).join("")}</div>
+    <div class="cmc-scale-labels"><span>${q.label_min}</span><span>${q.label_max}</span></div>`;
+        } else {
+          inputHTML = `<textarea id="cmc-free-input" class="cmc-free-input" placeholder="Escribe tu respuesta..." rows="3">${myAns || ""}</textarea>`;
+        }
+        // Para preguntas libres el botón siempre está activo — se valida al presionar
+        const isFree = q.type === "free";
+        const hasAns = isFree ? true : myAns !== undefined && myAns !== "";
+        return `<div class="fade-in">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+      <span class="cmc-player-badge badge-p1">✏️ ${san(C.myName) || "Tú"}</span>
+      <span style="font-size:12px;color:var(--text3);">${C.currentIdx + 1} / ${C.selectedQs.length}</span>
+    </div>
+    <div class="cmc-progress"><div class="cmc-progress-bar" style="width:${progress}%"></div></div>
+    <div class="cmc-question-box">
+      <div class="cmc-qnum">${q.type === "multiple" ? "Múltiple opción" : q.type === "truefalse" ? "Verdadero o Falso" : q.type === "scale" ? "Escala 1–5" : "Respuesta libre"}</div>
+      <div class="cmc-qtext">${q.text}</div>
+      ${inputHTML}
+    </div>
+    <div style="display:flex;gap:8px;">
+      ${C.currentIdx > 0 ? `<button class="btn btn-sm" onclick="prevCMC()" style="padding:11px 16px;">← Anterior</button>` : ""}
+      <button class="btn btn-primary" style="flex:1;padding:13px;" onclick="nextCMC()" ${!hasAns ? "disabled style='opacity:0.5;cursor:default;'" : ""}>
+        ${C.currentIdx < C.selectedQs.length - 1 ? "Siguiente →" : "Ver mi link →"}
+      </button>
+    </div>
+  </div>`;
+      }
+
+      function setCMCAns(qid, val) {
+        C.myAnswers[qid] = val;
+        renderCMC();
+      }
+
+      function prevCMC() {
+        if (C.currentIdx > 0) {
+          C.currentIdx--;
+          renderCMC();
+        }
+      }
+
+      function nextCMC() {
+        const q = C.selectedQs[C.currentIdx];
+        // save free text before validating
+        const ft = document.getElementById("cmc-free-input");
+        if (ft && q.type === "free") C.myAnswers[q.id] = ft.value.trim();
+        // for free questions allow empty (optional) — just warn once
+        if (
+          q.type === "free" &&
+          (!C.myAnswers[q.id] || C.myAnswers[q.id] === "")
+        ) {
+          C.myAnswers[q.id] = "(sin respuesta)";
+        }
+        // for other types require an answer
+        if (
+          q.type !== "free" &&
+          (C.myAnswers[q.id] === undefined || C.myAnswers[q.id] === "")
+        )
+          return;
+        if (C.currentIdx < C.selectedQs.length - 1) {
+          C.currentIdx++;
+          renderCMC();
+        } else {
+          generateCMCLink();
+        }
+      }
+
+      function generateCMCLink() {
+        const payload = {
+          name: C.myName,
+          partner: C.p2,
+          qs: C.selectedQs.map((q) => q.id),
+          ans: C.myAnswers,
+        };
+        const encoded = btoa(
+          unescape(encodeURIComponent(JSON.stringify(payload))),
+        );
+        const base = window.location.origin + window.location.pathname;
+        C.shareUrl = `${base}?cmc=guess&d=${encoded}`;
+        C.phase = "share";
+        renderCMC();
+      }
+
+      function renderCMCShare() {
+        return `<div class="fade-in">
+    <div class="logo" style="margin-bottom:1rem;">
+      <div class="logo-suit">🧠</div>
+      <h1>¿Cuánto<br>me <em>conoces?</em></h1>
+    </div>
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:0.5rem;">🎉</div>
+      <div style="font-size:18px;font-weight:500;color:var(--text);margin-bottom:6px;">¡Listo, ${san(C.myName) || ""}!</div>
+      <div style="font-size:14px;color:var(--text3);">Mándale este link a ${san(C.p2) || "tu pareja"}</div>
+    </div>
+    <div class="cmc-share-box">
+      <div class="cmc-share-url">${C.shareUrl || ""}</div>
+      <button class="btn btn-primary" style="width:100%;padding:12px;" onclick="copyLink()">📋 Copiar link</button>
+    </div>
+    <div class="card-bg" style="margin-bottom:1rem;font-size:13px;color:var(--text2);line-height:1.7;">
+      <strong style="color:var(--text);font-weight:500;">Qué pasa ahora:</strong><br>
+      ${san(C.p2) || "Tu pareja"} abre el link y trata de adivinar tus ${C.selectedQs.length} respuestas.<br>
+      Por cada acierto gana puntos. Al final ven juntos el resultado.
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn" style="flex:1;padding:11px;" onclick="goHome()">← Inicio</button>
+      <button class="btn btn-sm" onclick="if(confirm('¿Jugar de nuevo desde cero?'))startCMC()" style="padding:11px 16px;">Nuevo</button>
+    </div>
+  </div>`;
+      }
+
+      function copyLink() {
+        navigator.clipboard
+          .writeText(C.shareUrl || "")
+          .then(() => {
+            const btn = document.querySelector(".cmc-share-box .btn-primary");
+            if (btn) {
+              btn.textContent = "✓ Copiado!";
+              setTimeout(() => {
+                btn.textContent = "📋 Copiar link";
+              }, 2000);
+            }
+          })
+          .catch(() => {
+            // fallback
+            const ta = document.createElement("textarea");
+            ta.value = C.shareUrl || "";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            alert("Link copiado!");
+          });
+      }
+
+      function loadCMCFromURL(params) {
+        try {
+          const raw = params.get("d");
+          if (!raw) throw new Error();
+          const payload = JSON.parse(decodeURIComponent(escape(atob(raw))));
+          // Rebuild selected questions from IDs
+          const qMap = {};
+          CMC_QUESTIONS.forEach((q) => (qMap[q.id] = q));
+          C.selectedQs = payload.qs.map((id) => qMap[id]).filter(Boolean);
+          C.myAnswers = payload.ans;
+          C.p1 = payload.name;
+          C.myName = payload.partner || "";
+          C.guesses = {};
+          C.currentIdx = 0;
+          C.phase = "guessing";
+          C.role = "guesser";
+          renderCMC();
+        } catch (e) {
+          APP.mode = null;
+          history.pushState({}, "", window.location.pathname);
+          render();
+        }
+      }
+
+      function renderCMCGuessing() {
+        const q = C.selectedQs[C.currentIdx];
+        const progress = (C.currentIdx / C.selectedQs.length) * 100;
+        const myGuess = C.guesses[q.id];
+        const revealed = C.showResult && myGuess !== undefined;
+        const correctAns = C.myAnswers[q.id];
+
+        function optClass(val) {
+          if (!revealed) return myGuess === val ? "selected" : "";
+          if (val === correctAns) return "correct";
+          if (val === myGuess && myGuess !== correctAns) return "wrong";
+          return "";
+        }
+
+        let inputHTML = "";
+        if (q.type === "multiple") {
+          inputHTML = `<div class="cmc-options">${q.options
+            .map((o, i) => {
+              const v = String(i);
+              return `<button class="cmc-opt ${optClass(v)}" onclick="${!revealed ? `setGuess('${q.id}','${v}')` : ""}">${o}${revealed && v === correctAns ? " ✓" : revealed && v === myGuess && myGuess !== correctAns ? " ✗" : ""}</button>`;
+            })
+            .join("")}</div>`;
+        } else if (q.type === "truefalse") {
+          inputHTML = `<div class="cmc-tf-row">
+      <button class="cmc-tf-btn ${optClass("true")}" onclick="${!revealed ? `setGuess('${q.id}','true')` : ""}" >✓ Verdadero</button>
+      <button class="cmc-tf-btn ${optClass("false")}" onclick="${!revealed ? `setGuess('${q.id}','false')` : ""}" >✗ Falso</button>
+    </div>`;
+        } else if (q.type === "scale") {
+          inputHTML = `<div class="cmc-scale-row">${[1, 2, 3, 4, 5]
+            .map((n) => {
+              const v = String(n);
+              return `<button class="cmc-scale-btn ${optClass(v)}" onclick="${!revealed ? `setGuess('${q.id}','${v}')` : ""}" style="height:${30 + n * 8}px;">${n}</button>`;
+            })
+            .join("")}</div>
+    <div class="cmc-scale-labels"><span>${q.label_min}</span><span>${q.label_max}</span></div>`;
+        } else {
+          if (!revealed) {
+            inputHTML = `<textarea id="cmc-guess-free" placeholder="¿Qué crees que respondió ${san(C.p1) || "él/ella"}?" rows="3">${san(myGuess) || ""}</textarea>`;
+          } else {
+            const isClose =
+              myGuess &&
+              correctAns &&
+              myGuess.trim().toLowerCase() === correctAns.trim().toLowerCase();
+            inputHTML = `<div class="cmc-free-answer" style="margin-bottom:8px;"><strong style="font-size:11px;color:var(--text3);display:block;margin-bottom:4px;">TU RESPUESTA</strong>${myGuess || "—"}</div>
+      <div class="cmc-free-answer"><strong style="font-size:11px;color:var(--text3);display:block;margin-bottom:4px;">RESPUESTA DE ${san(C.p1 || "").toUpperCase()}</strong>${san(correctAns) || "—"}</div>`;
+          }
+        }
+
+        let revealBox = "";
+        if (revealed && q.type !== "free") {
+          const correct = myGuess === correctAns;
+          revealBox = `<div class="cmc-reveal-box ${correct ? "cmc-reveal-correct" : "cmc-reveal-wrong"}">
+      ${correct ? "✓ ¡Correcto! +1 punto" : "✗ Respuesta incorrecta"}
+    </div>`;
+        }
+
+        // Para preguntas libres el botón siempre está activo
+        const hasGuess =
+          q.type === "free" ? true : myGuess !== undefined && myGuess !== "";
+        return `<div class="fade-in">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+      <span class="cmc-player-badge badge-p2">🔍 Adivinando a ${san(C.p1) || "..."}</span>
+      <span style="font-size:12px;color:var(--text3);">${C.currentIdx + 1} / ${C.selectedQs.length}</span>
+    </div>
+    <div class="cmc-progress"><div class="cmc-progress-bar" style="width:${progress}%"></div></div>
+    <div class="cmc-question-box">
+      <div class="cmc-qnum">${q.type === "multiple" ? "Múltiple opción" : q.type === "truefalse" ? "Verdadero o Falso" : q.type === "scale" ? "Escala 1–5" : "Respuesta libre"}</div>
+      <div class="cmc-qtext">${q.text}</div>
+      ${inputHTML}
+      ${revealBox}
+    </div>
+    ${
+      !revealed
+        ? `<button class="btn btn-primary" style="width:100%;padding:13px;" onclick="revealGuess()" ${!hasGuess ? "disabled style='opacity:0.5;cursor:default;'" : ""}>Ver respuesta →</button>`
+        : `<button class="btn btn-primary" style="width:100%;padding:13px;" onclick="nextGuess()">
+      ${C.currentIdx < C.selectedQs.length - 1 ? "Siguiente →" : "Ver resultados →"}
+    </button>`
+    }
+  </div>`;
+      }
+
+      function setGuess(qid, val) {
+        if (C.showResult) return;
+        C.guesses[qid] = val;
+        renderCMC();
+      }
+
+      function revealGuess() {
+        const q = C.selectedQs[C.currentIdx];
+        // save free text before validating
+        const gft = document.getElementById("cmc-guess-free");
+        if (gft && q.type === "free")
+          C.guesses[q.id] = gft.value.trim() || "(sin respuesta)";
+        // for non-free require a selection
+        if (q.type !== "free" && !C.guesses[q.id] && C.guesses[q.id] !== "0")
+          return;
+        // score for non-free only
+        if (q.type !== "free" && C.guesses[q.id] === C.myAnswers[q.id])
+          C.score++;
+        C.showResult = true;
+        renderCMC();
+      }
+
+      function nextGuess() {
+        C.showResult = false;
+        if (C.currentIdx < C.selectedQs.length - 1) {
+          C.currentIdx++;
+          renderCMC();
+        } else {
+          C.phase = "results";
+          renderCMC();
+        }
+      }
+
+      function renderCMCResults() {
+        const total = C.selectedQs.filter((q) => q.type !== "free").length;
+        const pct = total > 0 ? Math.round((C.score / total) * 100) : 0;
+        let emoji = "🤔",
+          msg = "Hay margen de mejora jaja";
+        if (pct >= 80) {
+          emoji = "🥇";
+          msg = "¡Los conoces increíble bien!";
+        } else if (pct >= 60) {
+          emoji = "🎉";
+          msg = "¡Bastante bien! Se conocen de verdad.";
+        } else if (pct >= 40) {
+          emoji = "😅";
+          msg = "Van a medias, queda tela que cortar.";
+        }
+
+        // Build full review — all questions
+        const typeLabels = {
+          multiple: "Múltiple opción",
+          truefalse: "V o F",
+          scale: "Escala",
+          free: "Respuesta libre",
+        };
+
+        const reviewHTML = C.selectedQs
+          .map((q, i) => {
+            const correct =
+              q.type !== "free" && C.guesses[q.id] === C.myAnswers[q.id];
+            const isFree = q.type === "free";
+            const borderColor = isFree
+              ? "var(--border2)"
+              : correct
+                ? "rgba(109,184,122,0.4)"
+                : "rgba(212,87,74,0.3)";
+            const icon = isFree ? "💬" : correct ? "✓" : "✗";
+            const iconColor = isFree
+              ? "var(--text3)"
+              : correct
+                ? "var(--clubs)"
+                : "var(--hearts)";
+
+            // Format the answer nicely depending on type
+            function formatAns(val) {
+              if (!val || val === "(sin respuesta)") return "—";
+              if (q.type === "multiple") return q.options[parseInt(val)] || val;
+              if (q.type === "truefalse")
+                return val === "true" ? "Verdadero" : "Falso";
+              if (q.type === "scale") return `${val} / 5`;
+              return san(val);
+            }
+
+            const answered = formatAns(C.myAnswers[q.id]);
+            const guessed = formatAns(C.guesses[q.id]);
+
+            return `<div style="background:var(--surface);border:0.5px solid ${borderColor};border-radius:12px;padding:12px 14px;margin-bottom:8px;text-align:left;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-size:10px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;">${typeLabels[q.type] || q.type}</span>
+        <span style="font-size:14px;color:${iconColor};font-weight:500;">${icon}</span>
+      </div>
+      <div style="font-size:13px;color:var(--text);margin-bottom:8px;line-height:1.5;">${q.text}</div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="font-size:12px;"><span style="color:var(--p1);font-weight:500;">Respondió: </span><span style="color:var(--text2);">${answered}</span></div>
+        <div style="font-size:12px;"><span style="color:var(--p2);font-weight:500;">Adivinaste: </span><span style="color:${isFree ? "var(--text2)" : correct ? "var(--clubs)" : "var(--hearts)"};">${guessed}</span></div>
+      </div>
+    </div>`;
+          })
+          .join("");
+
+        return `<div class="end-screen">
+    <div class="logo">
+      <div class="logo-suit">🧠</div>
+      <h1>¿Cuánto<br>me <em>conoces?</em></h1>
+    </div>
+    <div style="font-size:56px;margin:0.5rem 0;">${emoji}</div>
+    <div class="cmc-score-big">${C.score} / ${total}</div>
+    <p style="margin-bottom:0.5rem;">${msg}</p>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:1.5rem;">${pct}% de aciertos en preguntas objetivas</p>
+    <div style="text-align:left;margin-bottom:1.5rem;">
+      <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:0.75rem;text-align:center;">Revisen juntos — pregunta por pregunta</div>
+      ${reviewHTML}
+    </div>
+    <button class="btn btn-primary" style="width:100%;padding:13px;margin-bottom:0.75rem;" onclick="startCMC()">Jugar de nuevo</button>
+    <button class="btn" style="width:100%;padding:11px;" onclick="goHome()">← Inicio</button>
+  </div>`;
+      }
+
+      // ── INIT ──────────────────────────────────────────────────────────────────────
       render();
     </script>
   </body>
