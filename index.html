@@ -3670,11 +3670,17 @@
 
       // ── ROUTER ────────────────────────────────────────────────────────────────────
       function render() {
-        // Check URL for CMC guesser mode
         const params = new URLSearchParams(window.location.search);
+        // CMC guesser mode
         if (params.get("cmc") === "guess" && !APP.mode) {
           APP.mode = "cmc";
           loadCMCFromURL(params);
+          return;
+        }
+        // CMC shared results mode
+        if (params.get("cmc") === "results" && !APP.mode) {
+          APP.mode = "cmc";
+          loadCMCResultsFromURL(params);
           return;
         }
         const app = document.getElementById("app");
@@ -3745,6 +3751,9 @@
           myName: "",
           role: "answerer",
           questionCount: 10,
+          poolCount: 10,
+          customQs: [],
+          newCustomQ: "",
           selectedQs: [],
           currentIdx: 0,
           myAnswers: {},
@@ -3757,7 +3766,9 @@
       }
       function goHome() {
         APP.mode = null;
-        history.pushState({}, "", window.location.pathname);
+        try {
+          history.pushState({}, "", window.location.pathname);
+        } catch (e) {}
         render();
       }
 
@@ -4153,6 +4164,7 @@
       function renderCMC() {
         const app = document.getElementById("app");
         if (C.phase === "setup") app.innerHTML = renderCMCSetup();
+        else if (C.phase === "custom") app.innerHTML = renderCMCCustom();
         else if (C.phase === "answering") app.innerHTML = renderCMCAnswering();
         else if (C.phase === "share") app.innerHTML = renderCMCShare();
         else if (C.phase === "guessing") app.innerHTML = renderCMCGuessing();
@@ -4170,6 +4182,9 @@
             const q = C.selectedQs[C.currentIdx];
             C.guesses[q.id] = e.target.value;
           });
+        const cq = document.getElementById("cmc-custom-input");
+        if (cq)
+          cq.addEventListener("input", (e) => (C.newCustomQ = e.target.value));
       }
 
       function renderCMCSetup() {
@@ -4186,36 +4201,37 @@
       <input id="cmc-partner" value="${C.p2}" placeholder="¿Cómo se llama?"/>
     </div>
     <div class="card-bg" style="margin-bottom:1rem;">
-      <span class="section-label">Número de preguntas</span>
-      <div style="display:flex;gap:8px;margin-top:6px;">
-        ${[5, 10, 15, 20].map((n) => `<button class="btn btn-sm ${C.questionCount === n ? "btn-primary" : ""}" onclick="setCMCCount(${n})" style="flex:1;">${n}</button>`).join("")}
+      <span class="section-label">Preguntas del juego</span>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:8px;">¿Cuántas preguntas del banco quieres incluir?</div>
+      <div style="display:flex;gap:8px;">
+        ${[5, 10, 15, 20].map((n) => `<button class="btn btn-sm ${C.poolCount === n ? "btn-primary" : ""}" onclick="setCMCPoolCount(${n})" style="flex:1;">${n}</button>`).join("")}
       </div>
     </div>
     <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:1rem;font-size:13px;color:var(--text2);line-height:1.7;">
       <strong style="color:var(--text);font-weight:500;">¿Cómo funciona?</strong><br>
-      1. Tú respondes ${C.questionCount} preguntas sobre ti mismo/a<br>
-      2. Te genera un link especial<br>
-      3. Se lo mandas a tu pareja<br>
-      4. Tu pareja adivina tus respuestas<br>
-      5. Ven juntos quién ganó más puntos
+      1. Elige cuántas preguntas del banco incluir<br>
+      2. Agrega tus propias preguntas personalizadas<br>
+      3. Respóndelas todas en secreto<br>
+      4. Comparte el link con tu pareja<br>
+      5. Tu pareja adivina — ¡a ver quién te conoce mejor!
     </div>
     <div style="display:flex;gap:8px;">
       <button class="btn btn-sm" onclick="goHome()" style="padding:11px 16px;">← Inicio</button>
-      <button class="btn btn-primary" style="flex:1;padding:13px;" onclick="startCMCAnswering()">Empezar →</button>
+      <button class="btn btn-primary" style="flex:1;padding:13px;" onclick="goToCMCCustom()">Siguiente →</button>
     </div>
   </div>`;
       }
 
-      function setCMCCount(n) {
-        C.questionCount = n;
+      function setCMCPoolCount(n) {
         const ni = document.getElementById("cmc-name");
         const pi = document.getElementById("cmc-partner");
         if (ni) C.myName = ni.value;
         if (pi) C.p2 = pi.value;
+        C.poolCount = n;
         renderCMC();
       }
 
-      function startCMCAnswering() {
+      function goToCMCCustom() {
         const ni = document.getElementById("cmc-name");
         const pi = document.getElementById("cmc-partner");
         if (ni) C.myName = ni.value.trim();
@@ -4224,9 +4240,100 @@
           alert("Escribe tu nombre para continuar");
           return;
         }
-        // Select random questions
+        C.phase = "custom";
+        renderCMC();
+      }
+
+      function renderCMCCustom() {
+        const qs = C.customQs || [];
+        const total = C.poolCount + qs.length;
+        const qListHTML =
+          qs.length === 0
+            ? `<div class="empty-hint">Sin preguntas aún — solo se usarán las del banco.</div>`
+            : `<div class="q-list">${qs
+                .map(
+                  (q, i) => `
+      <div class="q-item">
+        <div class="q-item-text">${san(q)}</div>
+        <button class="q-del" onclick="deleteCMCCustomQ(${i})">×</button>
+      </div>`,
+                )
+                .join("")}</div>`;
+        return `<div class="fade-in">
+    <div class="logo" style="margin-bottom:1rem;">
+      <div class="logo-suit">🧠</div>
+      <h1>¿Cuánto<br>me <em>conoces?</em></h1>
+    </div>
+    <div class="card-bg" style="margin-bottom:1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+        <span style="font-size:14px;font-weight:500;color:var(--text);">Tus preguntas</span>
+        <span style="font-size:12px;color:var(--text3);">${qs.length} agregada${qs.length !== 1 ? "s" : ""}</span>
+      </div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:0.75rem;line-height:1.6;">
+        Agrega preguntas que quieras que tu pareja adivine sobre ti. Se responden como <strong style="color:var(--text2);">respuesta libre</strong>.
+      </div>
+      ${qListHTML}
+      <div class="add-q-form" style="margin-top:0.75rem;">
+        <span class="section-label">Nueva pregunta</span>
+        <textarea id="cmc-custom-input" placeholder="¿Cuál es mi mayor sueño pendiente?" rows="2">${C.newCustomQ || ""}</textarea>
+        <div style="display:flex;gap:6px;margin-top:8px;">
+          <button class="btn btn-primary btn-sm" style="flex:1;" onclick="addCMCCustomQ()">+ Agregar</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-bg" style="margin-bottom:1rem;font-size:13px;color:var(--text2);line-height:1.7;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+        <span>Del banco</span><span style="color:var(--text);font-weight:500;">${C.poolCount} preguntas</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+        <span>Tus preguntas</span><span style="color:var(--p1);font-weight:500;">${qs.length} preguntas</span>
+      </div>
+      <div style="border-top:0.5px solid var(--border);padding-top:6px;margin-top:4px;display:flex;justify-content:space-between;">
+        <span>Total</span><span style="color:var(--gold);font-weight:500;">${total} preguntas</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-sm" onclick="C.phase='setup';renderCMC()" style="padding:11px 16px;">← Atrás</button>
+      <button class="btn btn-primary" style="flex:1;padding:13px;" onclick="startCMCAnswering()">
+        Responder ${total} pregunta${total !== 1 ? "s" : ""} →
+      </button>
+    </div>
+  </div>`;
+      }
+
+      function addCMCCustomQ() {
+        const ta = document.getElementById("cmc-custom-input");
+        const text = (ta ? ta.value : C.newCustomQ || "").trim();
+        if (!text) return;
+        if (!C.customQs) C.customQs = [];
+        C.customQs.push(text);
+        C.newCustomQ = "";
+        renderCMC();
+      }
+
+      function deleteCMCCustomQ(idx) {
+        C.customQs.splice(idx, 1);
+        renderCMC();
+      }
+
+      function startCMCAnswering() {
+        if (!C.myName) {
+          alert("Escribe tu nombre para continuar");
+          return;
+        }
+        // Pick pool questions
         const shuffled = shuffle([...CMC_QUESTIONS]);
-        C.selectedQs = shuffled.slice(0, C.questionCount);
+        const poolQs = shuffled.slice(0, C.poolCount);
+        // Build custom questions as free-type
+        const customQs = (C.customQs || []).map((text, i) => ({
+          id: `custom_${i}`,
+          type: "free",
+          text,
+          custom: true,
+        }));
+        // Merge and shuffle
+        C.selectedQs = shuffle([...poolQs, ...customQs]);
+        C.questionCount = C.selectedQs.length;
         C.currentIdx = 0;
         C.myAnswers = {};
         C.phase = "answering";
@@ -4313,11 +4420,16 @@
       }
 
       function generateCMCLink() {
+        // Include full custom question data so guesser can see the question text
         const payload = {
           name: C.myName,
           partner: C.p2,
           qs: C.selectedQs.map((q) => q.id),
           ans: C.myAnswers,
+          // send custom question texts so they can be reconstructed on the other side
+          customQDefs: C.selectedQs
+            .filter((q) => q.custom)
+            .map((q) => ({ id: q.id, text: q.text })),
         };
         const encoded = btoa(
           unescape(encodeURIComponent(JSON.stringify(payload))),
@@ -4350,7 +4462,7 @@
     </div>
     <div style="display:flex;gap:8px;">
       <button class="btn" style="flex:1;padding:11px;" onclick="goHome()">← Inicio</button>
-      <button class="btn btn-sm" onclick="if(confirm('¿Jugar de nuevo desde cero?'))startCMC()" style="padding:11px 16px;">Nuevo</button>
+      <button class="btn btn-sm" onclick="startCMC()" style="padding:11px 16px;">Nuevo</button>
     </div>
   </div>`;
       }
@@ -4384,9 +4496,21 @@
           const raw = params.get("d");
           if (!raw) throw new Error();
           const payload = JSON.parse(decodeURIComponent(escape(atob(raw))));
-          // Rebuild selected questions from IDs
+          // Build question map from bank
           const qMap = {};
           CMC_QUESTIONS.forEach((q) => (qMap[q.id] = q));
+          // Also add custom questions from payload
+          if (payload.customQDefs) {
+            payload.customQDefs.forEach((cq) => {
+              qMap[cq.id] = {
+                id: cq.id,
+                type: "free",
+                text: cq.text,
+                custom: true,
+              };
+            });
+          }
+          // Rebuild selected questions preserving original order
           C.selectedQs = payload.qs.map((id) => qMap[id]).filter(Boolean);
           C.myAnswers = payload.ans;
           C.p1 = payload.name;
@@ -4398,7 +4522,47 @@
           renderCMC();
         } catch (e) {
           APP.mode = null;
-          history.pushState({}, "", window.location.pathname);
+          try {
+            history.pushState({}, "", window.location.pathname);
+          } catch (e) {}
+          render();
+        }
+      }
+
+      function loadCMCResultsFromURL(params) {
+        try {
+          const raw = params.get("d");
+          if (!raw) throw new Error();
+          const payload = JSON.parse(decodeURIComponent(escape(atob(raw))));
+          // Rebuild full question objects from payload
+          const qMap = {};
+          CMC_QUESTIONS.forEach((q) => (qMap[q.id] = q));
+          C.selectedQs = payload.qs.map((q) => {
+            // Use full object from payload (has text, type, options etc)
+            return {
+              id: q.id,
+              type: q.type,
+              text: q.text,
+              custom: q.custom || false,
+              options: q.options || null,
+              label_min: q.label_min || null,
+              label_max: q.label_max || null,
+            };
+          });
+          C.myAnswers = payload.ans;
+          C.guesses = payload.guesses;
+          C.score = payload.score || 0;
+          C.p1 = payload.p1 || "";
+          C.p2 = payload.p2 || "";
+          C.myName = payload.p1 || "";
+          C.phase = "results";
+          C.role = "viewer";
+          renderCMC();
+        } catch (e) {
+          APP.mode = null;
+          try {
+            history.pushState({}, "", window.location.pathname);
+          } catch (e) {}
           render();
         }
       }
@@ -4517,7 +4681,37 @@
         }
       }
 
+      function generateResultsLink() {
+        const payload = {
+          results: true,
+          p1: C.p1,
+          p2: C.myName,
+          score: C.score,
+          qs: C.selectedQs.map((q) => ({
+            id: q.id,
+            type: q.type,
+            text: q.text,
+            custom: q.custom || false,
+            options: q.options || null,
+            label_min: q.label_min || null,
+            label_max: q.label_max || null,
+          })),
+          ans: C.myAnswers,
+          guesses: C.guesses,
+        };
+        const encoded = btoa(
+          unescape(encodeURIComponent(JSON.stringify(payload))),
+        );
+        const base = window.location.origin + window.location.pathname;
+        return `${base}?cmc=results&d=${encoded}`;
+      }
+
       function renderCMCResults() {
+        // Check if viewing shared results (from J1's perspective)
+        const isShared = C.role === "viewer";
+        const guesserName = isShared ? C.p2 || "Tu pareja" : C.myName || "Tú";
+        const answererName = C.p1 || "...";
+
         const total = C.selectedQs.filter((q) => q.type !== "free").length;
         const pct = total > 0 ? Math.round((C.score / total) * 100) : 0;
         let emoji = "🤔",
@@ -4533,7 +4727,6 @@
           msg = "Van a medias, queda tela que cortar.";
         }
 
-        // Build full review — all questions
         const typeLabels = {
           multiple: "Múltiple opción",
           truefalse: "V o F",
@@ -4542,7 +4735,7 @@
         };
 
         const reviewHTML = C.selectedQs
-          .map((q, i) => {
+          .map((q) => {
             const correct =
               q.type !== "free" && C.guesses[q.id] === C.myAnswers[q.id];
             const isFree = q.type === "free";
@@ -4558,10 +4751,10 @@
                 ? "var(--clubs)"
                 : "var(--hearts)";
 
-            // Format the answer nicely depending on type
             function formatAns(val) {
               if (!val || val === "(sin respuesta)") return "—";
-              if (q.type === "multiple") return q.options[parseInt(val)] || val;
+              if (q.type === "multiple" && q.options)
+                return q.options[parseInt(val)] || san(val);
               if (q.type === "truefalse")
                 return val === "true" ? "Verdadero" : "Falso";
               if (q.type === "scale") return `${val} / 5`;
@@ -4573,17 +4766,20 @@
 
             return `<div style="background:var(--surface);border:0.5px solid ${borderColor};border-radius:12px;padding:12px 14px;margin-bottom:8px;text-align:left;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-        <span style="font-size:10px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;">${typeLabels[q.type] || q.type}</span>
+        <span style="font-size:10px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;">${q.custom ? "✏️ Personalizada" : typeLabels[q.type] || q.type}</span>
         <span style="font-size:14px;color:${iconColor};font-weight:500;">${icon}</span>
       </div>
-      <div style="font-size:13px;color:var(--text);margin-bottom:8px;line-height:1.5;">${q.text}</div>
+      <div style="font-size:13px;color:var(--text);margin-bottom:8px;line-height:1.5;">${san(q.text)}</div>
       <div style="display:flex;flex-direction:column;gap:4px;">
-        <div style="font-size:12px;"><span style="color:var(--p1);font-weight:500;">Respondió: </span><span style="color:var(--text2);">${answered}</span></div>
-        <div style="font-size:12px;"><span style="color:var(--p2);font-weight:500;">Adivinaste: </span><span style="color:${isFree ? "var(--text2)" : correct ? "var(--clubs)" : "var(--hearts)"};">${guessed}</span></div>
+        <div style="font-size:12px;"><span style="color:var(--p1);font-weight:500;">${san(answererName)} respondió: </span><span style="color:var(--text2);">${answered}</span></div>
+        <div style="font-size:12px;"><span style="color:var(--p2);font-weight:500;">${san(guesserName)} adivinó: </span><span style="color:${isFree ? "var(--text2)" : correct ? "var(--clubs)" : "var(--hearts)"};">${guessed}</span></div>
       </div>
     </div>`;
           })
           .join("");
+
+        // Generate results link if J2 just finished (not already viewing shared)
+        const resultsUrl = !isShared ? generateResultsLink() : null;
 
         return `<div class="end-screen">
     <div class="logo">
@@ -4594,13 +4790,58 @@
     <div class="cmc-score-big">${C.score} / ${total}</div>
     <p style="margin-bottom:0.5rem;">${msg}</p>
     <p style="font-size:12px;color:var(--text3);margin-bottom:1.5rem;">${pct}% de aciertos en preguntas objetivas</p>
+
+    ${
+      !isShared && resultsUrl
+        ? `
+    <div class="cmc-share-box" style="margin-bottom:1.5rem;">
+      <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;">📤 Mándale los resultados a ${san(answererName)}</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:0.75rem;line-height:1.5;">Para que vea tus respuestas y lo que adivinaste en su propio cel.</div>
+      <button class="btn btn-primary" style="width:100%;padding:12px;" onclick="copyResultsLink()">📋 Copiar link de resultados</button>
+    </div>`
+        : ""
+    }
+
     <div style="text-align:left;margin-bottom:1.5rem;">
-      <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:0.75rem;text-align:center;">Revisen juntos — pregunta por pregunta</div>
+      <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:0.75rem;text-align:center;">Pregunta por pregunta</div>
       ${reviewHTML}
     </div>
+    ${
+      !isShared
+        ? `
     <button class="btn btn-primary" style="width:100%;padding:13px;margin-bottom:0.75rem;" onclick="startCMC()">Jugar de nuevo</button>
     <button class="btn" style="width:100%;padding:11px;" onclick="goHome()">← Inicio</button>
+    `
+        : `
+    <button class="btn btn-primary" style="width:100%;padding:13px;margin-bottom:0.75rem;" onclick="startCMC()">Jugar yo también</button>
+    <button class="btn" style="width:100%;padding:11px;" onclick="goHome()">← Inicio</button>
+    `
+    }
   </div>`;
+      }
+
+      function copyResultsLink() {
+        const url = generateResultsLink();
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            const btn = document.querySelector(".cmc-share-box .btn-primary");
+            if (btn) {
+              btn.textContent = "✓ Copiado!";
+              setTimeout(() => {
+                btn.textContent = "📋 Copiar link de resultados";
+              }, 2000);
+            }
+          })
+          .catch(() => {
+            const ta = document.createElement("textarea");
+            ta.value = url;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            alert("Link copiado!");
+          });
       }
 
       // ── INIT ──────────────────────────────────────────────────────────────────────
